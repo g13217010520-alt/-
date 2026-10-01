@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 470 190" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="title desc">
+  <title id="title">JIAYI POWER</title>
+  <desc id="desc">绿色 JIAYI 与灰色 POWER 品牌标识，齿轮构成 POWER 中的 O</desc>
+  <g font-family="Arial Black, Arial, sans-serif" font-style="italic" font-weight="900">
+    <text x="36" y="78" fill="#68c952" font-size="78" letter-spacing="-4">JIAYI</text>
+    <text x="34" y="164" fill="#d2d5d1" font-size="84" letter-spacing="-5">P</text>
+    <text x="190" y="164" fill="#d2d5d1" font-size="84" letter-spacing="-5">WER</text>
+  </g>
+  <g transform="translate(145 135)">
+    <g fill="#68c952">
+      <rect x="-10" y="-51" width="20" height="22" rx="3"/>
+      <rect x="-10" y="29" width="20" height="22" rx="3"/>
+      <rect x="29" y="-10" width="22" height="20" rx="3"/>
+      <rect x="-51" y="-10" width="22" height="20" rx="3"/>
+      <rect x="22" y="-41" width="20" height="22" rx="3" transform="rotate(45 32 -30)"/>
+      <rect x="22" y="19" width="20" height="22" rx="3" transform="rotate(-45 32 30)"/>
+      <rect x="-42" y="-41" width="20" height="22" rx="3" transform="rotate(-45 -32 -30)"/>
+      <rect x="-42" y="19" width="20" height="22" rx="3" transform="rotate(45 -32 30)"/>
+      <circle r="39"/>
+    </g>
+    <circle r="22" fill="#f1f5ef"/>
+    <path d="M-4-19 13-11 5-3 18 3 1 20 4 7-11 12-4-1-18-5Z" fill="#68c952"/>
+  </g>
+</svg>

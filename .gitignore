@@ -1,0 +1,13 @@
+# Generated deployment archives
+*.zip
+
+# Local quality-assurance output
+.qa/
+
+# Local dependencies and logs
+node_modules/
+*.log
+
+# Operating-system metadata
+.DS_Store
+Thumbs.db

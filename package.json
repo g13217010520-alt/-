@@ -1,0 +1,10 @@
+{
+  "name": "jiayi-power-corporate-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node serve.mjs",
+    "check": "node --check dist/app.js && node --check dist/language.js && node --check dist/translations.js && node --check dist/product-detail.js && node --check serve.mjs"
+  }
+}
