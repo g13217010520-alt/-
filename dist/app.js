@@ -69,6 +69,11 @@ if (companyGallery) {
   const lightboxImage = lightbox?.querySelector("[data-lightbox-image]");
   const lightboxCaption = lightbox?.querySelector("[data-lightbox-caption]");
   const factorySourceIndices = [...Array.from({ length: 41 }, (_, index) => index + 1), 50, 51, 52];
+  const factoryPortraitSourceIndices = [3, 10, 11, 12, 13, 26, 27, 29, 30, 31, 33, 34, 35, 37, 41];
+  const factoryGroups = {
+    landscape: factorySourceIndices.filter((index) => !factoryPortraitSourceIndices.includes(index)),
+    portrait: factoryPortraitSourceIndices,
+  };
   const gallerySets = {
     exhibition: { directory: "exhibition", prefix: "exhibition", count: 10, mode: "accordion" },
     factory: { directory: "factory", prefix: "factory", count: factorySourceIndices.length, sourceIndices: factorySourceIndices, mode: "depth" },
@@ -81,7 +86,7 @@ if (companyGallery) {
   let accordionActiveIndex = 2;
   let lightboxTrigger = null;
   let swipeStartX = 0;
-  let depthActiveIndex = 0;
+  const depthActiveIndices = { landscape: 0, portrait: 0 };
   let depthAutoplayTimer = 0;
   let depthWheelLocked = false;
   let depthPointer = null;
@@ -147,59 +152,71 @@ if (companyGallery) {
     depthAutoplayTimer = 0;
   };
 
-  const layoutDepthCarousel = () => {
+  const layoutDepthCarousel = (targetCarousel) => {
     if (!galleryGrid || activeCategory !== "factory") return;
-    const cards = Array.from(galleryGrid.querySelectorAll(".depth-carousel__card"));
-    const dots = Array.from(galleryGrid.querySelectorAll(".depth-carousel__dot"));
-    const count = cards.length;
-    if (!count) return;
+    const carousels = targetCarousel ? [targetCarousel] : Array.from(galleryGrid.querySelectorAll("[data-depth-carousel]"));
+    carousels.forEach((carousel) => {
+      const group = carousel.dataset.depthCarousel;
+      const cards = Array.from(carousel.querySelectorAll(".depth-carousel__card"));
+      const dots = Array.from(carousel.querySelectorAll(".depth-carousel__dot"));
+      const count = cards.length;
+      if (!count) return;
 
-    const compact = window.matchMedia("(max-width: 760px)").matches;
-    const spread = compact ? 32 : 78;
-    const depth = compact ? 125 : 205;
-    const tilt = compact ? 14 : 21;
-    const visibleCards = 4;
+      const compact = window.matchMedia("(max-width: 760px)").matches || carousel.clientWidth < 520;
+      const spread = compact ? 24 : 34;
+      const depth = compact ? 120 : 155;
+      const tilt = compact ? 14 : 19;
+      const visibleCards = 4;
+      const active = depthActiveIndices[group] || 0;
 
-    cards.forEach((card, index) => {
-      const distance = (index - depthActiveIndex + count) % count;
-      const shown = distance <= visibleCards;
-      const brightness = Math.max(.24, 1 - distance * .19);
-      const blur = Math.min(6, distance * 1.45);
-      card.style.setProperty("--depth-x", `${distance * spread}px`);
-      card.style.setProperty("--depth-z", `${distance * -depth}px`);
-      card.style.setProperty("--depth-rotate", `${Math.min(distance, 1) * tilt}deg`);
-      card.style.setProperty("--depth-opacity", shown ? "1" : "0");
-      card.style.setProperty("--depth-brightness", brightness.toFixed(2));
-      card.style.setProperty("--depth-blur", `${blur}px`);
-      card.style.zIndex = String(1000 - distance);
-      card.style.pointerEvents = shown ? "auto" : "none";
-      card.classList.toggle("is-active", distance === 0);
-      card.setAttribute("aria-hidden", distance === 0 ? "false" : "true");
-      card.tabIndex = distance === 0 ? 0 : -1;
-      card.querySelector(".depth-carousel__tint")?.style.setProperty("opacity", Math.min(.82, distance * .18).toFixed(2));
+      cards.forEach((card, index) => {
+        const distance = (index - active + count) % count;
+        const shown = distance <= visibleCards;
+        const brightness = Math.max(.24, 1 - distance * .19);
+        const blur = Math.min(6, distance * 1.45);
+        card.style.setProperty("--depth-x", `${distance * spread}px`);
+        card.style.setProperty("--depth-z", `${distance * -depth}px`);
+        card.style.setProperty("--depth-rotate", `${Math.min(distance, 1) * tilt}deg`);
+        card.style.setProperty("--depth-opacity", shown ? "1" : "0");
+        card.style.setProperty("--depth-brightness", brightness.toFixed(2));
+        card.style.setProperty("--depth-blur", `${blur}px`);
+        card.style.zIndex = String(1000 - distance);
+        card.style.pointerEvents = shown ? "auto" : "none";
+        card.classList.toggle("is-active", distance === 0);
+        card.setAttribute("aria-hidden", distance === 0 ? "false" : "true");
+        card.tabIndex = distance === 0 ? 0 : -1;
+        card.querySelector(".depth-carousel__tint")?.style.setProperty("opacity", Math.min(.82, distance * .18).toFixed(2));
+      });
+
+      dots.forEach((dot, index) => {
+        const selected = index === active;
+        dot.classList.toggle("is-active", selected);
+        dot.setAttribute("aria-selected", String(selected));
+      });
+      const current = carousel.querySelector("[data-depth-current]");
+      if (current) current.textContent = String(active + 1).padStart(2, "0");
     });
-
-    dots.forEach((dot, index) => {
-      const selected = index === depthActiveIndex;
-      dot.classList.toggle("is-active", selected);
-      dot.setAttribute("aria-selected", String(selected));
-    });
-    const current = galleryGrid.querySelector("[data-depth-current]");
-    if (current) current.textContent = String(depthActiveIndex + 1).padStart(2, "0");
   };
 
-  const setDepthActive = (index, focus = false) => {
-    const count = gallerySets.factory.count;
-    depthActiveIndex = (index + count) % count;
-    layoutDepthCarousel();
-    if (focus) galleryGrid?.querySelector(`.depth-carousel__card[data-gallery-index="${depthActiveIndex}"]`)?.focus({ preventScroll: true });
+  const setDepthActive = (carousel, index, focus = false) => {
+    if (!carousel) return;
+    const group = carousel.dataset.depthCarousel;
+    const count = carousel.querySelectorAll(".depth-carousel__card").length;
+    if (!count) return;
+    depthActiveIndices[group] = (index + count) % count;
+    layoutDepthCarousel(carousel);
+    if (focus) carousel.querySelector(`.depth-carousel__card[data-depth-position="${depthActiveIndices[group]}"]`)?.focus({ preventScroll: true });
   };
 
   const startDepthAutoplay = () => {
     stopDepthAutoplay();
     if (activeCategory !== "factory" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     depthAutoplayTimer = window.setInterval(() => {
-      if (!depthHovering && !depthFocused && !depthPointer) setDepthActive(depthActiveIndex + 1);
+      if (depthHovering || depthFocused || depthPointer) return;
+      galleryGrid?.querySelectorAll("[data-depth-carousel]").forEach((carousel) => {
+        const group = carousel.dataset.depthCarousel;
+        setDepthActive(carousel, (depthActiveIndices[group] || 0) + 1);
+      });
     }, 3200);
   };
 
@@ -223,40 +240,58 @@ if (companyGallery) {
     stopDepthAutoplay();
 
     if (set.mode === "depth") {
-      galleryGrid.tabIndex = 0;
-      galleryGrid.setAttribute("aria-roledescription", "carousel");
-      const stage = document.createElement("div");
-      stage.className = "depth-carousel__stage";
-      for (let index = 0; index < set.count; index += 1) {
-        const number = String(index + 1).padStart(2, "0");
-        const card = document.createElement("button");
-        card.type = "button";
-        card.className = "company-gallery__item depth-carousel__card";
-        card.dataset.galleryIndex = String(index);
-        card.setAttribute("aria-label", `${labelFor(category)} ${number}`);
-        card.setAttribute("aria-roledescription", "slide");
-        card.innerHTML = `<img class="depth-carousel__img" src="${assetFor(category, index)}" alt="${labelFor(category)} ${number}" loading="${index < 5 ? "eager" : "lazy"}" decoding="async"><span class="depth-carousel__tint" aria-hidden="true"></span><span class="company-gallery__index">${number}</span>`;
-        stage.appendChild(card);
-      }
+      const galleryFragment = document.createDocumentFragment();
+      Object.entries(factoryGroups).forEach(([group, sourceIndices]) => {
+        const carousel = document.createElement("section");
+        carousel.className = `depth-carousel depth-carousel--${group}`;
+        carousel.dataset.depthCarousel = group;
+        carousel.tabIndex = 0;
+        carousel.setAttribute("role", "group");
+        carousel.setAttribute("aria-roledescription", "carousel");
+        carousel.setAttribute("aria-label", group === "landscape" ? "横向工厂影像" : "竖向工厂影像");
 
-      const controls = document.createElement("div");
-      controls.className = "depth-carousel__controls";
-      controls.innerHTML = `<button type="button" class="depth-carousel__arrow depth-carousel__arrow--prev" aria-label="上一张照片" data-depth-step="-1">←</button><p class="depth-carousel__counter"><strong data-depth-current>${String(depthActiveIndex + 1).padStart(2, "0")}</strong><span>/ ${String(set.count).padStart(2, "0")}</span></p><button type="button" class="depth-carousel__arrow depth-carousel__arrow--next" aria-label="下一张照片" data-depth-step="1">→</button>`;
+        const heading = document.createElement("div");
+        heading.className = "depth-carousel__heading";
+        heading.innerHTML = `<span>${group === "landscape" ? "Landscape / 横向影像" : "Portrait / 竖向影像"}</span><small>${String(sourceIndices.length).padStart(2, "0")}</small>`;
 
-      const dots = document.createElement("div");
-      dots.className = "depth-carousel__dots";
-      dots.setAttribute("role", "tablist");
-      dots.setAttribute("aria-label", "工厂照片");
-      for (let index = 0; index < set.count; index += 1) {
-        const dot = document.createElement("button");
-        dot.type = "button";
-        dot.className = "depth-carousel__dot";
-        dot.dataset.depthIndex = String(index);
-        dot.setAttribute("role", "tab");
-        dot.setAttribute("aria-label", `转到第 ${index + 1} 张照片`);
-        dots.appendChild(dot);
-      }
-      galleryGrid.replaceChildren(stage, controls, dots);
+        const stage = document.createElement("div");
+        stage.className = "depth-carousel__stage";
+        sourceIndices.forEach((sourceIndex, position) => {
+          const galleryIndex = factorySourceIndices.indexOf(sourceIndex);
+          const number = String(galleryIndex + 1).padStart(2, "0");
+          const card = document.createElement("button");
+          card.type = "button";
+          card.className = "company-gallery__item depth-carousel__card";
+          card.dataset.galleryIndex = String(galleryIndex);
+          card.dataset.depthPosition = String(position);
+          card.setAttribute("aria-label", `${labelFor(category)} ${number}`);
+          card.setAttribute("aria-roledescription", "slide");
+          card.innerHTML = `<img class="depth-carousel__img" src="${assetFor(category, galleryIndex)}" alt="${labelFor(category)} ${number}" loading="${position < 5 ? "eager" : "lazy"}" decoding="async"><span class="depth-carousel__tint" aria-hidden="true"></span><span class="company-gallery__index">${number}</span>`;
+          stage.appendChild(card);
+        });
+
+        const active = depthActiveIndices[group] || 0;
+        const controls = document.createElement("div");
+        controls.className = "depth-carousel__controls";
+        controls.innerHTML = `<button type="button" class="depth-carousel__arrow depth-carousel__arrow--prev" aria-label="上一张照片" data-depth-step="-1">←</button><p class="depth-carousel__counter"><strong data-depth-current>${String(active + 1).padStart(2, "0")}</strong><span>/ ${String(sourceIndices.length).padStart(2, "0")}</span></p><button type="button" class="depth-carousel__arrow depth-carousel__arrow--next" aria-label="下一张照片" data-depth-step="1">→</button>`;
+
+        const dots = document.createElement("div");
+        dots.className = "depth-carousel__dots";
+        dots.setAttribute("role", "tablist");
+        dots.setAttribute("aria-label", group === "landscape" ? "横向工厂照片" : "竖向工厂照片");
+        sourceIndices.forEach((_, position) => {
+          const dot = document.createElement("button");
+          dot.type = "button";
+          dot.className = "depth-carousel__dot";
+          dot.dataset.depthIndex = String(position);
+          dot.setAttribute("role", "tab");
+          dot.setAttribute("aria-label", `转到第 ${position + 1} 张照片`);
+          dots.appendChild(dot);
+        });
+        carousel.append(heading, stage, controls, dots);
+        galleryFragment.appendChild(carousel);
+      });
+      galleryGrid.replaceChildren(galleryFragment);
       requestAnimationFrame(() => {
         layoutDepthCarousel();
         startDepthAutoplay();
@@ -293,13 +328,15 @@ if (companyGallery) {
   galleryGrid?.addEventListener("click", (event) => {
     const depthStep = event.target.closest("[data-depth-step]");
     if (depthStep) {
-      setDepthActive(depthActiveIndex + Number(depthStep.dataset.depthStep));
+      const carousel = depthStep.closest("[data-depth-carousel]");
+      const group = carousel?.dataset.depthCarousel;
+      setDepthActive(carousel, (depthActiveIndices[group] || 0) + Number(depthStep.dataset.depthStep));
       startDepthAutoplay();
       return;
     }
     const depthDot = event.target.closest("[data-depth-index]");
     if (depthDot) {
-      setDepthActive(Number(depthDot.dataset.depthIndex));
+      setDepthActive(depthDot.closest("[data-depth-carousel]"), Number(depthDot.dataset.depthIndex));
       startDepthAutoplay();
       return;
     }
@@ -307,12 +344,15 @@ if (companyGallery) {
     if (!item) return;
     const index = Number(item.dataset.galleryIndex);
     if (activeCategory === "factory") {
+      const carousel = item.closest("[data-depth-carousel]");
+      const group = carousel?.dataset.depthCarousel;
+      const position = Number(item.dataset.depthPosition);
       if (depthSuppressClick) {
         depthSuppressClick = false;
         return;
       }
-      if (index !== depthActiveIndex) {
-        setDepthActive(index);
+      if (position !== (depthActiveIndices[group] || 0)) {
+        setDepthActive(carousel, position);
         startDepthAutoplay();
         return;
       }
@@ -351,9 +391,12 @@ if (companyGallery) {
     if (activeCategory === "factory") {
       if (!["ArrowRight", "ArrowLeft", "Home", "End"].includes(event.key)) return;
       event.preventDefault();
-      if (event.key === "Home") setDepthActive(0, true);
-      else if (event.key === "End") setDepthActive(gallerySets.factory.count - 1, true);
-      else setDepthActive(depthActiveIndex + (event.key === "ArrowRight" ? 1 : -1), true);
+      const carousel = event.target.closest("[data-depth-carousel]") || galleryGrid.querySelector("[data-depth-carousel]");
+      const group = carousel?.dataset.depthCarousel;
+      const count = carousel?.querySelectorAll(".depth-carousel__card").length || 0;
+      if (event.key === "Home") setDepthActive(carousel, 0, true);
+      else if (event.key === "End") setDepthActive(carousel, count - 1, true);
+      else setDepthActive(carousel, (depthActiveIndices[group] || 0) + (event.key === "ArrowRight" ? 1 : -1), true);
       startDepthAutoplay();
       return;
     }
@@ -365,17 +408,22 @@ if (companyGallery) {
   });
   galleryGrid?.addEventListener("wheel", (event) => {
     if (activeCategory !== "factory" || depthWheelLocked) return;
+    const carousel = event.target.closest("[data-depth-carousel]");
+    if (!carousel) return;
     event.preventDefault();
     const delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
     if (Math.abs(delta) < 4) return;
     depthWheelLocked = true;
-    setDepthActive(depthActiveIndex + (delta > 0 ? 1 : -1));
+    const group = carousel.dataset.depthCarousel;
+    setDepthActive(carousel, (depthActiveIndices[group] || 0) + (delta > 0 ? 1 : -1));
     startDepthAutoplay();
     window.setTimeout(() => { depthWheelLocked = false; }, 420);
   }, { passive: false });
   galleryGrid?.addEventListener("pointerdown", (event) => {
     if (activeCategory !== "factory" || event.target.closest(".depth-carousel__controls,.depth-carousel__dots")) return;
-    depthPointer = { id: event.pointerId, startX: event.clientX, x: event.clientX, moved: false };
+    const carousel = event.target.closest("[data-depth-carousel]");
+    if (!carousel) return;
+    depthPointer = { id: event.pointerId, startX: event.clientX, x: event.clientX, moved: false, carousel };
   });
   galleryGrid?.addEventListener("pointermove", (event) => {
     if (!depthPointer || depthPointer.id !== event.pointerId) return;
@@ -389,11 +437,15 @@ if (companyGallery) {
     if (!depthPointer || depthPointer.id !== event.pointerId) return;
     const distance = depthPointer.x - depthPointer.startX;
     const moved = depthPointer.moved;
+    const carousel = depthPointer.carousel;
     depthPointer = null;
     if (!moved) return;
     depthSuppressClick = true;
     window.setTimeout(() => { depthSuppressClick = false; }, 120);
-    if (Math.abs(distance) > 34) setDepthActive(depthActiveIndex + (distance < 0 ? 1 : -1));
+    if (Math.abs(distance) > 34) {
+      const group = carousel.dataset.depthCarousel;
+      setDepthActive(carousel, (depthActiveIndices[group] || 0) + (distance < 0 ? 1 : -1));
+    }
     startDepthAutoplay();
   };
   galleryGrid?.addEventListener("pointerup", finishDepthPointer);
