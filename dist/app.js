@@ -80,6 +80,7 @@ if (companyGallery) {
   let accordionActiveIndex = 2;
   let lightboxTrigger = null;
   let swipeStartX = 0;
+  let masonryFrame = 0;
 
   const assetFor = (category, index) => {
     const set = gallerySets[category];
@@ -134,6 +135,47 @@ if (companyGallery) {
     if (focus) items[accordionActiveIndex]?.focus({ preventScroll: true });
   };
 
+  const getMasonryColumnCount = () => {
+    if (window.innerWidth >= 1500) return 5;
+    if (window.innerWidth >= 1000) return 4;
+    if (window.innerWidth > 760) return 3;
+    return 1;
+  };
+
+  const layoutMasonry = () => {
+    if (!galleryGrid || activeCategory !== "factory") return;
+    const items = Array.from(galleryGrid.querySelectorAll(".company-gallery__item--masonry"));
+    const width = galleryGrid.clientWidth;
+    if (!items.length || !width) return;
+
+    const columns = getMasonryColumnCount();
+    const gap = columns === 1 ? 12 : 14;
+    const columnWidth = (width - gap * (columns - 1)) / columns;
+    const columnHeights = new Array(columns).fill(0);
+
+    items.forEach((item) => {
+      const image = item.querySelector("img");
+      const ratio = image?.naturalWidth && image?.naturalHeight ? image.naturalWidth / image.naturalHeight : 4 / 3;
+      const itemHeight = Math.max(columnWidth * .72, Math.min(columnWidth / ratio, columnWidth * 1.55));
+      const column = columnHeights.indexOf(Math.min(...columnHeights));
+      const x = column * (columnWidth + gap);
+      const y = columnHeights[column];
+      columnHeights[column] += itemHeight + gap;
+      item.style.setProperty("--masonry-x", `${x}px`);
+      item.style.setProperty("--masonry-y", `${y}px`);
+      item.style.setProperty("--masonry-width", `${columnWidth}px`);
+      item.style.setProperty("--masonry-height", `${itemHeight}px`);
+    });
+
+    galleryGrid.style.height = `${Math.max(...columnHeights) - gap}px`;
+    requestAnimationFrame(() => items.forEach((item) => item.classList.add("is-visible")));
+  };
+
+  const scheduleMasonryLayout = () => {
+    cancelAnimationFrame(masonryFrame);
+    masonryFrame = requestAnimationFrame(layoutMasonry);
+  };
+
   const renderGallery = (category) => {
     const set = gallerySets[category];
     if (!set || !galleryGrid) return;
@@ -145,6 +187,7 @@ if (companyGallery) {
     });
 
     galleryGrid.className = "company-gallery__grid";
+    galleryGrid.style.removeProperty("height");
     galleryGrid.classList.add(`company-gallery__grid--${set.mode || "standard"}`);
     galleryGrid.setAttribute("aria-label", labelFor(category));
     galleryGrid.setAttribute("role", set.mode === "accordion" ? "list" : "tabpanel");
@@ -176,6 +219,10 @@ if (companyGallery) {
     }
     galleryGrid.replaceChildren(fragment);
     if (set.mode === "accordion") setAccordionActive(accordionActiveIndex);
+    if (set.mode === "masonry") {
+      galleryGrid.querySelectorAll("img").forEach((image) => image.addEventListener("load", scheduleMasonryLayout, { once: true }));
+      scheduleMasonryLayout();
+    }
   };
 
   galleryTabs.forEach((tab) => tab.addEventListener("click", () => renderGallery(tab.dataset.galleryCategory)));
@@ -206,6 +253,16 @@ if (companyGallery) {
     const direction = event.key === "ArrowRight" || event.key === "ArrowDown" ? 1 : -1;
     setAccordionActive(accordionActiveIndex + direction, true);
   });
+  if (galleryGrid && "ResizeObserver" in window) {
+    let observedMasonryWidth = 0;
+    new ResizeObserver(([entry]) => {
+      const width = entry.contentRect.width;
+      if (Math.abs(width - observedMasonryWidth) < .5) return;
+      observedMasonryWidth = width;
+      scheduleMasonryLayout();
+    }).observe(galleryGrid);
+  }
+  else window.addEventListener("resize", scheduleMasonryLayout, { passive: true });
   lightbox?.querySelector("[data-lightbox-close]")?.addEventListener("click", closeLightbox);
   lightbox?.querySelector("[data-lightbox-prev]")?.addEventListener("click", () => stepLightbox(-1));
   lightbox?.querySelector("[data-lightbox-next]")?.addEventListener("click", () => stepLightbox(1));
