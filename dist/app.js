@@ -68,20 +68,23 @@ if (companyGallery) {
   const lightbox = document.querySelector("[data-photo-lightbox]");
   const lightboxImage = lightbox?.querySelector("[data-lightbox-image]");
   const lightboxCaption = lightbox?.querySelector("[data-lightbox-caption]");
+  const factorySourceIndices = [...Array.from({ length: 41 }, (_, index) => index + 1), 50, 51, 52];
   const gallerySets = {
-    exhibition: { directory: "exhibition", prefix: "exhibition", count: 10 },
-    factory: { directory: "factory", prefix: "factory", count: 52 },
+    exhibition: { directory: "exhibition", prefix: "exhibition", count: 10, mode: "accordion" },
+    factory: { directory: "factory", prefix: "factory", count: factorySourceIndices.length, sourceIndices: factorySourceIndices, mode: "masonry" },
     meeting: { directory: "meeting", prefix: "meeting", count: 1 },
     rd: { directory: "rd", prefix: "rd", count: 3 },
   };
   let activeCategory = "exhibition";
   let activeIndex = 0;
+  let accordionActiveIndex = 2;
   let lightboxTrigger = null;
   let swipeStartX = 0;
 
   const assetFor = (category, index) => {
     const set = gallerySets[category];
-    return `assets/about-gallery-v1/${set.directory}/${set.prefix}-${String(index + 1).padStart(2, "0")}.jpg`;
+    const sourceIndex = set.sourceIndices?.[index] ?? index + 1;
+    return `assets/about-gallery-v1/${set.directory}/${set.prefix}-${String(sourceIndex).padStart(2, "0")}.jpg`;
   };
 
   const labelFor = (category) => galleryTabs.find((tab) => tab.dataset.galleryCategory === category)?.querySelector("strong")?.textContent || "JIAYI";
@@ -118,6 +121,19 @@ if (companyGallery) {
     showLightboxImage();
   };
 
+  const setAccordionActive = (index, focus = false) => {
+    if (!galleryGrid || activeCategory !== "exhibition") return;
+    const items = Array.from(galleryGrid.querySelectorAll("[data-gallery-index]"));
+    if (!items.length) return;
+    accordionActiveIndex = (index + items.length) % items.length;
+    items.forEach((item, itemIndex) => {
+      const selected = itemIndex === accordionActiveIndex;
+      item.classList.toggle("is-active", selected);
+      item.setAttribute("aria-current", selected ? "true" : "false");
+    });
+    if (focus) items[accordionActiveIndex]?.focus({ preventScroll: true });
+  };
+
   const renderGallery = (category) => {
     const set = gallerySets[category];
     if (!set || !galleryGrid) return;
@@ -128,6 +144,11 @@ if (companyGallery) {
       tab.setAttribute("aria-selected", String(selected));
     });
 
+    galleryGrid.className = "company-gallery__grid";
+    galleryGrid.classList.add(`company-gallery__grid--${set.mode || "standard"}`);
+    galleryGrid.setAttribute("aria-label", labelFor(category));
+    galleryGrid.setAttribute("role", set.mode === "accordion" ? "list" : "tabpanel");
+
     const fragment = document.createDocumentFragment();
     for (let index = 0; index < set.count; index += 1) {
       const button = document.createElement("button");
@@ -135,16 +156,55 @@ if (companyGallery) {
       button.className = "company-gallery__item";
       button.dataset.galleryIndex = String(index);
       button.setAttribute("aria-label", `${labelFor(category)} ${String(index + 1).padStart(2, "0")}`);
-      button.innerHTML = `<img src="${assetFor(category, index)}" alt="${labelFor(category)} ${String(index + 1).padStart(2, "0")}" loading="lazy" decoding="async"><span>${String(index + 1).padStart(2, "0")}</span>`;
+      const number = String(index + 1).padStart(2, "0");
+      const image = assetFor(category, index);
+      if (set.mode === "accordion") {
+        const selected = index === accordionActiveIndex;
+        button.classList.add("accordion-gallery__panel");
+        button.classList.toggle("is-active", selected);
+        button.setAttribute("role", "listitem");
+        button.setAttribute("aria-current", selected ? "true" : "false");
+        button.innerHTML = `<span class="accordion-gallery__frame"><img src="${image}" alt="${labelFor(category)} ${number}" loading="lazy" decoding="async"><span class="accordion-gallery__shade" aria-hidden="true"></span></span><span class="accordion-gallery__label" aria-hidden="true"><i></i><strong>${labelFor(category)} ${number}</strong></span>`;
+      } else {
+        if (set.mode === "masonry") {
+          button.classList.add("company-gallery__item--masonry");
+          button.style.setProperty("--masonry-delay", `${Math.min(index, 18) * 42}ms`);
+        }
+        button.innerHTML = `<img src="${image}" alt="${labelFor(category)} ${number}" loading="lazy" decoding="async"><span class="company-gallery__index">${number}</span>`;
+      }
       fragment.appendChild(button);
     }
     galleryGrid.replaceChildren(fragment);
+    if (set.mode === "accordion") setAccordionActive(accordionActiveIndex);
   };
 
   galleryTabs.forEach((tab) => tab.addEventListener("click", () => renderGallery(tab.dataset.galleryCategory)));
   galleryGrid?.addEventListener("click", (event) => {
     const item = event.target.closest("[data-gallery-index]");
-    if (item) openLightbox(Number(item.dataset.galleryIndex), item);
+    if (!item) return;
+    const index = Number(item.dataset.galleryIndex);
+    if (activeCategory === "exhibition" && !item.classList.contains("is-active")) {
+      setAccordionActive(index);
+      return;
+    }
+    openLightbox(index, item);
+  });
+  galleryGrid?.addEventListener("pointerover", (event) => {
+    if (activeCategory !== "exhibition" || !window.matchMedia("(hover: hover)").matches) return;
+    const item = event.target.closest("[data-gallery-index]");
+    if (item) setAccordionActive(Number(item.dataset.galleryIndex));
+  });
+  galleryGrid?.addEventListener("focusin", (event) => {
+    if (activeCategory !== "exhibition") return;
+    const item = event.target.closest("[data-gallery-index]");
+    if (item) setAccordionActive(Number(item.dataset.galleryIndex));
+  });
+  galleryGrid?.addEventListener("keydown", (event) => {
+    if (activeCategory !== "exhibition") return;
+    if (!["ArrowRight", "ArrowDown", "ArrowLeft", "ArrowUp"].includes(event.key)) return;
+    event.preventDefault();
+    const direction = event.key === "ArrowRight" || event.key === "ArrowDown" ? 1 : -1;
+    setAccordionActive(accordionActiveIndex + direction, true);
   });
   lightbox?.querySelector("[data-lightbox-close]")?.addEventListener("click", closeLightbox);
   lightbox?.querySelector("[data-lightbox-prev]")?.addEventListener("click", () => stepLightbox(-1));
