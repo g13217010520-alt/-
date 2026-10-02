@@ -71,16 +71,23 @@ if (companyGallery) {
   const factorySourceIndices = [...Array.from({ length: 41 }, (_, index) => index + 1), 50, 51, 52];
   const gallerySets = {
     exhibition: { directory: "exhibition", prefix: "exhibition", count: 10, mode: "accordion" },
-    factory: { directory: "factory", prefix: "factory", count: factorySourceIndices.length, sourceIndices: factorySourceIndices, mode: "masonry" },
+    factory: { directory: "factory", prefix: "factory", count: factorySourceIndices.length, sourceIndices: factorySourceIndices, mode: "depth" },
     meeting: { directory: "meeting", prefix: "meeting", count: 1 },
     rd: { directory: "rd", prefix: "rd", count: 3 },
   };
-  let activeCategory = "exhibition";
+  const requestedGallery = new URLSearchParams(window.location.search).get("gallery");
+  let activeCategory = gallerySets[requestedGallery] ? requestedGallery : "exhibition";
   let activeIndex = 0;
   let accordionActiveIndex = 2;
   let lightboxTrigger = null;
   let swipeStartX = 0;
-  let masonryFrame = 0;
+  let depthActiveIndex = 0;
+  let depthAutoplayTimer = 0;
+  let depthWheelLocked = false;
+  let depthPointer = null;
+  let depthSuppressClick = false;
+  let depthHovering = false;
+  let depthFocused = false;
 
   const assetFor = (category, index) => {
     const set = gallerySets[category];
@@ -135,45 +142,65 @@ if (companyGallery) {
     if (focus) items[accordionActiveIndex]?.focus({ preventScroll: true });
   };
 
-  const getMasonryColumnCount = () => {
-    if (window.innerWidth >= 1500) return 5;
-    if (window.innerWidth >= 1000) return 4;
-    if (window.innerWidth > 760) return 3;
-    return 1;
+  const stopDepthAutoplay = () => {
+    window.clearInterval(depthAutoplayTimer);
+    depthAutoplayTimer = 0;
   };
 
-  const layoutMasonry = () => {
+  const layoutDepthCarousel = () => {
     if (!galleryGrid || activeCategory !== "factory") return;
-    const items = Array.from(galleryGrid.querySelectorAll(".company-gallery__item--masonry"));
-    const width = galleryGrid.clientWidth;
-    if (!items.length || !width) return;
+    const cards = Array.from(galleryGrid.querySelectorAll(".depth-carousel__card"));
+    const dots = Array.from(galleryGrid.querySelectorAll(".depth-carousel__dot"));
+    const count = cards.length;
+    if (!count) return;
 
-    const columns = getMasonryColumnCount();
-    const gap = columns === 1 ? 12 : 14;
-    const columnWidth = (width - gap * (columns - 1)) / columns;
-    const columnHeights = new Array(columns).fill(0);
+    const compact = window.matchMedia("(max-width: 760px)").matches;
+    const spread = compact ? 32 : 78;
+    const depth = compact ? 125 : 205;
+    const tilt = compact ? 14 : 21;
+    const visibleCards = 4;
 
-    items.forEach((item) => {
-      const image = item.querySelector("img");
-      const ratio = image?.naturalWidth && image?.naturalHeight ? image.naturalWidth / image.naturalHeight : 4 / 3;
-      const itemHeight = Math.max(columnWidth * .72, Math.min(columnWidth / ratio, columnWidth * 1.55));
-      const column = columnHeights.indexOf(Math.min(...columnHeights));
-      const x = column * (columnWidth + gap);
-      const y = columnHeights[column];
-      columnHeights[column] += itemHeight + gap;
-      item.style.setProperty("--masonry-x", `${x}px`);
-      item.style.setProperty("--masonry-y", `${y}px`);
-      item.style.setProperty("--masonry-width", `${columnWidth}px`);
-      item.style.setProperty("--masonry-height", `${itemHeight}px`);
+    cards.forEach((card, index) => {
+      const distance = (index - depthActiveIndex + count) % count;
+      const shown = distance <= visibleCards;
+      const brightness = Math.max(.24, 1 - distance * .19);
+      const blur = Math.min(6, distance * 1.45);
+      card.style.setProperty("--depth-x", `${distance * spread}px`);
+      card.style.setProperty("--depth-z", `${distance * -depth}px`);
+      card.style.setProperty("--depth-rotate", `${Math.min(distance, 1) * tilt}deg`);
+      card.style.setProperty("--depth-opacity", shown ? "1" : "0");
+      card.style.setProperty("--depth-brightness", brightness.toFixed(2));
+      card.style.setProperty("--depth-blur", `${blur}px`);
+      card.style.zIndex = String(1000 - distance);
+      card.style.pointerEvents = shown ? "auto" : "none";
+      card.classList.toggle("is-active", distance === 0);
+      card.setAttribute("aria-hidden", distance === 0 ? "false" : "true");
+      card.tabIndex = distance === 0 ? 0 : -1;
+      card.querySelector(".depth-carousel__tint")?.style.setProperty("opacity", Math.min(.82, distance * .18).toFixed(2));
     });
 
-    galleryGrid.style.height = `${Math.max(...columnHeights) - gap}px`;
-    requestAnimationFrame(() => items.forEach((item) => item.classList.add("is-visible")));
+    dots.forEach((dot, index) => {
+      const selected = index === depthActiveIndex;
+      dot.classList.toggle("is-active", selected);
+      dot.setAttribute("aria-selected", String(selected));
+    });
+    const current = galleryGrid.querySelector("[data-depth-current]");
+    if (current) current.textContent = String(depthActiveIndex + 1).padStart(2, "0");
   };
 
-  const scheduleMasonryLayout = () => {
-    cancelAnimationFrame(masonryFrame);
-    masonryFrame = requestAnimationFrame(layoutMasonry);
+  const setDepthActive = (index, focus = false) => {
+    const count = gallerySets.factory.count;
+    depthActiveIndex = (index + count) % count;
+    layoutDepthCarousel();
+    if (focus) galleryGrid?.querySelector(`.depth-carousel__card[data-gallery-index="${depthActiveIndex}"]`)?.focus({ preventScroll: true });
+  };
+
+  const startDepthAutoplay = () => {
+    stopDepthAutoplay();
+    if (activeCategory !== "factory" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    depthAutoplayTimer = window.setInterval(() => {
+      if (!depthHovering && !depthFocused && !depthPointer) setDepthActive(depthActiveIndex + 1);
+    }, 3200);
   };
 
   const renderGallery = (category) => {
@@ -188,9 +215,54 @@ if (companyGallery) {
 
     galleryGrid.className = "company-gallery__grid";
     galleryGrid.style.removeProperty("height");
+    galleryGrid.removeAttribute("tabindex");
+    galleryGrid.removeAttribute("aria-roledescription");
     galleryGrid.classList.add(`company-gallery__grid--${set.mode || "standard"}`);
     galleryGrid.setAttribute("aria-label", labelFor(category));
-    galleryGrid.setAttribute("role", set.mode === "accordion" ? "list" : "tabpanel");
+    galleryGrid.setAttribute("role", set.mode === "accordion" ? "list" : set.mode === "depth" ? "group" : "tabpanel");
+    stopDepthAutoplay();
+
+    if (set.mode === "depth") {
+      galleryGrid.tabIndex = 0;
+      galleryGrid.setAttribute("aria-roledescription", "carousel");
+      const stage = document.createElement("div");
+      stage.className = "depth-carousel__stage";
+      for (let index = 0; index < set.count; index += 1) {
+        const number = String(index + 1).padStart(2, "0");
+        const card = document.createElement("button");
+        card.type = "button";
+        card.className = "company-gallery__item depth-carousel__card";
+        card.dataset.galleryIndex = String(index);
+        card.setAttribute("aria-label", `${labelFor(category)} ${number}`);
+        card.setAttribute("aria-roledescription", "slide");
+        card.innerHTML = `<img class="depth-carousel__img" src="${assetFor(category, index)}" alt="${labelFor(category)} ${number}" loading="${index < 5 ? "eager" : "lazy"}" decoding="async"><span class="depth-carousel__tint" aria-hidden="true"></span><span class="company-gallery__index">${number}</span>`;
+        stage.appendChild(card);
+      }
+
+      const controls = document.createElement("div");
+      controls.className = "depth-carousel__controls";
+      controls.innerHTML = `<button type="button" class="depth-carousel__arrow depth-carousel__arrow--prev" aria-label="上一张照片" data-depth-step="-1">←</button><p class="depth-carousel__counter"><strong data-depth-current>${String(depthActiveIndex + 1).padStart(2, "0")}</strong><span>/ ${String(set.count).padStart(2, "0")}</span></p><button type="button" class="depth-carousel__arrow depth-carousel__arrow--next" aria-label="下一张照片" data-depth-step="1">→</button>`;
+
+      const dots = document.createElement("div");
+      dots.className = "depth-carousel__dots";
+      dots.setAttribute("role", "tablist");
+      dots.setAttribute("aria-label", "工厂照片");
+      for (let index = 0; index < set.count; index += 1) {
+        const dot = document.createElement("button");
+        dot.type = "button";
+        dot.className = "depth-carousel__dot";
+        dot.dataset.depthIndex = String(index);
+        dot.setAttribute("role", "tab");
+        dot.setAttribute("aria-label", `转到第 ${index + 1} 张照片`);
+        dots.appendChild(dot);
+      }
+      galleryGrid.replaceChildren(stage, controls, dots);
+      requestAnimationFrame(() => {
+        layoutDepthCarousel();
+        startDepthAutoplay();
+      });
+      return;
+    }
 
     const fragment = document.createDocumentFragment();
     for (let index = 0; index < set.count; index += 1) {
@@ -209,27 +281,42 @@ if (companyGallery) {
         button.setAttribute("aria-current", selected ? "true" : "false");
         button.innerHTML = `<span class="accordion-gallery__frame"><img src="${image}" alt="${labelFor(category)} ${number}" loading="lazy" decoding="async"><span class="accordion-gallery__shade" aria-hidden="true"></span></span><span class="accordion-gallery__label" aria-hidden="true"><i></i><strong>${labelFor(category)} ${number}</strong></span>`;
       } else {
-        if (set.mode === "masonry") {
-          button.classList.add("company-gallery__item--masonry");
-          button.style.setProperty("--masonry-delay", `${Math.min(index, 18) * 42}ms`);
-        }
         button.innerHTML = `<img src="${image}" alt="${labelFor(category)} ${number}" loading="lazy" decoding="async"><span class="company-gallery__index">${number}</span>`;
       }
       fragment.appendChild(button);
     }
     galleryGrid.replaceChildren(fragment);
     if (set.mode === "accordion") setAccordionActive(accordionActiveIndex);
-    if (set.mode === "masonry") {
-      galleryGrid.querySelectorAll("img").forEach((image) => image.addEventListener("load", scheduleMasonryLayout, { once: true }));
-      scheduleMasonryLayout();
-    }
   };
 
   galleryTabs.forEach((tab) => tab.addEventListener("click", () => renderGallery(tab.dataset.galleryCategory)));
   galleryGrid?.addEventListener("click", (event) => {
+    const depthStep = event.target.closest("[data-depth-step]");
+    if (depthStep) {
+      setDepthActive(depthActiveIndex + Number(depthStep.dataset.depthStep));
+      startDepthAutoplay();
+      return;
+    }
+    const depthDot = event.target.closest("[data-depth-index]");
+    if (depthDot) {
+      setDepthActive(Number(depthDot.dataset.depthIndex));
+      startDepthAutoplay();
+      return;
+    }
     const item = event.target.closest("[data-gallery-index]");
     if (!item) return;
     const index = Number(item.dataset.galleryIndex);
+    if (activeCategory === "factory") {
+      if (depthSuppressClick) {
+        depthSuppressClick = false;
+        return;
+      }
+      if (index !== depthActiveIndex) {
+        setDepthActive(index);
+        startDepthAutoplay();
+        return;
+      }
+    }
     if (activeCategory === "exhibition" && !item.classList.contains("is-active")) {
       setAccordionActive(index);
       return;
@@ -242,27 +329,76 @@ if (companyGallery) {
     if (item) setAccordionActive(Number(item.dataset.galleryIndex));
   });
   galleryGrid?.addEventListener("focusin", (event) => {
+    if (activeCategory === "factory") {
+      depthFocused = true;
+      return;
+    }
     if (activeCategory !== "exhibition") return;
     const item = event.target.closest("[data-gallery-index]");
     if (item) setAccordionActive(Number(item.dataset.galleryIndex));
   });
+  galleryGrid?.addEventListener("focusout", (event) => {
+    if (activeCategory !== "factory" || galleryGrid.contains(event.relatedTarget)) return;
+    depthFocused = false;
+  });
+  galleryGrid?.addEventListener("mouseenter", () => {
+    if (activeCategory === "factory") depthHovering = true;
+  });
+  galleryGrid?.addEventListener("mouseleave", () => {
+    depthHovering = false;
+  });
   galleryGrid?.addEventListener("keydown", (event) => {
+    if (activeCategory === "factory") {
+      if (!["ArrowRight", "ArrowLeft", "Home", "End"].includes(event.key)) return;
+      event.preventDefault();
+      if (event.key === "Home") setDepthActive(0, true);
+      else if (event.key === "End") setDepthActive(gallerySets.factory.count - 1, true);
+      else setDepthActive(depthActiveIndex + (event.key === "ArrowRight" ? 1 : -1), true);
+      startDepthAutoplay();
+      return;
+    }
     if (activeCategory !== "exhibition") return;
     if (!["ArrowRight", "ArrowDown", "ArrowLeft", "ArrowUp"].includes(event.key)) return;
     event.preventDefault();
     const direction = event.key === "ArrowRight" || event.key === "ArrowDown" ? 1 : -1;
     setAccordionActive(accordionActiveIndex + direction, true);
   });
-  if (galleryGrid && "ResizeObserver" in window) {
-    let observedMasonryWidth = 0;
-    new ResizeObserver(([entry]) => {
-      const width = entry.contentRect.width;
-      if (Math.abs(width - observedMasonryWidth) < .5) return;
-      observedMasonryWidth = width;
-      scheduleMasonryLayout();
-    }).observe(galleryGrid);
-  }
-  else window.addEventListener("resize", scheduleMasonryLayout, { passive: true });
+  galleryGrid?.addEventListener("wheel", (event) => {
+    if (activeCategory !== "factory" || depthWheelLocked) return;
+    event.preventDefault();
+    const delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
+    if (Math.abs(delta) < 4) return;
+    depthWheelLocked = true;
+    setDepthActive(depthActiveIndex + (delta > 0 ? 1 : -1));
+    startDepthAutoplay();
+    window.setTimeout(() => { depthWheelLocked = false; }, 420);
+  }, { passive: false });
+  galleryGrid?.addEventListener("pointerdown", (event) => {
+    if (activeCategory !== "factory" || event.target.closest(".depth-carousel__controls,.depth-carousel__dots")) return;
+    depthPointer = { id: event.pointerId, startX: event.clientX, x: event.clientX, moved: false };
+  });
+  galleryGrid?.addEventListener("pointermove", (event) => {
+    if (!depthPointer || depthPointer.id !== event.pointerId) return;
+    depthPointer.x = event.clientX;
+    if (Math.abs(depthPointer.x - depthPointer.startX) > 8) {
+      depthPointer.moved = true;
+      galleryGrid.setPointerCapture?.(event.pointerId);
+    }
+  });
+  const finishDepthPointer = (event) => {
+    if (!depthPointer || depthPointer.id !== event.pointerId) return;
+    const distance = depthPointer.x - depthPointer.startX;
+    const moved = depthPointer.moved;
+    depthPointer = null;
+    if (!moved) return;
+    depthSuppressClick = true;
+    window.setTimeout(() => { depthSuppressClick = false; }, 120);
+    if (Math.abs(distance) > 34) setDepthActive(depthActiveIndex + (distance < 0 ? 1 : -1));
+    startDepthAutoplay();
+  };
+  galleryGrid?.addEventListener("pointerup", finishDepthPointer);
+  galleryGrid?.addEventListener("pointercancel", finishDepthPointer);
+  window.addEventListener("resize", layoutDepthCarousel, { passive: true });
   lightbox?.querySelector("[data-lightbox-close]")?.addEventListener("click", closeLightbox);
   lightbox?.querySelector("[data-lightbox-prev]")?.addEventListener("click", () => stepLightbox(-1));
   lightbox?.querySelector("[data-lightbox-next]")?.addEventListener("click", () => stepLightbox(1));
