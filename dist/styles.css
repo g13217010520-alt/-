@@ -419,12 +419,11 @@ a, button { touch-action: manipulation; -webkit-tap-highlight-color: transparent
 .depth-carousel { position: relative; min-width: 0; min-height: 650px; overflow: hidden; border: 1px solid var(--line); border-radius: 24px; background: radial-gradient(circle at 42% 50%,rgba(153,255,66,.1),transparent 31%),linear-gradient(145deg,#111713,#090d0a 74%); perspective: 1250px; perspective-origin: 50% 50%; touch-action: pan-y; cursor: grab; isolation: isolate; }
 .depth-carousel:active { cursor: grabbing; }
 .depth-carousel:focus-visible { outline: 2px solid var(--green); outline-offset: 4px; }
-.depth-carousel__heading { position: absolute; z-index: 1200; top: 20px; right: 22px; left: 22px; display: flex; align-items: center; justify-content: space-between; color: var(--green); font-size: .68rem; font-weight: 750; letter-spacing: .12em; text-transform: uppercase; }
-.depth-carousel__heading small { color: #6f796f; font-size: .66rem; }
-.depth-carousel__stage { position: absolute; inset: 54px 0 84px; transform-style: preserve-3d; }
+.depth-carousel__stage { position: absolute; inset: 0 0 84px; transform-style: preserve-3d; }
 .depth-carousel__stage::before { position: absolute; top: 50%; left: 40%; width: 92%; height: 54%; border: 1px solid rgba(153,255,66,.08); border-radius: 50%; content: ""; transform: translate(-50%,-50%) rotateX(72deg); box-shadow: 0 0 100px rgba(153,255,66,.045); }
 .depth-carousel__card { position: absolute; top: 50%; left: 40%; margin: 0; overflow: hidden; border: 1px solid rgba(224,239,222,.2); border-radius: 20px; opacity: var(--depth-opacity,0); background: #050806; box-shadow: 0 34px 70px -24px rgba(0,0,0,.82),0 10px 26px -15px rgba(0,0,0,.68); filter: brightness(var(--depth-brightness,1)) blur(var(--depth-blur,0)); transform: translate(-50%,-50%) translateX(var(--depth-x,0)) translateZ(var(--depth-z,0)) rotateY(var(--depth-rotate,0)); transform-origin: center; transform-style: preserve-3d; will-change: transform,opacity,filter; cursor: pointer; transition: transform .7s cubic-bezier(.16,1,.3,1),opacity .52s ease,filter .7s cubic-bezier(.16,1,.3,1),border-color .3s ease,box-shadow .3s ease; }
 .depth-carousel--landscape .depth-carousel__card { width: min(38vw,520px); height: min(25vw,345px); }
+.depth-carousel--landscape .depth-carousel__card, .depth-carousel--landscape .depth-carousel__stage::before { left: 45%; }
 .depth-carousel--portrait .depth-carousel__card { width: min(23vw,310px); height: min(35vw,465px); }
 .depth-carousel__card.is-active { border-color: rgba(153,255,66,.55); box-shadow: 0 38px 82px -26px rgba(0,0,0,.88),0 0 0 1px rgba(153,255,66,.14),0 0 42px rgba(153,255,66,.09); }
 .depth-carousel__card:focus-visible { outline: 2px solid var(--green); outline-offset: 4px; }
@@ -845,7 +844,7 @@ a, button { touch-action: manipulation; -webkit-tap-highlight-color: transparent
   .depth-carousel { border-radius: 18px; perspective: 1100px; }
   .depth-carousel--landscape { min-height: 500px; }
   .depth-carousel--portrait { min-height: 620px; }
-  .depth-carousel__stage { inset: 54px 0 78px; }
+  .depth-carousel__stage { inset: 0 0 78px; }
   .depth-carousel__stage::before { left: 38%; width: 90%; height: 56%; }
   .depth-carousel__card { left: 38%; border-radius: 16px; }
   .depth-carousel--landscape .depth-carousel__card { width: min(80vw,480px); height: min(54vw,320px); }

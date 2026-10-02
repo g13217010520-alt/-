@@ -250,10 +250,6 @@ if (companyGallery) {
         carousel.setAttribute("aria-roledescription", "carousel");
         carousel.setAttribute("aria-label", group === "landscape" ? "横向工厂影像" : "竖向工厂影像");
 
-        const heading = document.createElement("div");
-        heading.className = "depth-carousel__heading";
-        heading.innerHTML = `<span>${group === "landscape" ? "Landscape / 横向影像" : "Portrait / 竖向影像"}</span><small>${String(sourceIndices.length).padStart(2, "0")}</small>`;
-
         const stage = document.createElement("div");
         stage.className = "depth-carousel__stage";
         sourceIndices.forEach((sourceIndex, position) => {
@@ -288,7 +284,7 @@ if (companyGallery) {
           dot.setAttribute("aria-label", `转到第 ${position + 1} 张照片`);
           dots.appendChild(dot);
         });
-        carousel.append(heading, stage, controls, dots);
+        carousel.append(stage, controls, dots);
         galleryFragment.appendChild(carousel);
       });
       galleryGrid.replaceChildren(galleryFragment);
