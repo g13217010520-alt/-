@@ -1,0 +1,2244 @@
+{
+  "version": 1,
+  "products": [
+    {
+      "id": "chainsaw",
+      "order": 0,
+      "year": "2026",
+      "cardLayout": "wide",
+      "cardLabel": "Cutting System",
+      "name": "锂电链锯",
+      "model": "JY-CH1201",
+      "category": "Cutting System / 切割系统",
+      "image": "assets/chainsaw.webp",
+      "summary": "面向庭院修枝与木料切割的 21V 无刷动力方案，兼顾切割效率、快速维护与握持稳定性。",
+      "featureTitle": "更快调节，更稳定地完成每一次切割。",
+      "description": "免工具张紧结构缩短维护路径，自动泵油与电子刹车让连续作业更从容。产品可配置 12 英寸与 16 英寸导板，为家用和中强度作业提供灵活选择。",
+      "specs": [
+        [
+          "额定电压",
+          "21V"
+        ],
+        [
+          "链速",
+          "10 m/s"
+        ],
+        [
+          "导板",
+          "12″ / 16″"
+        ],
+        [
+          "有效切割",
+          "280 / 350 mm"
+        ],
+        [
+          "电机",
+          "无刷"
+        ],
+        [
+          "油壶容量",
+          "120 ml"
+        ]
+      ],
+      "uses": [
+        "庭院树枝修整",
+        "木料快速切割",
+        "农场与果园维护"
+      ],
+      "series": [
+        {
+          "model": "JY-CH1201",
+          "name": "12″ / 16″ 无刷链锯",
+          "image": "assets/chainsaw.webp",
+          "specs": [
+            "21V",
+            "10 m/s",
+            "无刷动力"
+          ],
+          "parameters": [
+            [
+              "额定电压",
+              "21V"
+            ],
+            [
+              "链速",
+              "10 m/s"
+            ],
+            [
+              "导板",
+              "12″ / 16″"
+            ],
+            [
+              "最大切割直径",
+              "280 / 350 mm"
+            ],
+            [
+              "油壶容量",
+              "120 ml"
+            ],
+            [
+              "刹车",
+              "电子刹车"
+            ],
+            [
+              "电机类型",
+              "无刷"
+            ]
+          ],
+          "applications": [
+            "庭院树枝修整",
+            "木料快速切割",
+            "农场与果园维护"
+          ]
+        },
+        {
+          "model": "JY-CH0702",
+          "name": "8″ 迷你链锯",
+          "image": "assets/series/chainsaw-8.webp",
+          "specs": [
+            "21V",
+            "9 m/s",
+            "200 mm"
+          ],
+          "parameters": [
+            [
+              "额定电压",
+              "21V"
+            ],
+            [
+              "链速",
+              "9 m/s"
+            ],
+            [
+              "导板",
+              "8″"
+            ],
+            [
+              "最大切割直径",
+              "200 mm"
+            ],
+            [
+              "电机类型",
+              "无刷"
+            ]
+          ],
+          "applications": [
+            "庭院树枝修整",
+            "木料快速切割",
+            "农场与果园维护"
+          ]
+        },
+        {
+          "model": "JY-CH0701",
+          "name": "6″ 迷你链锯",
+          "image": "assets/series/chainsaw-6-compact.webp",
+          "specs": [
+            "21V",
+            "7 m/s",
+            "150 mm"
+          ],
+          "parameters": [
+            [
+              "额定电压",
+              "21V"
+            ],
+            [
+              "链速",
+              "7 m/s"
+            ],
+            [
+              "导板",
+              "6″"
+            ],
+            [
+              "最大切割直径",
+              "150 mm"
+            ],
+            [
+              "电机类型",
+              "有刷"
+            ]
+          ],
+          "applications": [
+            "庭院树枝修整",
+            "木料快速切割",
+            "农场与果园维护"
+          ]
+        },
+        {
+          "model": "JY-CH0602",
+          "name": "6″ 迷你链锯",
+          "image": "assets/series/chainsaw-6-brushless.webp",
+          "specs": [
+            "21V",
+            "6–7 m/s",
+            "双版本可选"
+          ],
+          "parameters": [
+            [
+              "额定电压",
+              "21V"
+            ],
+            [
+              "链速",
+              "6 / 7 m/s"
+            ],
+            [
+              "导板",
+              "6″"
+            ],
+            [
+              "最大切割直径",
+              "150 mm"
+            ],
+            [
+              "电机类型",
+              "有刷 / 无刷"
+            ]
+          ],
+          "applications": [
+            "庭院树枝修整",
+            "木料快速切割",
+            "农场与果园维护"
+          ]
+        },
+        {
+          "model": "JY-CH2601 HS",
+          "name": "6″ / 8″ 迷你链锯",
+          "image": "assets/series/chainsaw-6-classic.webp",
+          "specs": [
+            "21V",
+            "7 m/s",
+            "无刷动力"
+          ],
+          "parameters": [
+            [
+              "额定电压",
+              "21V"
+            ],
+            [
+              "链速",
+              "7 m/s"
+            ],
+            [
+              "导板",
+              "6″ / 8″"
+            ],
+            [
+              "最大切割直径",
+              "150 / 200 mm"
+            ],
+            [
+              "电机类型",
+              "无刷"
+            ]
+          ],
+          "applications": [
+            "庭院树枝修整",
+            "木料快速切割",
+            "农场与果园维护"
+          ]
+        },
+        {
+          "model": "JY-CH0403",
+          "name": "4″ 迷你链锯",
+          "image": "assets/series/chainsaw-4.webp",
+          "specs": [
+            "12V",
+            "5 m/s",
+            "100 mm"
+          ],
+          "parameters": [
+            [
+              "额定电压",
+              "12V"
+            ],
+            [
+              "链速",
+              "5 m/s"
+            ],
+            [
+              "导板",
+              "4″"
+            ],
+            [
+              "最大切割直径",
+              "100 mm"
+            ],
+            [
+              "电机类型",
+              "有刷"
+            ]
+          ],
+          "applications": [
+            "庭院树枝修整",
+            "木料快速切割",
+            "农场与果园维护"
+          ]
+        },
+        {
+          "model": "JY-CH0901",
+          "name": "10″ 迷你链锯",
+          "image": "assets/series/chainsaw-10.webp",
+          "specs": [
+            "21V",
+            "12.5 m/s",
+            "210 mm"
+          ],
+          "parameters": [
+            [
+              "额定电压",
+              "21V"
+            ],
+            [
+              "链速",
+              "12.5 m/s"
+            ],
+            [
+              "导板",
+              "10″"
+            ],
+            [
+              "最大切割直径",
+              "210 mm"
+            ],
+            [
+              "电机类型",
+              "无刷"
+            ]
+          ],
+          "applications": [
+            "庭院树枝修整",
+            "木料快速切割",
+            "农场与果园维护"
+          ]
+        },
+        {
+          "model": "JY-CH0601",
+          "name": "6″ 数显迷你链锯",
+          "image": "assets/series/chainsaw-6-display.webp",
+          "specs": [
+            "21V",
+            "6–7 m/s",
+            "电量显示"
+          ],
+          "parameters": [
+            [
+              "额定电压",
+              "21V"
+            ],
+            [
+              "链速",
+              "6 / 7 m/s"
+            ],
+            [
+              "导板",
+              "6″"
+            ],
+            [
+              "最大切割直径",
+              "150 mm"
+            ],
+            [
+              "电机类型",
+              "有刷 / 无刷"
+            ]
+          ],
+          "applications": [
+            "庭院树枝修整",
+            "木料快速切割",
+            "农场与果园维护"
+          ]
+        },
+        {
+          "model": "JY-CH0603",
+          "name": "6″ 迷你链锯",
+          "image": "assets/series/chainsaw-6-basic.webp",
+          "specs": [
+            "21V",
+            "7 m/s",
+            "轻量机身"
+          ],
+          "parameters": [
+            [
+              "额定电压",
+              "21V"
+            ],
+            [
+              "链速",
+              "7 m/s"
+            ],
+            [
+              "导板",
+              "6″"
+            ],
+            [
+              "最大切割直径",
+              "150 mm"
+            ],
+            [
+              "电机类型",
+              "有刷"
+            ]
+          ],
+          "applications": [
+            "庭院树枝修整",
+            "木料快速切割",
+            "农场与果园维护"
+          ]
+        }
+      ],
+      "featured": {
+        "image": "assets/chainsaw-scene.webp",
+        "meta": "JY-CH1201",
+        "kicker": "10 m/s · 12″ / 16″",
+        "headline": "快速调链，稳定切割。",
+        "features": []
+      }
+    },
+    {
+      "id": "blower",
+      "order": 1,
+      "year": "2026",
+      "cardLayout": "standard",
+      "cardLabel": "Airflow System",
+      "name": "锂电吹风机",
+      "model": "JY-LB2401",
+      "category": "Airflow System / 风力系统",
+      "image": "assets/blower.webp",
+      "summary": "以高风速与大风量覆盖落叶清理、庭院维护和户外设备除尘。",
+      "featureTitle": "大风量输出，也能保持无绳机动性。",
+      "description": "无刷版本最高可达 630 CFM，配合多档调速在续航与清扫效率之间快速切换，适合面积更大的庭院和户外场地。",
+      "specs": [
+        [
+          "额定电压",
+          "21V"
+        ],
+        [
+          "电机转速",
+          "32,000 rpm"
+        ],
+        [
+          "最高风速",
+          "240 km/h"
+        ],
+        [
+          "最大风量",
+          "630 CFM"
+        ],
+        [
+          "电机",
+          "无刷"
+        ],
+        [
+          "调速",
+          "多档"
+        ]
+      ],
+      "uses": [
+        "庭院落叶清扫",
+        "车库与工位除尘",
+        "户外场地维护"
+      ],
+      "series": [
+        {
+          "model": "JY-LB2201",
+          "name": "210 CFM 锂电吹风机",
+          "image": "assets/series/blower-210.webp",
+          "specs": [
+            "21V",
+            "150 km/h",
+            "210 CFM"
+          ],
+          "parameters": [
+            [
+              "额定电压",
+              "21V"
+            ],
+            [
+              "电机转速",
+              "17,000 / 28,000 rpm"
+            ],
+            [
+              "最高风速",
+              "130 / 150 km/h"
+            ],
+            [
+              "最大风量",
+              "180 / 210 CFM"
+            ],
+            [
+              "电机类型",
+              "有刷 / 无刷"
+            ]
+          ],
+          "applications": [
+            "庭院落叶清扫",
+            "车库与工位除尘",
+            "户外场地维护"
+          ]
+        },
+        {
+          "model": "JY-LB2401",
+          "name": "630 CFM 无刷吹风机",
+          "image": "assets/series/blower-630.webp",
+          "specs": [
+            "21V",
+            "240 km/h",
+            "630 CFM"
+          ],
+          "parameters": [
+            [
+              "额定电压",
+              "21V"
+            ],
+            [
+              "电机转速",
+              "28,000 / 32,000 rpm"
+            ],
+            [
+              "最高风速",
+              "210 / 240 km/h"
+            ],
+            [
+              "最大风量",
+              "550 / 630 CFM"
+            ],
+            [
+              "电机类型",
+              "有刷 / 无刷"
+            ]
+          ],
+          "applications": [
+            "庭院落叶清扫",
+            "车库与工位除尘",
+            "户外场地维护"
+          ]
+        },
+        {
+          "model": "JY-LB2601",
+          "name": "迷你锂电吹风机",
+          "image": "assets/series/blower-mini.webp",
+          "specs": [
+            "21V",
+            "225 km/h",
+            "440 CFM"
+          ],
+          "parameters": [
+            [
+              "额定电压",
+              "21V"
+            ],
+            [
+              "电机转速",
+              "34,500 / 34,000 rpm"
+            ],
+            [
+              "最高风速",
+              "162 / 225 km/h"
+            ],
+            [
+              "最大风量",
+              "180 / 440 CFM"
+            ],
+            [
+              "电机类型",
+              "有刷 / 无刷"
+            ]
+          ],
+          "applications": [
+            "庭院落叶清扫",
+            "车库与工位除尘",
+            "户外场地维护"
+          ]
+        }
+      ],
+      "featured": null
+    },
+    {
+      "id": "trimmer",
+      "order": 2,
+      "year": "2026",
+      "cardLayout": "standard",
+      "cardLabel": "Grass Trimming",
+      "name": "割草机系列",
+      "model": "JY-LM2602",
+      "category": "Grass Trimming / 割草系统",
+      "image": "assets/trimmer.webp",
+      "summary": "轻量化长杆结构配合无刷动力，为草坪边缘、灌木周边与狭窄区域提供灵活修剪。",
+      "featureTitle": "从边缘到角落，保持顺手的修剪路径。",
+      "description": "300 mm 切割范围与 2 合 1 配置兼顾效率和通过性；电量显示帮助使用者更直观地安排作业节奏。",
+      "specs": [
+        [
+          "额定电压",
+          "21V"
+        ],
+        [
+          "电机转速",
+          "19,500 rpm"
+        ],
+        [
+          "切割直径",
+          "300 mm"
+        ],
+        [
+          "最大功率",
+          "850 W"
+        ],
+        [
+          "电机",
+          "无刷"
+        ],
+        [
+          "功能",
+          "2 in 1"
+        ]
+      ],
+      "uses": [
+        "草坪边缘整理",
+        "围栏与树木周边修剪",
+        "家庭庭院维护"
+      ],
+      "series": [
+        {
+          "model": "JY-LM2601",
+          "name": "锂电割草机",
+          "image": "assets/series/trimmer-lm2601.webp",
+          "specs": [
+            "21V",
+            "10,500 rpm",
+            "700 W"
+          ],
+          "parameters": [
+            [
+              "额定电压",
+              "21V"
+            ],
+            [
+              "电机转速",
+              "10,500 rpm"
+            ],
+            [
+              "最大切割直径",
+              "300 mm"
+            ],
+            [
+              "最大功率",
+              "700 W"
+            ],
+            [
+              "电机类型",
+              "有刷"
+            ]
+          ],
+          "applications": [
+            "草坪边缘整理",
+            "围栏与树木周边修剪",
+            "家庭庭院维护"
+          ]
+        },
+        {
+          "model": "JY-LM2602",
+          "name": "无刷锂电割草机",
+          "image": "assets/series/trimmer-lm2602.webp",
+          "specs": [
+            "21V",
+            "19,500 rpm",
+            "850 W"
+          ],
+          "parameters": [
+            [
+              "额定电压",
+              "21V"
+            ],
+            [
+              "电机转速",
+              "19,500 rpm"
+            ],
+            [
+              "最大切割直径",
+              "300 mm"
+            ],
+            [
+              "最大功率",
+              "850 W"
+            ],
+            [
+              "电机类型",
+              "无刷"
+            ]
+          ],
+          "applications": [
+            "草坪边缘整理",
+            "围栏与树木周边修剪",
+            "家庭庭院维护"
+          ]
+        },
+        {
+          "model": "JY-LM2401",
+          "name": "轻量锂电割草机",
+          "image": "assets/series/trimmer-lm2401.webp",
+          "specs": [
+            "21V",
+            "10,500 rpm",
+            "700 W"
+          ],
+          "parameters": [
+            [
+              "额定电压",
+              "21V"
+            ],
+            [
+              "电机转速",
+              "10,500 rpm"
+            ],
+            [
+              "最大切割直径",
+              "300 mm"
+            ],
+            [
+              "最大功率",
+              "700 W"
+            ],
+            [
+              "电机类型",
+              "有刷"
+            ]
+          ],
+          "applications": [
+            "草坪边缘整理",
+            "围栏与树木周边修剪",
+            "家庭庭院维护"
+          ]
+        },
+        {
+          "model": "JY-LM2402",
+          "name": "无刷割草机",
+          "image": "assets/series/trimmer-lm2402.webp",
+          "specs": [
+            "21V",
+            "19,500 rpm",
+            "850 W"
+          ],
+          "parameters": [
+            [
+              "额定电压",
+              "21V"
+            ],
+            [
+              "电机转速",
+              "19,500 rpm"
+            ],
+            [
+              "最大切割直径",
+              "300 mm"
+            ],
+            [
+              "最大功率",
+              "850 W"
+            ],
+            [
+              "电机类型",
+              "无刷"
+            ]
+          ],
+          "applications": [
+            "草坪边缘整理",
+            "围栏与树木周边修剪",
+            "家庭庭院维护"
+          ]
+        }
+      ],
+      "featured": null
+    },
+    {
+      "id": "hedge",
+      "order": 3,
+      "year": "2026",
+      "cardLayout": "standard",
+      "cardLabel": "Hedge Trimming",
+      "name": "绿篱机系列",
+      "model": "JY-HT SERIES",
+      "category": "Hedge Trimming / 绿篱系统",
+      "image": "assets/series/hedge-compact.webp",
+      "summary": "以紧凑型修剪头与长刀片无刷机型组成独立绿篱产品线，覆盖局部整形、灌木维护与连续绿篱修剪。",
+      "featureTitle": "从精细整形到长距离修剪，形成完整绿篱解决方案。",
+      "description": "紧凑型机身适合灌木轮廓和细节修整，20 英寸无刷机型提供更大的作业覆盖。两款产品均采用 21V 锂电平台，兼顾机动性与维护便利。",
+      "specs": [
+        [
+          "额定电压",
+          "21V"
+        ],
+        [
+          "产品数量",
+          "2 款"
+        ],
+        [
+          "最高冲程",
+          "1,500 SPM"
+        ],
+        [
+          "最长刀片",
+          "480 mm"
+        ],
+        [
+          "电机",
+          "有刷 / 无刷"
+        ],
+        [
+          "应用",
+          "灌木 / 绿篱"
+        ]
+      ],
+      "uses": [
+        "庭院绿篱整形",
+        "灌木细节修剪",
+        "连续绿篱维护"
+      ],
+      "series": [
+        {
+          "model": "JY-HT2401",
+          "name": "紧凑型绿篱机",
+          "image": "assets/series/hedge-compact.webp",
+          "specs": [
+            "21V",
+            "1250 SPM",
+            "130 / 220 mm"
+          ],
+          "description": "双刀头组合面向灌木轮廓、草边和局部细节修整。短机身便于单手控制，也更容易进入枝叶密集区域。",
+          "parameters": [
+            [
+              "额定电压",
+              "21V"
+            ],
+            [
+              "冲程速度",
+              "1,250 SPM"
+            ],
+            [
+              "切割宽度",
+              "130 mm"
+            ],
+            [
+              "刀片长度",
+              "220 mm"
+            ],
+            [
+              "电机类型",
+              "有刷"
+            ]
+          ],
+          "applications": [
+            "庭院绿篱整形",
+            "灌木细节修剪",
+            "连续绿篱维护"
+          ]
+        },
+        {
+          "model": "JY-HT2601",
+          "name": "20″ 锂电绿篱机",
+          "image": "assets/series/hedge-20.webp",
+          "specs": [
+            "21V",
+            "1500 SPM",
+            "480 mm"
+          ],
+          "description": "480 mm 长刀片适合连续绿篱的快速整形。环形辅助手柄提供多角度握持，兼顾覆盖效率与操控稳定性。",
+          "parameters": [
+            [
+              "额定电压",
+              "21V"
+            ],
+            [
+              "冲程速度",
+              "1,500 SPM"
+            ],
+            [
+              "刀片长度",
+              "480 mm"
+            ],
+            [
+              "电机类型",
+              "有刷"
+            ]
+          ],
+          "applications": [
+            "庭院绿篱整形",
+            "灌木细节修剪",
+            "连续绿篱维护"
+          ]
+        }
+      ],
+      "featured": null
+    },
+    {
+      "id": "mower",
+      "order": 4,
+      "year": "2026",
+      "cardLayout": "full",
+      "cardLabel": "Smart Lawn",
+      "name": "智能割草机器人",
+      "model": "VISUAL + RTK",
+      "category": "Smart Lawn / 智能草坪",
+      "image": "assets/mower.webp",
+      "summary": "视觉识别与 RTK 定位双系统协同，实现无边界割草、区域管理、智能避障和 App 控制。",
+      "featureTitle": "看见边界，理解环境，自主完成草坪养护。",
+      "description": "双目视觉识别与厘米级 RTK 定位共同建立工作区域，支持多区域任务规划和七类对象识别。无需铺设传统边界线，降低安装与后期调整成本。",
+      "specs": [
+        [
+          "导航系统",
+          "Visual + RTK"
+        ],
+        [
+          "边界方式",
+          "无边界"
+        ],
+        [
+          "剪草高度",
+          "25–70 mm"
+        ],
+        [
+          "工作速度",
+          "40 × 20 cm/s"
+        ],
+        [
+          "续航覆盖",
+          "700㎡ / 4Ah"
+        ],
+        [
+          "控制方式",
+          "App / 区域管理"
+        ]
+      ],
+      "uses": [
+        "独立住宅草坪",
+        "景观庭院",
+        "多区域草坪管理"
+      ],
+      "series": [
+        {
+          "model": "VISUAL + RTK",
+          "name": "双系统智能割草机器人",
+          "image": "assets/mower.webp",
+          "specs": [
+            "视觉 + RTK",
+            "25–70 mm",
+            "700㎡ / 4Ah"
+          ],
+          "parameters": [
+            [
+              "导航系统",
+              "Visual + RTK 双系统"
+            ],
+            [
+              "识别能力",
+              "7 类对象识别"
+            ],
+            [
+              "边界方式",
+              "无边界 / 无需 RTK 配件"
+            ],
+            [
+              "剪草高度",
+              "25–70 mm"
+            ],
+            [
+              "作业效率",
+              "40 × 20 cm/s"
+            ],
+            [
+              "续航覆盖",
+              "700㎡ / 4Ah"
+            ],
+            [
+              "控制方式",
+              "App / 区域管理"
+            ]
+          ],
+          "applications": [
+            "独立住宅草坪",
+            "景观庭院",
+            "多区域草坪管理"
+          ]
+        }
+      ],
+      "featured": {
+        "image": "assets/mower-scene-clean.png",
+        "meta": "Visual + RTK",
+        "kicker": "无边界 · 区域管理 · App 控制",
+        "headline": "看见边界，自主完成草坪养护。",
+        "features": [
+          "厘米级定位",
+          "智能避障",
+          "边界识别"
+        ]
+      }
+    },
+    {
+      "id": "pole",
+      "order": 5,
+      "year": "2026",
+      "cardLayout": "wide",
+      "cardLabel": "Elevated Work",
+      "name": "高空作业系列",
+      "model": "JY-POLE SERIES",
+      "category": "Elevated Work / 高空作业",
+      "image": "assets/series/pole-saw.webp",
+      "summary": "由延长杆、高枝锯和高枝绿篱机组成的 21V 高空维护方案，覆盖树冠修枝与高位绿篱整形。",
+      "featureTitle": "把地面上的稳定操控，延伸到更高的作业位置。",
+      "description": "模块化长杆结构降低登高作业频率，可调角度帮助刀头贴合不同枝条和绿篱方向；同一 21V 电池平台让多种高空任务快速切换。",
+      "specs": [
+        [
+          "额定电压",
+          "21V"
+        ],
+        [
+          "系列产品",
+          "3 款"
+        ],
+        [
+          "最长杆长",
+          "2.5 m"
+        ],
+        [
+          "最高链速",
+          "7 m/s"
+        ],
+        [
+          "最高功率",
+          "800 W"
+        ],
+        [
+          "刀头",
+          "锯链 / 绿篱刀"
+        ]
+      ],
+      "uses": [
+        "果树与树冠修枝",
+        "高位绿篱整形",
+        "庭院高空维护"
+      ],
+      "series": [
+        {
+          "model": "JY-CH0702",
+          "name": "延长杆系统",
+          "image": "assets/series/pole-extension.webp",
+          "specs": [
+            "21V",
+            "7 m/s",
+            "2 / 2.5 m"
+          ],
+          "description": "可伸缩长杆与角度可调刀头，将迷你链锯的灵活性延伸到树冠位置，适合家庭庭院中的高枝修剪。",
+          "parameters": [
+            [
+              "额定电压",
+              "21V"
+            ],
+            [
+              "链速",
+              "7 m/s"
+            ],
+            [
+              "电机转速",
+              "20,000 rpm"
+            ],
+            [
+              "最大功率",
+              "800 W"
+            ],
+            [
+              "杆长",
+              "2 / 2.5 m"
+            ]
+          ],
+          "applications": [
+            "果树与树冠修枝",
+            "高位绿篱整形",
+            "庭院高空维护"
+          ]
+        },
+        {
+          "model": "JY-PCH01",
+          "name": "锂电高枝锯",
+          "image": "assets/series/pole-saw.webp",
+          "specs": [
+            "21V",
+            "7 m/s",
+            "20,000 rpm",
+            "800 W",
+            "150 / 200 mm"
+          ],
+          "description": "高转速电机与 150 / 200 mm 切割配置兼顾通过性和切割效率，可调角度结构让使用者从地面完成不同方向的树枝处理。",
+          "parameters": [
+            [
+              "额定电压",
+              "21V"
+            ],
+            [
+              "最大切割直径",
+              "150 / 200 mm"
+            ],
+            [
+              "电机转速",
+              "20,000 rpm"
+            ],
+            [
+              "链速",
+              "7 m/s"
+            ],
+            [
+              "最大功率",
+              "800 W"
+            ]
+          ],
+          "applications": [
+            "果树与树冠修枝",
+            "高位绿篱整形",
+            "庭院高空维护"
+          ]
+        },
+        {
+          "model": "JY-PHT01",
+          "name": "锂电高枝绿篱机",
+          "image": "assets/series/pole-trimmer.webp",
+          "specs": [
+            "21V",
+            "1,500 SPM",
+            "400 mm",
+            "500 W"
+          ],
+          "description": "400 mm 刀片与多角度刀头适合高位绿篱的顶部和侧面整形，长杆结构扩大作业范围并减少反复移动。",
+          "parameters": [
+            [
+              "额定电压",
+              "21V"
+            ],
+            [
+              "冲程速度",
+              "1,500 SPM"
+            ],
+            [
+              "最大切割直径",
+              "400 mm"
+            ],
+            [
+              "最大功率",
+              "500 W"
+            ]
+          ],
+          "applications": [
+            "果树与树冠修枝",
+            "高位绿篱整形",
+            "庭院高空维护"
+          ]
+        }
+      ],
+      "featured": null
+    },
+    {
+      "id": "drill",
+      "order": 6,
+      "year": "2026",
+      "cardLayout": "standard",
+      "cardLabel": "Cordless Drilling",
+      "name": "锂电钻系列",
+      "model": "JY-ED24 SERIES",
+      "category": "Cordless Drilling / 锂电钻",
+      "image": "assets/series/drill-ed2402.png",
+      "summary": "有刷与无刷双版本覆盖安装、装配和日常维护，让 21V 电池平台延伸至通用工具场景。",
+      "featureTitle": "从园林维护到安装装配，共用一套无绳动力平台。",
+      "description": "双速调节覆盖拧紧与钻孔任务，紧凑握持结构便于长时间操作；无刷版本进一步提升扭矩、效率和耐久性。",
+      "specs": [
+        [
+          "额定电压",
+          "21V"
+        ],
+        [
+          "系列产品",
+          "2 款"
+        ],
+        [
+          "转速",
+          "450 / 1,500 rpm"
+        ],
+        [
+          "最大扭矩",
+          "20 / 30 N·m"
+        ],
+        [
+          "最大功率",
+          "500 / 700 W"
+        ],
+        [
+          "电机",
+          "有刷 / 无刷"
+        ]
+      ],
+      "uses": [
+        "设备安装与装配",
+        "庭院设施维护",
+        "家庭日常维修"
+      ],
+      "series": [
+        {
+          "model": "JY-ED2401",
+          "name": "有刷锂电钻",
+          "image": "assets/series/drill-ed2401.png",
+          "specs": [
+            "21V",
+            "450 / 1,500 rpm",
+            "20 N·m",
+            "500 W"
+          ],
+          "description": "双速有刷方案满足日常钻孔和紧固需求，结构简洁、使用直观，适合高频基础安装与维修。",
+          "parameters": [
+            [
+              "额定电压",
+              "21V"
+            ],
+            [
+              "电机转速",
+              "450 / 1,500 rpm"
+            ],
+            [
+              "最大扭矩",
+              "20 N·m"
+            ],
+            [
+              "最大功率",
+              "500 W"
+            ],
+            [
+              "电机类型",
+              "有刷"
+            ]
+          ],
+          "applications": [
+            "设备安装与装配",
+            "庭院设施维护",
+            "家庭日常维修"
+          ]
+        },
+        {
+          "model": "JY-ED2402",
+          "name": "无刷锂电钻",
+          "image": "assets/series/drill-ed2402.png",
+          "specs": [
+            "21V",
+            "450 / 1,500 rpm",
+            "30 N·m",
+            "700 W"
+          ],
+          "description": "无刷电机将最大扭矩提升至 30 N·m，并以更高效率和更低维护需求应对强度更高的装配任务。",
+          "parameters": [
+            [
+              "额定电压",
+              "21V"
+            ],
+            [
+              "电机转速",
+              "450 / 1,500 rpm"
+            ],
+            [
+              "最大扭矩",
+              "30 N·m"
+            ],
+            [
+              "最大功率",
+              "700 W"
+            ],
+            [
+              "电机类型",
+              "无刷"
+            ]
+          ],
+          "applications": [
+            "设备安装与装配",
+            "庭院设施维护",
+            "家庭日常维修"
+          ]
+        }
+      ],
+      "featured": null
+    },
+    {
+      "id": "precision",
+      "order": 7,
+      "year": "2026",
+      "cardLayout": "standard",
+      "cardLabel": "Precision Cutting",
+      "name": "精细切割工具",
+      "model": "JY-EC / EP SERIES",
+      "category": "Precision Cutting / 精细切割",
+      "image": "assets/series/pruner-ep2501.png",
+      "summary": "纸板切割机与电动修枝剪组成轻型精细切割组合，覆盖包装材料和园艺枝条处理。",
+      "featureTitle": "更轻巧的机身，处理更细致的切割任务。",
+      "description": "两款工具分别针对纸板与园艺枝条设计，强调单手操控、快速响应和便携使用，让精细切割任务更省力。",
+      "specs": [
+        [
+          "系列产品",
+          "2 款"
+        ],
+        [
+          "电压平台",
+          "3.6–4.2V / 21V"
+        ],
+        [
+          "最高转速",
+          "350 rpm"
+        ],
+        [
+          "最大剪切直径",
+          "30 mm"
+        ],
+        [
+          "最大功率",
+          "450 W"
+        ],
+        [
+          "用途",
+          "纸板 / 园艺枝条"
+        ]
+      ],
+      "uses": [
+        "包装纸板与瓦楞材料切割",
+        "果树和灌木枝条修剪",
+        "家庭与轻型专业维护"
+      ],
+      "series": [
+        {
+          "model": "JY-EC2601",
+          "name": "电动纸板切割机",
+          "image": "assets/series/cardboard-cutter-ec2601.png",
+          "specs": [
+            "3.6–4.2V",
+            "2–3A",
+            "350 rpm",
+            "有刷"
+          ],
+          "parameters": [
+            [
+              "额定电压",
+              "3.6–4.2V"
+            ],
+            [
+              "空载电流",
+              "2–3A"
+            ],
+            [
+              "电机转速",
+              "350 rpm"
+            ],
+            [
+              "电机类型",
+              "有刷"
+            ]
+          ],
+          "applications": [
+            "瓦楞纸板裁切",
+            "包装材料拆解",
+            "轻型手工作业"
+          ],
+          "description": "紧凑式圆刀结构面向纸板与包装材料的连续裁切，机身便于单手握持，可减少传统手工刀具反复用力。"
+        },
+        {
+          "model": "JY-EP2501",
+          "name": "电动修枝剪",
+          "image": "assets/series/pruner-ep2501.png",
+          "specs": [
+            "21V",
+            "2.5–3A",
+            "30 mm",
+            "450 W"
+          ],
+          "parameters": [
+            [
+              "额定电压",
+              "21V"
+            ],
+            [
+              "空载电流",
+              "2.5–3A"
+            ],
+            [
+              "最大剪切直径",
+              "30 mm"
+            ],
+            [
+              "最大功率",
+              "450 W"
+            ],
+            [
+              "动力系统",
+              "无刷"
+            ]
+          ],
+          "applications": [
+            "果树枝条修剪",
+            "灌木整形",
+            "庭院绿植维护"
+          ],
+          "description": "30 mm 最大剪切直径配合 21V 锂电平台，适合果树、灌木和庭院枝条的快速修剪，降低重复握剪带来的疲劳。"
+        }
+      ],
+      "featured": null
+    },
+    {
+      "id": "cultivator",
+      "order": 8,
+      "year": "2026",
+      "cardLayout": "standard",
+      "cardLabel": "Soil Cultivation",
+      "name": "锂电松土机系列",
+      "model": "JY-TC2501",
+      "category": "Soil Cultivation / 土壤耕作",
+      "image": "assets/series/cultivator-brushless.webp",
+      "summary": "有刷与无刷双版本面向花圃翻土、土壤松动和种植准备，形成独立的锂电耕作系列。",
+      "featureTitle": "从硬土松动到种植准备，让庭院耕作更轻便。",
+      "description": "340 rpm 输出配合 160 / 210 mm 耕深配置，在家庭花圃和小型种植区域中兼顾通过性、翻土效率与操控稳定性。",
+      "specs": [
+        [
+          "额定电压",
+          "21V"
+        ],
+        [
+          "电机转速",
+          "340 rpm"
+        ],
+        [
+          "耕作深度",
+          "160 / 210 mm"
+        ],
+        [
+          "耕作宽度",
+          "230 mm"
+        ],
+        [
+          "最大功率",
+          "600 / 800 W"
+        ],
+        [
+          "电机",
+          "有刷 / 无刷"
+        ]
+      ],
+      "uses": [
+        "花圃与菜园松土",
+        "种植前土壤准备",
+        "小型庭院地块维护"
+      ],
+      "series": [
+        {
+          "model": "JY-TC2501",
+          "name": "锂电松土机（有刷）",
+          "image": "assets/series/cultivator-brushed.webp",
+          "specs": [
+            "21V",
+            "340 rpm",
+            "160 × 230 mm",
+            "600 W"
+          ],
+          "parameters": [
+            [
+              "额定电压",
+              "21V"
+            ],
+            [
+              "电机转速",
+              "340 rpm"
+            ],
+            [
+              "耕作深度 × 宽度",
+              "160 × 230 mm"
+            ],
+            [
+              "最大功率",
+              "600 W"
+            ],
+            [
+              "电机类型",
+              "有刷"
+            ]
+          ],
+          "applications": [
+            "花圃表层松土",
+            "小型菜园整地",
+            "种植前土壤翻松"
+          ],
+          "description": "有刷版本以 600 W 最大功率覆盖日常花圃和家庭菜园松土，结构直接、操控轻便，适合常规庭院耕作。"
+        },
+        {
+          "model": "JY-TC2501",
+          "name": "锂电松土机（无刷）",
+          "image": "assets/series/cultivator-brushless.webp",
+          "specs": [
+            "21V",
+            "340 rpm",
+            "210 × 230 mm",
+            "800 W"
+          ],
+          "parameters": [
+            [
+              "额定电压",
+              "21V"
+            ],
+            [
+              "电机转速",
+              "340 rpm"
+            ],
+            [
+              "耕作深度 × 宽度",
+              "210 × 230 mm"
+            ],
+            [
+              "最大功率",
+              "800 W"
+            ],
+            [
+              "电机类型",
+              "无刷"
+            ]
+          ],
+          "applications": [
+            "较深土层松动",
+            "菜园与种植区整地",
+            "连续庭院耕作"
+          ],
+          "description": "无刷版本将最大功率提升至 800 W，并提供 210 × 230 mm 耕作范围，适合更深土层和强度更高的连续整地任务。"
+        }
+      ],
+      "featured": null
+    },
+    {
+      "id": "snow",
+      "order": 9,
+      "year": "2026",
+      "cardLayout": "standard",
+      "cardLabel": "All Season",
+      "name": "无刷锂电除雪机",
+      "model": "JY-SS2601",
+      "category": "All Season / 全季节工具",
+      "image": "assets/snow-shovel.webp",
+      "summary": "40V 无刷动力覆盖门前车道与步道积雪，让锂电平台从绿地延伸至冬季。",
+      "featureTitle": "更轻便的冬季清理，不再依赖燃油设备。",
+      "description": "紧凑结构兼顾推行灵活性与抛雪能力，适合住宅周边日常积雪处理；电量显示便于实时掌握剩余作业时间。",
+      "specs": [
+        [
+          "额定电压",
+          "40V"
+        ],
+        [
+          "输出转速",
+          "2,600 rpm"
+        ],
+        [
+          "除雪深度",
+          "17 cm"
+        ],
+        [
+          "除雪宽度",
+          "40 cm"
+        ],
+        [
+          "最大功率",
+          "3,400 W"
+        ],
+        [
+          "电机",
+          "无刷"
+        ]
+      ],
+      "uses": [
+        "住宅车道清雪",
+        "庭院步道维护",
+        "门廊与露台清理"
+      ],
+      "series": [
+        {
+          "model": "JY-SS2601",
+          "name": "40V 无刷除雪机",
+          "image": "assets/series/snow-shovel.webp",
+          "specs": [
+            "40V",
+            "2,600 rpm",
+            "17 × 40 cm",
+            "3,400 W",
+            "无刷"
+          ],
+          "parameters": [
+            [
+              "额定电压",
+              "40V"
+            ],
+            [
+              "输出转速",
+              "2,600 rpm"
+            ],
+            [
+              "除雪深度 × 宽度",
+              "17 × 40 cm"
+            ],
+            [
+              "最大功率",
+              "3,400 W"
+            ],
+            [
+              "电机类型",
+              "无刷"
+            ]
+          ],
+          "applications": [
+            "住宅车道清雪",
+            "庭院步道维护",
+            "门廊与露台清理"
+          ]
+        }
+      ],
+      "featured": {
+        "image": "assets/snow-scene-original.png",
+        "meta": "40V · 3400W",
+        "kicker": "17 × 40 cm 除雪范围",
+        "headline": "从绿地，工作到雪季。",
+        "features": []
+      }
+    },
+    {
+      "id": "washer",
+      "order": 10,
+      "year": "2026",
+      "cardLayout": "standard",
+      "cardLabel": "Cleaning System",
+      "name": "锂电清洗机",
+      "model": "JY-WG2601",
+      "category": "Cleaning System / 清洁系统",
+      "image": "assets/washer.webp",
+      "summary": "便携式取水与多档喷型设计，为车辆、庭院家具和户外装备提供随时可用的清洗能力。",
+      "featureTitle": "摆脱固定水源，把清洁带到需要的地方。",
+      "description": "无刷电机配合六档喷型，在便携性与清洁力之间取得平衡；数字显示让压力和电量状态更直观。",
+      "specs": [
+        [
+          "额定电压",
+          "21V"
+        ],
+        [
+          "电机转速",
+          "24,000 rpm"
+        ],
+        [
+          "最大功率",
+          "500 W"
+        ],
+        [
+          "最大压力",
+          "4 Bar"
+        ],
+        [
+          "电机",
+          "无刷"
+        ],
+        [
+          "喷型",
+          "6 in 1"
+        ]
+      ],
+      "uses": [
+        "车辆与自行车清洗",
+        "庭院家具维护",
+        "露营与户外装备清洁"
+      ],
+      "series": [
+        {
+          "model": "JY-WG2201",
+          "name": "便携式锂电清洗机",
+          "image": "assets/series/washer-wg2201.webp",
+          "specs": [
+            "21V",
+            "2 Bar",
+            "5 L/min"
+          ],
+          "parameters": [
+            [
+              "额定电压",
+              "21V"
+            ],
+            [
+              "电机转速",
+              "20,000 rpm"
+            ],
+            [
+              "最大压力",
+              "2 Bar"
+            ],
+            [
+              "喷射范围",
+              "20 m / 2 m（高位）"
+            ],
+            [
+              "最大流量",
+              "5 L/min"
+            ],
+            [
+              "电机类型",
+              "有刷"
+            ]
+          ],
+          "applications": [
+            "车辆与自行车清洗",
+            "庭院家具维护",
+            "露营与户外装备清洁"
+          ]
+        },
+        {
+          "model": "JY-WG2301",
+          "name": "多喷型锂电清洗机",
+          "image": "assets/series/washer-wg2301.webp",
+          "specs": [
+            "21V",
+            "2 Bar",
+            "5 L/min"
+          ],
+          "parameters": [
+            [
+              "额定电压",
+              "21V"
+            ],
+            [
+              "电机转速",
+              "20,000 rpm"
+            ],
+            [
+              "最大压力",
+              "2 Bar"
+            ],
+            [
+              "喷射范围",
+              "20 m / 2 m（高位）"
+            ],
+            [
+              "最大流量",
+              "5 L/min"
+            ],
+            [
+              "电机类型",
+              "有刷"
+            ]
+          ],
+          "applications": [
+            "车辆与自行车清洗",
+            "庭院家具维护",
+            "露营与户外装备清洁"
+          ]
+        },
+        {
+          "model": "JY-WG2601",
+          "name": "无刷锂电清洗机",
+          "image": "assets/series/washer-wg2601.webp",
+          "specs": [
+            "21V",
+            "4 Bar",
+            "500 W"
+          ],
+          "parameters": [
+            [
+              "额定电压",
+              "21V"
+            ],
+            [
+              "电机转速",
+              "24,000 rpm"
+            ],
+            [
+              "最大功率",
+              "500 W"
+            ],
+            [
+              "最大压力",
+              "4 Bar"
+            ],
+            [
+              "电机类型",
+              "无刷"
+            ]
+          ],
+          "applications": [
+            "车辆与自行车清洗",
+            "庭院家具维护",
+            "露营与户外装备清洁"
+          ]
+        }
+      ],
+      "featured": null
+    }
+  ],
+  "featuredProductIds": [
+    "mower",
+    "chainsaw",
+    "snow"
+  ],
+  "galleries": {
+    "exhibition": {
+      "title": "展会现场",
+      "mode": "accordion",
+      "items": [
+        {
+          "id": "exhibition-01",
+          "type": "image",
+          "url": "assets/about-gallery-v1/exhibition/exhibition-01.jpg",
+          "alt": "展会现场 01",
+          "orientation": "landscape"
+        },
+        {
+          "id": "exhibition-02",
+          "type": "image",
+          "url": "assets/about-gallery-v1/exhibition/exhibition-02.jpg",
+          "alt": "展会现场 02",
+          "orientation": "landscape"
+        },
+        {
+          "id": "exhibition-03",
+          "type": "image",
+          "url": "assets/about-gallery-v1/exhibition/exhibition-03.jpg",
+          "alt": "展会现场 03",
+          "orientation": "landscape"
+        },
+        {
+          "id": "exhibition-04",
+          "type": "image",
+          "url": "assets/about-gallery-v1/exhibition/exhibition-04.jpg",
+          "alt": "展会现场 04",
+          "orientation": "landscape"
+        },
+        {
+          "id": "exhibition-05",
+          "type": "image",
+          "url": "assets/about-gallery-v1/exhibition/exhibition-05.jpg",
+          "alt": "展会现场 05",
+          "orientation": "landscape"
+        },
+        {
+          "id": "exhibition-06",
+          "type": "image",
+          "url": "assets/about-gallery-v1/exhibition/exhibition-06.jpg",
+          "alt": "展会现场 06",
+          "orientation": "landscape"
+        },
+        {
+          "id": "exhibition-07",
+          "type": "image",
+          "url": "assets/about-gallery-v1/exhibition/exhibition-07.jpg",
+          "alt": "展会现场 07",
+          "orientation": "landscape"
+        },
+        {
+          "id": "exhibition-08",
+          "type": "image",
+          "url": "assets/about-gallery-v1/exhibition/exhibition-08.jpg",
+          "alt": "展会现场 08",
+          "orientation": "landscape"
+        },
+        {
+          "id": "exhibition-09",
+          "type": "image",
+          "url": "assets/about-gallery-v1/exhibition/exhibition-09.jpg",
+          "alt": "展会现场 09",
+          "orientation": "landscape"
+        },
+        {
+          "id": "exhibition-10",
+          "type": "image",
+          "url": "assets/about-gallery-v1/exhibition/exhibition-10.jpg",
+          "alt": "展会现场 10",
+          "orientation": "landscape"
+        }
+      ]
+    },
+    "factory": {
+      "title": "工厂与设备",
+      "mode": "depth",
+      "items": [
+        {
+          "id": "factory-01",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-01.jpg",
+          "alt": "工厂与设备 01",
+          "orientation": "landscape"
+        },
+        {
+          "id": "factory-02",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-02.jpg",
+          "alt": "工厂与设备 02",
+          "orientation": "landscape"
+        },
+        {
+          "id": "factory-03",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-03.jpg",
+          "alt": "工厂与设备 03",
+          "orientation": "portrait"
+        },
+        {
+          "id": "factory-04",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-04.jpg",
+          "alt": "工厂与设备 04",
+          "orientation": "landscape"
+        },
+        {
+          "id": "factory-05",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-05.jpg",
+          "alt": "工厂与设备 05",
+          "orientation": "landscape"
+        },
+        {
+          "id": "factory-06",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-06.jpg",
+          "alt": "工厂与设备 06",
+          "orientation": "landscape"
+        },
+        {
+          "id": "factory-07",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-07.jpg",
+          "alt": "工厂与设备 07",
+          "orientation": "landscape"
+        },
+        {
+          "id": "factory-08",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-08.jpg",
+          "alt": "工厂与设备 08",
+          "orientation": "landscape"
+        },
+        {
+          "id": "factory-09",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-09.jpg",
+          "alt": "工厂与设备 09",
+          "orientation": "landscape"
+        },
+        {
+          "id": "factory-10",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-10.jpg",
+          "alt": "工厂与设备 10",
+          "orientation": "portrait"
+        },
+        {
+          "id": "factory-11",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-11.jpg",
+          "alt": "工厂与设备 11",
+          "orientation": "portrait"
+        },
+        {
+          "id": "factory-12",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-12.jpg",
+          "alt": "工厂与设备 12",
+          "orientation": "portrait"
+        },
+        {
+          "id": "factory-13",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-13.jpg",
+          "alt": "工厂与设备 13",
+          "orientation": "portrait"
+        },
+        {
+          "id": "factory-14",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-14.jpg",
+          "alt": "工厂与设备 14",
+          "orientation": "landscape"
+        },
+        {
+          "id": "factory-15",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-15.jpg",
+          "alt": "工厂与设备 15",
+          "orientation": "landscape"
+        },
+        {
+          "id": "factory-16",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-16.jpg",
+          "alt": "工厂与设备 16",
+          "orientation": "landscape"
+        },
+        {
+          "id": "factory-17",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-17.jpg",
+          "alt": "工厂与设备 17",
+          "orientation": "landscape"
+        },
+        {
+          "id": "factory-18",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-18.jpg",
+          "alt": "工厂与设备 18",
+          "orientation": "landscape"
+        },
+        {
+          "id": "factory-19",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-19.jpg",
+          "alt": "工厂与设备 19",
+          "orientation": "landscape"
+        },
+        {
+          "id": "factory-20",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-20.jpg",
+          "alt": "工厂与设备 20",
+          "orientation": "landscape"
+        },
+        {
+          "id": "factory-21",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-21.jpg",
+          "alt": "工厂与设备 21",
+          "orientation": "landscape"
+        },
+        {
+          "id": "factory-22",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-22.jpg",
+          "alt": "工厂与设备 22",
+          "orientation": "landscape"
+        },
+        {
+          "id": "factory-23",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-23.jpg",
+          "alt": "工厂与设备 23",
+          "orientation": "landscape"
+        },
+        {
+          "id": "factory-24",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-24.jpg",
+          "alt": "工厂与设备 24",
+          "orientation": "landscape"
+        },
+        {
+          "id": "factory-25",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-25.jpg",
+          "alt": "工厂与设备 25",
+          "orientation": "landscape"
+        },
+        {
+          "id": "factory-26",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-26.jpg",
+          "alt": "工厂与设备 26",
+          "orientation": "portrait"
+        },
+        {
+          "id": "factory-27",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-27.jpg",
+          "alt": "工厂与设备 27",
+          "orientation": "portrait"
+        },
+        {
+          "id": "factory-28",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-28.jpg",
+          "alt": "工厂与设备 28",
+          "orientation": "landscape"
+        },
+        {
+          "id": "factory-29",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-29.jpg",
+          "alt": "工厂与设备 29",
+          "orientation": "portrait"
+        },
+        {
+          "id": "factory-30",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-30.jpg",
+          "alt": "工厂与设备 30",
+          "orientation": "portrait"
+        },
+        {
+          "id": "factory-31",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-31.jpg",
+          "alt": "工厂与设备 31",
+          "orientation": "portrait"
+        },
+        {
+          "id": "factory-32",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-32.jpg",
+          "alt": "工厂与设备 32",
+          "orientation": "landscape"
+        },
+        {
+          "id": "factory-33",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-33.jpg",
+          "alt": "工厂与设备 33",
+          "orientation": "portrait"
+        },
+        {
+          "id": "factory-34",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-34.jpg",
+          "alt": "工厂与设备 34",
+          "orientation": "portrait"
+        },
+        {
+          "id": "factory-35",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-35.jpg",
+          "alt": "工厂与设备 35",
+          "orientation": "portrait"
+        },
+        {
+          "id": "factory-36",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-36.jpg",
+          "alt": "工厂与设备 36",
+          "orientation": "landscape"
+        },
+        {
+          "id": "factory-37",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-37.jpg",
+          "alt": "工厂与设备 37",
+          "orientation": "portrait"
+        },
+        {
+          "id": "factory-38",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-38.jpg",
+          "alt": "工厂与设备 38",
+          "orientation": "landscape"
+        },
+        {
+          "id": "factory-39",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-39.jpg",
+          "alt": "工厂与设备 39",
+          "orientation": "landscape"
+        },
+        {
+          "id": "factory-40",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-40.jpg",
+          "alt": "工厂与设备 40",
+          "orientation": "landscape"
+        },
+        {
+          "id": "factory-41",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-41.jpg",
+          "alt": "工厂与设备 41",
+          "orientation": "portrait"
+        },
+        {
+          "id": "factory-50",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-50.jpg",
+          "alt": "工厂与设备 50",
+          "orientation": "landscape"
+        },
+        {
+          "id": "factory-51",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-51.jpg",
+          "alt": "工厂与设备 51",
+          "orientation": "landscape"
+        },
+        {
+          "id": "factory-52",
+          "type": "image",
+          "url": "assets/about-gallery-v1/factory/factory-52.jpg",
+          "alt": "工厂与设备 52",
+          "orientation": "landscape"
+        }
+      ]
+    },
+    "meeting": {
+      "title": "团队会议",
+      "mode": "grid",
+      "items": [
+        {
+          "id": "meeting-01",
+          "type": "image",
+          "url": "assets/about-gallery-v1/meeting/meeting-01.jpg",
+          "alt": "团队会议 01",
+          "orientation": "landscape"
+        }
+      ]
+    },
+    "rd": {
+      "title": "研发日常",
+      "mode": "grid",
+      "items": [
+        {
+          "id": "rd-01",
+          "type": "image",
+          "url": "assets/about-gallery-v1/rd/rd-01.jpg",
+          "alt": "研发日常 01",
+          "orientation": "landscape"
+        },
+        {
+          "id": "rd-02",
+          "type": "image",
+          "url": "assets/about-gallery-v1/rd/rd-02.jpg",
+          "alt": "研发日常 02",
+          "orientation": "landscape"
+        },
+        {
+          "id": "rd-03",
+          "type": "image",
+          "url": "assets/about-gallery-v1/rd/rd-03.jpg",
+          "alt": "研发日常 03",
+          "orientation": "landscape"
+        }
+      ]
+    }
+  },
+  "contact": {
+    "eyebrowLeft": "Let’s build the next tool.",
+    "eyebrowRight": "全球合作 / OEM · ODM",
+    "title": "下一款工具，",
+    "accentTitle": "从一次对话开始。",
+    "email": "sales@jiayipower.com",
+    "secondaryEmail": "jiayilithiumpowertools@outlook.com",
+    "phone": "+86 137 7306 1153",
+    "whatsapp": "8613773061153",
+    "address": "Yongkang, Zhejiang, China",
+    "streetAddress": "浙江省永康市玉桂路 21 号",
+    "website": "www.jiayipower.com",
+    "wechatLabel": "微信联系",
+    "wechatUrl": "wechat-contact.html",
+    "videoLabel": "官方视频号",
+    "videoUrl": "official-video.html",
+    "officialAccounts": [
+      {
+        "name": "官方账号 01",
+        "description": "Official Channel",
+        "image": ""
+      },
+      {
+        "name": "官方账号 02",
+        "description": "Official Channel",
+        "image": ""
+      },
+      {
+        "name": "官方账号 03",
+        "description": "Official Channel",
+        "image": ""
+      }
+    ]
+  }
+}

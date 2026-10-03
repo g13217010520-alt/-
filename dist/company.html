@@ -83,7 +83,7 @@
           <p>围绕轻量化、无绳化与平台化，形成从家庭修剪到专业户外作业的完整产品组合。</p>
         </div>
 
-        <div class="product-grid">
+        <div class="product-grid" data-cms-product-grid>
           <article class="product-card product-card--wide reveal">
             <a class="card-hit" href="product-detail.html?id=chainsaw" aria-label="查看锂电链锯详细介绍"></a>
             <div class="product-card__meta"><span>01</span><span>Cutting</span></div>
@@ -188,8 +188,8 @@
           <p>研发流程贯穿产品设计、结构优化，以及电机、控制器与金属件的反复匹配；标准化产线、全过程质量控制与一体化供应链，为稳定交付提供支撑。</p>
           <div class="contact-strip">
             <span>Business contact</span>
-            <a href="mailto:sales@jiayipower.com">sales@jiayipower.com</a>
-            <a href="https://wa.me/8613773061153" target="_blank" rel="noreferrer">+86 137 7306 1153</a>
+            <a href="mailto:sales@jiayipower.com" data-cms-business-email>sales@jiayipower.com</a>
+            <a href="https://wa.me/8613773061153" target="_blank" rel="noreferrer" data-cms-business-phone>+86 137 7306 1153</a>
           </div>
         </div>
         <div class="rd-showcase reveal">
@@ -243,7 +243,7 @@
           <p>从林木切割、智能草坪养护到全季节清理，代表产品体现了嘉易对动力、结构与使用体验的综合判断。</p>
         </div>
 
-        <div class="project-stack">
+        <div class="project-stack" data-cms-featured>
           <article class="project-card project-card--mower reveal">
             <a class="project-hit" href="product-detail.html?id=mower" aria-label="查看智能割草机器人详情"></a>
             <img src="assets/mower-scene-clean.png" alt="视觉与 RTK 双系统智能割草机器人在庭院中工作" loading="lazy" />
@@ -304,30 +304,30 @@
       <section class="contact" id="contact" aria-labelledby="contact-title">
         <div class="contact__glow" aria-hidden="true"></div>
         <div class="contact__inner reveal">
-          <div class="contact__label"><span>Let’s build the next tool.</span><span>全球合作 / OEM · ODM</span></div>
-          <h2 id="contact-title">下一款工具，<br /><em>从一次对话开始。</em></h2>
+          <div class="contact__label"><span data-cms-contact-left>Let’s build the next tool.</span><span data-cms-contact-right>全球合作 / OEM · ODM</span></div>
+          <h2 id="contact-title"><span data-cms-contact-title>下一款工具，</span><br /><em data-cms-contact-accent>从一次对话开始。</em></h2>
           <div class="contact__actions">
-            <a class="button button--primary button--large" href="wechat-contact.html">微信联系</a>
-            <a class="button button--ghost button--large" href="official-video.html">官方视频号</a>
+            <a class="button button--primary button--large" href="wechat-contact.html" data-cms-contact-wechat>微信联系</a>
+            <a class="button button--ghost button--large" href="official-video.html" data-cms-contact-video>官方视频号</a>
           </div>
         </div>
         <footer class="footer">
           <a class="brand" href="#main" aria-label="返回顶部"><img class="brand__logo" src="assets/jiayi-logo.svg" alt="JIAYI POWER" /></a>
           <div class="footer__contacts">
-            <a href="mailto:sales@jiayipower.com">sales@jiayipower.com</a>
-            <a href="mailto:jiayilithiumpowertools@outlook.com">jiayilithiumpowertools@outlook.com</a>
+            <a href="mailto:sales@jiayipower.com" data-cms-email>sales@jiayipower.com</a>
+            <a href="mailto:jiayilithiumpowertools@outlook.com" data-cms-email>jiayilithiumpowertools@outlook.com</a>
           </div>
-          <div class="footer__meta"><span>Yongkang, Zhejiang, China</span><span>© 2026 JIAYI POWER</span></div>
+          <div class="footer__meta"><span data-cms-address>Yongkang, Zhejiang, China</span><span>© 2026 JIAYI POWER</span></div>
         </footer>
       </section>
     </main>
     <div class="photo-lightbox" data-photo-lightbox role="dialog" aria-modal="true" aria-label="企业照片放大浏览" hidden>
       <button class="photo-lightbox__close" type="button" data-lightbox-close>关闭 <span aria-hidden="true">×</span></button>
       <button class="photo-lightbox__nav photo-lightbox__nav--prev" type="button" aria-label="上一张照片" data-lightbox-prev>←</button>
-      <figure><img src="" alt="" data-lightbox-image /><figcaption data-lightbox-caption></figcaption></figure>
+      <figure><img src="" alt="" data-lightbox-image /><video src="" controls playsinline data-lightbox-video hidden></video><figcaption data-lightbox-caption></figcaption></figure>
       <button class="photo-lightbox__nav photo-lightbox__nav--next" type="button" aria-label="下一张照片" data-lightbox-next>→</button>
     </div>
-    <script src="app.js" defer></script>
+    <script src="site-content.js" type="module"></script>
     <script src="translations.js" defer></script>
     <script src="language.js" defer></script>
   </body>

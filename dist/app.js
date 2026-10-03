@@ -67,19 +67,35 @@ if (companyGallery) {
   const galleryTabs = Array.from(companyGallery.querySelectorAll("[data-gallery-category]"));
   const lightbox = document.querySelector("[data-photo-lightbox]");
   const lightboxImage = lightbox?.querySelector("[data-lightbox-image]");
+  const lightboxVideo = lightbox?.querySelector("[data-lightbox-video]");
   const lightboxCaption = lightbox?.querySelector("[data-lightbox-caption]");
-  const factorySourceIndices = [...Array.from({ length: 41 }, (_, index) => index + 1), 50, 51, 52];
-  const factoryPortraitSourceIndices = [3, 10, 11, 12, 13, 26, 27, 29, 30, 31, 33, 34, 35, 37, 41];
+  const managedGalleries = window.JIAYI_CONTENT?.galleries || {};
+  const managedFactoryItems = managedGalleries.factory?.items || [];
+  const factorySourceIndices = managedFactoryItems.length
+    ? managedFactoryItems.map((_, index) => index + 1)
+    : [...Array.from({ length: 41 }, (_, index) => index + 1), 50, 51, 52];
+  const factoryPortraitSourceIndices = managedFactoryItems.length
+    ? managedFactoryItems.map((item, index) => item.orientation === "portrait" ? index + 1 : null).filter(Boolean)
+    : [3, 10, 11, 12, 13, 26, 27, 29, 30, 31, 33, 34, 35, 37, 41];
   const factoryGroups = {
     landscape: factorySourceIndices.filter((index) => !factoryPortraitSourceIndices.includes(index)),
     portrait: factoryPortraitSourceIndices,
   };
-  const gallerySets = {
+  const fallbackGallerySets = {
     exhibition: { directory: "exhibition", prefix: "exhibition", count: 10, mode: "accordion" },
     factory: { directory: "factory", prefix: "factory", count: factorySourceIndices.length, sourceIndices: factorySourceIndices, mode: "depth" },
     meeting: { directory: "meeting", prefix: "meeting", count: 1 },
     rd: { directory: "rd", prefix: "rd", count: 3 },
   };
+  const gallerySets = Object.fromEntries(Object.entries(fallbackGallerySets).map(([key, fallback]) => {
+    const managed = managedGalleries[key];
+    return [key, managed ? { ...fallback, ...managed, count: managed.items?.length || 0 } : fallback];
+  }));
+  galleryTabs.forEach((tab) => {
+    const group = gallerySets[tab.dataset.galleryCategory];
+    const title = group?.title;
+    if (title) tab.querySelector("strong").textContent = title;
+  });
   const requestedGallery = new URLSearchParams(window.location.search).get("gallery");
   let activeCategory = gallerySets[requestedGallery] ? requestedGallery : "exhibition";
   let activeIndex = 0;
@@ -96,8 +112,18 @@ if (companyGallery) {
 
   const assetFor = (category, index) => {
     const set = gallerySets[category];
+    if (set.items?.[index]?.url) return set.items[index].url;
     const sourceIndex = set.sourceIndices?.[index] ?? index + 1;
     return `assets/about-gallery-v1/${set.directory}/${set.prefix}-${String(sourceIndex).padStart(2, "0")}.jpg`;
+  };
+
+  const itemFor = (category, index) => gallerySets[category]?.items?.[index] || { type: "image", url: assetFor(category, index) };
+  const mediaMarkup = (category, index, className = "", loading = "lazy") => {
+    const item = itemFor(category, index);
+    const label = item.alt || `${labelFor(category)} ${String(index + 1).padStart(2, "0")}`;
+    return item.type === "video"
+      ? `<video class="${className}" src="${item.url}" aria-label="${label}" muted loop autoplay playsinline preload="metadata"></video>`
+      : `<img class="${className}" src="${item.url}" alt="${label}" loading="${loading}" decoding="async">`;
   };
 
   const labelFor = (category) => galleryTabs.find((tab) => tab.dataset.galleryCategory === category)?.querySelector("strong")?.textContent || "JIAYI";
@@ -105,8 +131,20 @@ if (companyGallery) {
   const showLightboxImage = () => {
     if (!lightboxImage || !lightboxCaption) return;
     const label = labelFor(activeCategory);
-    lightboxImage.src = assetFor(activeCategory, activeIndex);
-    lightboxImage.alt = `${label} ${String(activeIndex + 1).padStart(2, "0")}`;
+    const item = itemFor(activeCategory, activeIndex);
+    const isVideo = item.type === "video";
+    lightboxImage.hidden = isVideo;
+    if (lightboxVideo) lightboxVideo.hidden = !isVideo;
+    if (isVideo && lightboxVideo) {
+      lightboxImage.removeAttribute("src");
+      lightboxVideo.src = item.url;
+      lightboxVideo.play().catch(() => {});
+    } else {
+      lightboxVideo?.pause();
+      lightboxVideo?.removeAttribute("src");
+      lightboxImage.src = item.url || assetFor(activeCategory, activeIndex);
+      lightboxImage.alt = item.alt || `${label} ${String(activeIndex + 1).padStart(2, "0")}`;
+    }
     lightboxCaption.textContent = `${label} · ${String(activeIndex + 1).padStart(2, "0")} / ${gallerySets[activeCategory].count}`;
   };
 
@@ -125,6 +163,8 @@ if (companyGallery) {
     lightbox.hidden = true;
     document.body.classList.remove("photo-lightbox-open");
     lightboxImage?.removeAttribute("src");
+    lightboxVideo?.pause();
+    lightboxVideo?.removeAttribute("src");
     lightboxTrigger?.focus({ preventScroll: true });
   };
 
@@ -262,7 +302,7 @@ if (companyGallery) {
           card.dataset.depthPosition = String(position);
           card.setAttribute("aria-label", `${labelFor(category)} ${number}`);
           card.setAttribute("aria-roledescription", "slide");
-          card.innerHTML = `<img class="depth-carousel__img" src="${assetFor(category, galleryIndex)}" alt="${labelFor(category)} ${number}" loading="${position < 5 ? "eager" : "lazy"}" decoding="async"><span class="depth-carousel__tint" aria-hidden="true"></span><span class="company-gallery__index">${number}</span>`;
+          card.innerHTML = `${mediaMarkup(category, galleryIndex, "depth-carousel__img", position < 5 ? "eager" : "lazy")}<span class="depth-carousel__tint" aria-hidden="true"></span><span class="company-gallery__index">${number}</span>`;
           stage.appendChild(card);
         });
 
@@ -303,16 +343,15 @@ if (companyGallery) {
       button.dataset.galleryIndex = String(index);
       button.setAttribute("aria-label", `${labelFor(category)} ${String(index + 1).padStart(2, "0")}`);
       const number = String(index + 1).padStart(2, "0");
-      const image = assetFor(category, index);
       if (set.mode === "accordion") {
         const selected = index === accordionActiveIndex;
         button.classList.add("accordion-gallery__panel");
         button.classList.toggle("is-active", selected);
         button.setAttribute("role", "listitem");
         button.setAttribute("aria-current", selected ? "true" : "false");
-        button.innerHTML = `<span class="accordion-gallery__frame"><img src="${image}" alt="${labelFor(category)} ${number}" loading="lazy" decoding="async"><span class="accordion-gallery__shade" aria-hidden="true"></span></span><span class="accordion-gallery__label" aria-hidden="true"><i></i><strong>${labelFor(category)} ${number}</strong></span>`;
+        button.innerHTML = `<span class="accordion-gallery__frame">${mediaMarkup(category, index)}<span class="accordion-gallery__shade" aria-hidden="true"></span></span><span class="accordion-gallery__label" aria-hidden="true"><i></i><strong>${labelFor(category)} ${number}</strong></span>`;
       } else {
-        button.innerHTML = `<img src="${image}" alt="${labelFor(category)} ${number}" loading="lazy" decoding="async"><span class="company-gallery__index">${number}</span>`;
+        button.innerHTML = `${mediaMarkup(category, index)}<span class="company-gallery__index">${number}</span>`;
       }
       fragment.appendChild(button);
     }

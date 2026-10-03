@@ -1,4 +1,6 @@
-const products = {
+import { loadSiteContent } from "./content-client.js";
+
+const fallbackProducts = {
   chainsaw: {
     name: "锂电链锯",
     model: "JY-CH1201",
@@ -243,8 +245,29 @@ const catalogParameters = {
   "JY-WG2601": [["额定电压", "21V"], ["电机转速", "24,000 rpm"], ["最大功率", "500 W"], ["最大压力", "4 Bar"], ["电机类型", "无刷"]],
 };
 
+const managedContent = await loadSiteContent();
+const managedContact = managedContent.contact || {};
+const managedProducts = Array.isArray(managedContent.products) ? managedContent.products : [];
+const products = managedProducts.length
+  ? Object.fromEntries(managedProducts.map((item) => [item.id, {
+      name: "未命名产品",
+      model: "JIAYI",
+      category: "JIAYI POWER / 产品",
+      image: "assets/jiayi-logo.svg",
+      summary: "",
+      featureTitle: item.name || "JIAYI POWER",
+      description: "",
+      specs: [],
+      uses: [],
+      series: [],
+      ...(fallbackProducts[item.id] || {}),
+      ...item,
+    }]))
+  : fallbackProducts;
+
 const requestedProductId = new URLSearchParams(window.location.search).get("id") || "mower";
-const productId = products[requestedProductId] ? requestedProductId : "mower";
+const defaultProductId = products.mower ? "mower" : Object.keys(products)[0];
+const productId = products[requestedProductId] ? requestedProductId : defaultProductId;
 const product = products[productId];
 
 const setText = (selector, value) => {
@@ -254,9 +277,14 @@ const setText = (selector, value) => {
 
 setText("[data-product-name]", product.name);
 setText("[data-product-model]", product.model);
-setText("[data-product-category]", product.category);
+setText("[data-product-category]", `${product.category}${product.year ? ` · ${product.year}` : ""}`);
 setText("[data-product-summary]", product.summary);
 document.title = `${product.name} · JIAYI POWER`;
+
+const contactLink = document.querySelector("[data-product-contact]");
+if (contactLink && managedContact.email) contactLink.href = `mailto:${managedContact.email}?subject=${encodeURIComponent(`JIAYI POWER ${product.name} Product Inquiry`)}`;
+const footerEmail = document.querySelector("[data-product-footer-email]");
+if (footerEmail && managedContact.email) { footerEmail.textContent = managedContact.email; footerEmail.href = `mailto:${managedContact.email}`; }
 
 const productImage = document.querySelector("[data-product-image]");
 if (productImage) {
@@ -299,13 +327,13 @@ const inferParameterLabel = (value, index) => {
   return parameterLabels[productId]?.[index] || `核心参数 ${index + 1}`;
 };
 
-const getParameters = (item) => catalogParameters[`${item.model}|${item.name}`] || catalogParameters[item.model] || item.parameters || item.specs.map((value, index) => [inferParameterLabel(value, index), value]);
+const getParameters = (item) => item.parameters?.length ? item.parameters : catalogParameters[`${item.model}|${item.name}`] || catalogParameters[item.model] || (item.specs || []).map((value, index) => [inferParameterLabel(value, index), value]);
 const getApplications = (item) => item.applications || product.uses;
 
 const seriesGrid = document.querySelector("[data-series-grid]");
 if (seriesGrid) {
   seriesGrid.innerHTML = product.series.map((item, index) => {
-    const description = item.description || `${item.name}围绕${product.uses[0]}等真实场景开发，以 ${item.specs.join("、")} 为核心配置，在动力输出、操控与维护效率之间取得平衡。`;
+    const description = item.description || `${item.name}围绕${product.uses?.[0] || "真实作业"}等场景开发，以 ${(item.specs || []).join("、")} 为核心配置，在动力输出、操控与维护效率之间取得平衡。`;
     const parameters = getParameters(item);
     const applications = getApplications(item);
     const slug = `${item.model}-${index + 1}`.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");

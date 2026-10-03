@@ -483,6 +483,11 @@ a, button { touch-action: manipulation; -webkit-tap-highlight-color: transparent
 .project-card--mower img { object-position: center 63%; }
 .project-card--snow img { object-position: 60% center; }
 
+.company-gallery__item video,
+.accordion-gallery__frame video,
+.depth-carousel__card video { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+.photo-lightbox figure video { display: block; width: min(92vw, 1280px); max-height: 82vh; border-radius: 18px; background: #000; }
+
 /* Advantages */
 .advantages { border-top: 1px solid var(--line); }
 .advantages__header { display: grid; grid-template-columns: 1fr 1.5fr .7fr; align-items: end; gap: 40px; margin-bottom: 66px; }
@@ -712,6 +717,7 @@ a, button { touch-action: manipulation; -webkit-tap-highlight-color: transparent
 .video-qr-card__index { display: block; margin-bottom: 18px; color: #687369; font-size: .7rem; letter-spacing: .14em; }
 .video-qr-placeholder { display: grid; width: 100%; aspect-ratio: 1; place-items: center; align-content: center; gap: 16px; border: 1px dashed rgba(153,255,66,.34); border-radius: 18px; background: radial-gradient(circle,rgba(153,255,66,.1),transparent 66%),#0a0e0b; color: #7c887c; }
 .video-qr-placeholder svg { width: 88px; fill: var(--green); opacity: .68; }
+.video-qr-placeholder img { width: 100%; height: 100%; padding: 7%; border-radius: inherit; object-fit: contain; background: #fff; }
 .video-qr-placeholder strong { font-size: .82rem; letter-spacing: .08em; }
 .video-qr-card h2 { margin: 24px 0 7px; font-size: 1.28rem; }
 .video-qr-card p { margin: 0; color: var(--muted); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; }

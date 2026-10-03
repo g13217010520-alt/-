@@ -1,0 +1,12 @@
+/admin.html
+  Cache-Control: no-store
+  X-Robots-Tag: noindex, nofollow
+  X-Frame-Options: DENY
+  Referrer-Policy: same-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob: https:; media-src 'self' blob: https:; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'
+
+/api/admin/*
+  Cache-Control: no-store
+  X-Frame-Options: DENY
+  Referrer-Policy: same-origin

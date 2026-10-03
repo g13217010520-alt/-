@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "node serve.mjs",
-    "check": "node --check dist/app.js && node --check dist/language.js && node --check dist/translations.js && node --check dist/product-detail.js && node --check serve.mjs"
+    "cms:defaults": "node scripts/generate-default-content.mjs",
+    "cms:test": "node scripts/test-cms.mjs",
+    "check": "node --check dist/app.js && node --check dist/admin.js && node --check dist/site-content.js && node --check dist/contact-page.js && node --check dist/official-video-content.js && node --check dist/content-client.js && node --check dist/language.js && node --check dist/translations.js && node --check dist/product-detail.js && node --check functions/_shared/auth.js && node --check functions/api/admin/content.js && node --check functions/api/admin/media.js && node --check serve.mjs"
   }
 }
