@@ -10,7 +10,7 @@ const productGrid = document.querySelector("[data-cms-product-grid]");
 if (productGrid && Array.isArray(content.products)) {
   productGrid.innerHTML = content.products.map((product, index) => {
     const layout = ["wide", "full"].includes(product.cardLayout) ? ` product-card--${product.cardLayout}` : "";
-    const details = Array.isArray(product.specs) ? product.specs.slice(0, 2).map((row) => `<li>${escapeHtml(Array.isArray(row) ? row[1] : row)}</li>`).join("") : "";
+    const details = Array.isArray(product.specs) ? product.specs.slice(0, 2).map((row) => `<li>${escapeHtml(Array.isArray(row) ? row[1] : row?.value ?? row)}</li>`).join("") : "";
     const body = product.cardLayout === "wide" ? `<div class="product-card__body"><div><h3>${escapeHtml(product.name)}</h3><p>${escapeHtml(product.summary)}</p></div>${details ? `<ul>${details}</ul>` : ""}</div>` : `<h3>${escapeHtml(product.name)}</h3><p>${escapeHtml(product.summary)}</p>`;
     return `<article class="product-card${layout} reveal is-visible" data-product-id="${escapeHtml(product.id)}">
       <a class="card-hit" href="product-detail.html?id=${encodeURIComponent(product.id)}" aria-label="查看${escapeHtml(product.name)}详细介绍"></a>

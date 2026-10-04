@@ -1,0 +1,347 @@
+media:
+  - name: site_media
+    label: 网站图片与视频
+    input: dist/assets
+    output: assets
+    rename: safe
+    categories: [image, video]
+
+settings:
+  content:
+    merge: true
+  commit:
+    identity: user
+    templates:
+      update: "后台更新：{path}"
+      create: "后台新增：{path}"
+      delete: "后台删除：{path}"
+      rename: "后台重命名：{oldPath} -> {newPath}"
+
+components:
+  key_value:
+    type: object
+    fields:
+      - name: label
+        label: 参数名称
+        type: string
+        required: true
+      - name: value
+        label: 参数值
+        type: string
+        required: true
+
+  series_item:
+    type: object
+    fields:
+      - name: model
+        label: 型号
+        type: string
+      - name: name
+        label: 型号名称
+        type: string
+        required: true
+      - name: image
+        label: 型号图片
+        type: image
+        options:
+          media: site_media
+          categories: [image]
+      - name: description
+        label: 产品概要
+        type: text
+      - name: specs
+        label: 参数摘要
+        type: string
+        list: true
+      - name: parameters
+        label: 核心参数
+        component: key_value
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{label}：{value}"
+      - name: applications
+        label: 应用场景
+        type: string
+        list: true
+
+  featured_card:
+    type: object
+    fields:
+      - name: image
+        label: 精选展示图片
+        type: image
+        options:
+          media: site_media
+          categories: [image]
+      - name: meta
+        label: 右上角信息
+        type: string
+      - name: kicker
+        label: 辅助文案
+        type: string
+      - name: headline
+        label: 精选标题
+        type: text
+      - name: features
+        label: 特点标签
+        type: string
+        list: true
+
+  product:
+    type: object
+    fields:
+      - name: id
+        label: 产品 ID
+        type: string
+        required: true
+        description: 只使用小写英文字母、数字和连字符；创建后尽量不要修改。
+        pattern:
+          regex: "^[a-z0-9-]+$"
+          message: 请输入小写英文字母、数字或连字符。
+      - name: order
+        label: 排列顺序
+        type: number
+        description: 数字越小越靠前，也可以直接拖动产品条目调整顺序。
+      - name: year
+        label: 年份
+        type: string
+      - name: cardLayout
+        label: 产品卡片尺寸
+        type: select
+        options:
+          values:
+            - name: standard
+              label: 标准卡片
+            - name: wide
+              label: 横向宽卡片
+            - name: full
+              label: 独占整行
+      - name: cardLabel
+        label: 卡片英文标签
+        type: string
+      - name: name
+        label: 产品标题
+        type: string
+        required: true
+      - name: model
+        label: 主型号
+        type: string
+      - name: category
+        label: 分类
+        type: string
+      - name: image
+        label: 产品主图
+        type: image
+        required: true
+        options:
+          media: site_media
+          categories: [image]
+      - name: summary
+        label: 产品文案
+        type: text
+      - name: featureTitle
+        label: 产品页主标题
+        type: text
+      - name: description
+        label: 产品概要
+        type: text
+      - name: specs
+        label: 卡片核心参数
+        component: key_value
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{label}：{value}"
+      - name: uses
+        label: 应用场景
+        type: string
+        list: true
+      - name: series
+        label: 产品型号
+        component: series_item
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{model} · {name}"
+      - name: featured
+        label: 精选产品展示内容
+        component: featured_card
+
+  gallery_item:
+    type: object
+    fields:
+      - name: id
+        label: 素材 ID
+        type: string
+        required: true
+      - name: type
+        label: 类型
+        type: select
+        required: true
+        options:
+          values:
+            - name: image
+              label: 图片
+            - name: video
+              label: 视频
+      - name: url
+        label: 图片或视频文件
+        type: file
+        required: true
+        options:
+          media: site_media
+          categories: [image, video]
+      - name: alt
+        label: 图片说明
+        type: string
+      - name: orientation
+        label: 展示方向
+        type: select
+        options:
+          values:
+            - name: landscape
+              label: 横向
+            - name: portrait
+              label: 竖向
+
+  gallery:
+    type: object
+    fields:
+      - name: title
+        label: 板块标题
+        type: string
+        required: true
+      - name: mode
+        label: 展示效果
+        type: select
+        options:
+          values:
+            - name: accordion
+              label: 手风琴画廊
+            - name: depth
+              label: 景深轮播
+            - name: grid
+              label: 网格
+      - name: items
+        label: 照片与视频
+        component: gallery_item
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{id} · {alt}"
+
+content:
+  - name: website_content
+    label: 嘉易官网内容
+    type: file
+    path: dist/default-content.json
+    format: json
+    operations:
+      create: false
+      rename: false
+      delete: false
+    fields:
+      - name: version
+        label: 数据版本
+        type: number
+        readonly: true
+      - name: products
+        label: 产品管理
+        component: product
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{order} · {name} · {model}"
+      - name: featuredProductIds
+        label: 精选产品
+        type: string
+        list:
+          min: 1
+          max: 6
+        description: 填写产品 ID，并拖动调整精选产品展示顺序。
+      - name: galleries
+        label: 企业影像
+        type: object
+        fields:
+          - name: exhibition
+            label: 01 展会现场
+            component: gallery
+          - name: factory
+            label: 02 工厂与设备
+            component: gallery
+          - name: meeting
+            label: 03 团队会议
+            component: gallery
+          - name: rd
+            label: 04 研发日常
+            component: gallery
+      - name: contact
+        label: 联系方式
+        type: object
+        fields:
+          - name: eyebrowLeft
+            label: 左侧小标题
+            type: string
+          - name: eyebrowRight
+            label: 右侧小标题
+            type: string
+          - name: title
+            label: 主标题
+            type: string
+          - name: accentTitle
+            label: 绿色强调标题
+            type: string
+          - name: email
+            label: 业务邮箱
+            type: string
+          - name: secondaryEmail
+            label: 备用邮箱
+            type: string
+          - name: phone
+            label: 电话
+            type: string
+          - name: whatsapp
+            label: WhatsApp 号码
+            type: string
+          - name: address
+            label: 英文地址
+            type: string
+          - name: streetAddress
+            label: 中文地址
+            type: string
+          - name: website
+            label: 网站地址
+            type: string
+          - name: wechatLabel
+            label: 微信按钮文字
+            type: string
+          - name: wechatUrl
+            label: 微信按钮链接
+            type: string
+          - name: videoLabel
+            label: 视频号按钮文字
+            type: string
+          - name: videoUrl
+            label: 视频号按钮链接
+            type: string
+          - name: officialAccounts
+            label: 官方账号二维码
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{name}"
+            fields:
+              - name: name
+                label: 账号名称
+                type: string
+              - name: description
+                label: 账号说明
+                type: string
+              - name: image
+                label: 二维码图片
+                type: image
+                options:
+                  media: site_media
+                  categories: [image]

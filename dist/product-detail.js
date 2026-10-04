@@ -327,7 +327,15 @@ const inferParameterLabel = (value, index) => {
   return parameterLabels[productId]?.[index] || `核心参数 ${index + 1}`;
 };
 
-const getParameters = (item) => item.parameters?.length ? item.parameters : catalogParameters[`${item.model}|${item.name}`] || catalogParameters[item.model] || (item.specs || []).map((value, index) => [inferParameterLabel(value, index), value]);
+const normalizeParameter = (entry) => Array.isArray(entry)
+  ? { label: entry[0] || "", value: entry[1] || "" }
+  : { label: entry?.label || "", value: entry?.value || "" };
+const getParameters = (item) => {
+  const source = item.parameters?.length
+    ? item.parameters
+    : catalogParameters[`${item.model}|${item.name}`] || catalogParameters[item.model] || (item.specs || []).map((value, index) => [inferParameterLabel(value, index), value]);
+  return source.map(normalizeParameter);
+};
 const getApplications = (item) => item.applications || product.uses;
 
 const seriesGrid = document.querySelector("[data-series-grid]");
@@ -354,7 +362,7 @@ if (seriesGrid) {
                 <p class="series-detail__description">${description}</p>
               </div>
               <div class="model-tab-panel" id="panel-${slug}-specs" role="tabpanel" aria-labelledby="tab-${slug}-specs" data-model-panel="specs" hidden>
-                <dl class="model-spec-table">${parameters.map(([label, value]) => `<div><dt>${label}</dt><dd>${value}</dd></div>`).join("")}</dl>
+                <dl class="model-spec-table">${parameters.map(({ label, value }) => `<div><dt>${label}</dt><dd>${value}</dd></div>`).join("")}</dl>
               </div>
               <div class="model-tab-panel" id="panel-${slug}-use" role="tabpanel" aria-labelledby="tab-${slug}-use" data-model-panel="use" hidden>
                 <ul class="model-use-list">${applications.map((use, useIndex) => `<li><span>${String(useIndex + 1).padStart(2, "0")}</span>${use}</li>`).join("")}</ul>

@@ -17,6 +17,9 @@ const productMap = extractLiteral("const fallbackProducts =", "const catalogPara
 const parameterMap = extractLiteral("const catalogParameters =", "const managedContent =");
 
 const layoutById = { chainsaw: "wide", pole: "wide", mower: "full" };
+const toKeyValueList = (items = []) => items.map((item) => Array.isArray(item)
+  ? { label: item[0] || "", value: item[1] || "" }
+  : item);
 const featuredById = {
   mower: {
     image: "assets/mower-scene-clean.png",
@@ -48,9 +51,10 @@ const products = Object.entries(productMap).map(([id, product], index) => ({
   cardLayout: layoutById[id] || "standard",
   cardLabel: product.category.split(" /")[0],
   ...product,
+  specs: toKeyValueList(product.specs),
   series: (product.series || []).map((item) => ({
     ...item,
-    parameters: item.parameters || parameterMap[`${item.model}|${item.name}`] || parameterMap[item.model] || [],
+    parameters: toKeyValueList(item.parameters || parameterMap[`${item.model}|${item.name}`] || parameterMap[item.model] || []),
     applications: item.applications || product.uses || [],
   })),
   featured: featuredById[id] || null,
