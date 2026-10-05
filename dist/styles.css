@@ -987,3 +987,38 @@ a, button { touch-action: manipulation; -webkit-tap-highlight-color: transparent
     display: none;
   }
 }
+/* Definitive iPhone opening-title spacing fix */
+@media (max-width: 760px) {
+  .intro__content h1 {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: clamp(18px, 5vw, 28px);
+    width: 100%;
+    max-width: none;
+    font-size: clamp(2.7rem, 12.5vw, 4.15rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+
+  .intro__content h1 > span {
+    display: block;
+    min-height: 1.12em;
+    padding: 0.06em 0;
+    line-height: 1;
+  }
+
+  .intro__content h1 > span + span {
+    margin-top: 0;
+  }
+
+  .intro__content .outline-text {
+    -webkit-text-stroke-width: 1px;
+  }
+}
+
+@media (max-height: 600px) and (orientation: landscape) {
+  .intro__content h1 {
+    row-gap: 10px;
+    font-size: clamp(2.15rem, 7.5vw, 3.15rem);
+  }
+}
