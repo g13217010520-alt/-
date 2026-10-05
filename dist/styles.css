@@ -1012,8 +1012,9 @@ a, button { touch-action: manipulation; -webkit-tap-highlight-color: transparent
   }
 
   .intro__content .outline-text {
-    -webkit-text-stroke-width: 1px;
-  }
+  color: var(--green);
+  -webkit-text-stroke: 0;
+  text-shadow: 0 0 18px rgba(153, 255, 66, 0.14);
 }
 
 @media (max-height: 600px) and (orientation: landscape) {
