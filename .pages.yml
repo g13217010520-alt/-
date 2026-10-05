@@ -100,9 +100,10 @@ components:
           regex: "^[a-z0-9-]+$"
           message: 请输入小写英文字母、数字或连字符。
       - name: order
-        label: 排列顺序
+        label: 原始编号
         type: number
-        description: 数字越小越靠前，也可以直接拖动产品条目调整顺序。
+        readonly: true
+        description: 兼容字段；网页实际顺序请使用每个产品左侧的拖动手柄调整。
       - name: year
         label: 年份
         type: string
@@ -252,7 +253,7 @@ content:
         list:
           collapsible:
             collapsed: true
-            summary: "{order} · {name} · {model}"
+            summary: "{index} · {name} · {model}"
       - name: featuredProductIds
         label: 精选产品
         type: string
