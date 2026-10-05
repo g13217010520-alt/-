@@ -392,8 +392,7 @@
         "image": "assets/chainsaw-scene.webp",
         "meta": "JY-CH1201",
         "kicker": "10 m/s · 12″ / 16″",
-        "headline": "快速调链，稳定切割。",
-        "features": []
+        "headline": "快速调链，稳定切割。"
       }
     },
     {
@@ -552,8 +551,7 @@
             "户外场地维护"
           ]
         }
-      ],
-      "featured": null
+      ]
     },
     {
       "id": "trimmer",
@@ -748,8 +746,7 @@
             "家庭庭院维护"
           ]
         }
-      ],
-      "featured": null
+      ]
     },
     {
       "id": "hedge",
@@ -800,12 +797,12 @@
           "model": "JY-HT2401",
           "name": "紧凑型绿篱机",
           "image": "assets/series/hedge-compact.webp",
+          "description": "双刀头组合面向灌木轮廓、草边和局部细节修整。短机身便于单手控制，也更容易进入枝叶密集区域。",
           "specs": [
             "21V",
             "1250 SPM",
             "130 / 220 mm"
           ],
-          "description": "双刀头组合面向灌木轮廓、草边和局部细节修整。短机身便于单手控制，也更容易进入枝叶密集区域。",
           "parameters": [
             {
               "label": "额定电压",
@@ -838,12 +835,12 @@
           "model": "JY-HT2601",
           "name": "20″ 锂电绿篱机",
           "image": "assets/series/hedge-20.webp",
+          "description": "480 mm 长刀片适合连续绿篱的快速整形。环形辅助手柄提供多角度握持，兼顾覆盖效率与操控稳定性。",
           "specs": [
             "21V",
             "1500 SPM",
             "480 mm"
           ],
-          "description": "480 mm 长刀片适合连续绿篱的快速整形。环形辅助手柄提供多角度握持，兼顾覆盖效率与操控稳定性。",
           "parameters": [
             {
               "label": "额定电压",
@@ -868,272 +865,7 @@
             "连续绿篱维护"
           ]
         }
-      ],
-      "featured": null
-    },
-    {
-      "id": "mower",
-      "order": 4,
-      "year": "2026",
-      "cardLayout": "full",
-      "cardLabel": "Smart Lawn",
-      "name": "智能割草机器人",
-      "model": "VISUAL + RTK",
-      "category": "Smart Lawn / 智能草坪",
-      "image": "assets/mower.webp",
-      "summary": "视觉识别与 RTK 定位双系统协同，实现无边界割草、区域管理、智能避障和 App 控制。",
-      "featureTitle": "看见边界，理解环境，自主完成草坪养护。",
-      "description": "双目视觉识别与厘米级 RTK 定位共同建立工作区域，支持多区域任务规划和七类对象识别。无需铺设传统边界线，降低安装与后期调整成本。",
-      "specs": [
-        {
-          "label": "导航系统",
-          "value": "Visual + RTK"
-        },
-        {
-          "label": "边界方式",
-          "value": "无边界"
-        },
-        {
-          "label": "剪草高度",
-          "value": "25–70 mm"
-        },
-        {
-          "label": "工作速度",
-          "value": "40 × 20 cm/s"
-        },
-        {
-          "label": "续航覆盖",
-          "value": "700㎡ / 4Ah"
-        },
-        {
-          "label": "控制方式",
-          "value": "App / 区域管理"
-        }
-      ],
-      "uses": [
-        "独立住宅草坪",
-        "景观庭院",
-        "多区域草坪管理"
-      ],
-      "series": [
-        {
-          "model": "VISUAL + RTK",
-          "name": "双系统智能割草机器人",
-          "image": "assets/mower.webp",
-          "specs": [
-            "视觉 + RTK",
-            "25–70 mm",
-            "700㎡ / 4Ah"
-          ],
-          "parameters": [
-            {
-              "label": "导航系统",
-              "value": "Visual + RTK 双系统"
-            },
-            {
-              "label": "识别能力",
-              "value": "7 类对象识别"
-            },
-            {
-              "label": "边界方式",
-              "value": "无边界 / 无需 RTK 配件"
-            },
-            {
-              "label": "剪草高度",
-              "value": "25–70 mm"
-            },
-            {
-              "label": "作业效率",
-              "value": "40 × 20 cm/s"
-            },
-            {
-              "label": "续航覆盖",
-              "value": "700㎡ / 4Ah"
-            },
-            {
-              "label": "控制方式",
-              "value": "App / 区域管理"
-            }
-          ],
-          "applications": [
-            "独立住宅草坪",
-            "景观庭院",
-            "多区域草坪管理"
-          ]
-        }
-      ],
-      "featured": {
-        "image": "assets/mower-scene-clean.png",
-        "meta": "Visual + RTK",
-        "kicker": "无边界 · 区域管理 · App 控制",
-        "headline": "看见边界，自主完成草坪养护。",
-        "features": [
-          "厘米级定位",
-          "智能避障",
-          "边界识别"
-        ]
-      }
-    },
-    {
-      "id": "pole",
-      "order": 5,
-      "year": "2026",
-      "cardLayout": "wide",
-      "cardLabel": "Elevated Work",
-      "name": "高空作业系列",
-      "model": "JY-POLE SERIES",
-      "category": "Elevated Work / 高空作业",
-      "image": "assets/series/pole-saw.webp",
-      "summary": "由延长杆、高枝锯和高枝绿篱机组成的 21V 高空维护方案，覆盖树冠修枝与高位绿篱整形。",
-      "featureTitle": "把地面上的稳定操控，延伸到更高的作业位置。",
-      "description": "模块化长杆结构降低登高作业频率，可调角度帮助刀头贴合不同枝条和绿篱方向；同一 21V 电池平台让多种高空任务快速切换。",
-      "specs": [
-        {
-          "label": "额定电压",
-          "value": "21V"
-        },
-        {
-          "label": "系列产品",
-          "value": "3 款"
-        },
-        {
-          "label": "最长杆长",
-          "value": "2.5 m"
-        },
-        {
-          "label": "最高链速",
-          "value": "7 m/s"
-        },
-        {
-          "label": "最高功率",
-          "value": "800 W"
-        },
-        {
-          "label": "刀头",
-          "value": "锯链 / 绿篱刀"
-        }
-      ],
-      "uses": [
-        "果树与树冠修枝",
-        "高位绿篱整形",
-        "庭院高空维护"
-      ],
-      "series": [
-        {
-          "model": "JY-CH0702",
-          "name": "延长杆系统",
-          "image": "assets/series/pole-extension.webp",
-          "specs": [
-            "21V",
-            "7 m/s",
-            "2 / 2.5 m"
-          ],
-          "description": "可伸缩长杆与角度可调刀头，将迷你链锯的灵活性延伸到树冠位置，适合家庭庭院中的高枝修剪。",
-          "parameters": [
-            {
-              "label": "额定电压",
-              "value": "21V"
-            },
-            {
-              "label": "链速",
-              "value": "7 m/s"
-            },
-            {
-              "label": "电机转速",
-              "value": "20,000 rpm"
-            },
-            {
-              "label": "最大功率",
-              "value": "800 W"
-            },
-            {
-              "label": "杆长",
-              "value": "2 / 2.5 m"
-            }
-          ],
-          "applications": [
-            "果树与树冠修枝",
-            "高位绿篱整形",
-            "庭院高空维护"
-          ]
-        },
-        {
-          "model": "JY-PCH01",
-          "name": "锂电高枝锯",
-          "image": "assets/series/pole-saw.webp",
-          "specs": [
-            "21V",
-            "7 m/s",
-            "20,000 rpm",
-            "800 W",
-            "150 / 200 mm"
-          ],
-          "description": "高转速电机与 150 / 200 mm 切割配置兼顾通过性和切割效率，可调角度结构让使用者从地面完成不同方向的树枝处理。",
-          "parameters": [
-            {
-              "label": "额定电压",
-              "value": "21V"
-            },
-            {
-              "label": "最大切割直径",
-              "value": "150 / 200 mm"
-            },
-            {
-              "label": "电机转速",
-              "value": "20,000 rpm"
-            },
-            {
-              "label": "链速",
-              "value": "7 m/s"
-            },
-            {
-              "label": "最大功率",
-              "value": "800 W"
-            }
-          ],
-          "applications": [
-            "果树与树冠修枝",
-            "高位绿篱整形",
-            "庭院高空维护"
-          ]
-        },
-        {
-          "model": "JY-PHT01",
-          "name": "锂电高枝绿篱机",
-          "image": "assets/series/pole-trimmer.webp",
-          "specs": [
-            "21V",
-            "1,500 SPM",
-            "400 mm",
-            "500 W"
-          ],
-          "description": "400 mm 刀片与多角度刀头适合高位绿篱的顶部和侧面整形，长杆结构扩大作业范围并减少反复移动。",
-          "parameters": [
-            {
-              "label": "额定电压",
-              "value": "21V"
-            },
-            {
-              "label": "冲程速度",
-              "value": "1,500 SPM"
-            },
-            {
-              "label": "最大切割直径",
-              "value": "400 mm"
-            },
-            {
-              "label": "最大功率",
-              "value": "500 W"
-            }
-          ],
-          "applications": [
-            "果树与树冠修枝",
-            "高位绿篱整形",
-            "庭院高空维护"
-          ]
-        }
-      ],
-      "featured": null
+      ]
     },
     {
       "id": "drill",
@@ -1184,13 +916,13 @@
           "model": "JY-ED2401",
           "name": "有刷锂电钻",
           "image": "assets/series/drill-ed2401.png",
+          "description": "双速有刷方案满足日常钻孔和紧固需求，结构简洁、使用直观，适合高频基础安装与维修。",
           "specs": [
             "21V",
             "450 / 1,500 rpm",
             "20 N·m",
             "500 W"
           ],
-          "description": "双速有刷方案满足日常钻孔和紧固需求，结构简洁、使用直观，适合高频基础安装与维修。",
           "parameters": [
             {
               "label": "额定电压",
@@ -1223,13 +955,13 @@
           "model": "JY-ED2402",
           "name": "无刷锂电钻",
           "image": "assets/series/drill-ed2402.png",
+          "description": "无刷电机将最大扭矩提升至 30 N·m，并以更高效率和更低维护需求应对强度更高的装配任务。",
           "specs": [
             "21V",
             "450 / 1,500 rpm",
             "30 N·m",
             "700 W"
           ],
-          "description": "无刷电机将最大扭矩提升至 30 N·m，并以更高效率和更低维护需求应对强度更高的装配任务。",
           "parameters": [
             {
               "label": "额定电压",
@@ -1258,8 +990,167 @@
             "家庭日常维修"
           ]
         }
+      ]
+    },
+    {
+      "id": "pole",
+      "order": 5,
+      "year": "2026",
+      "cardLayout": "wide",
+      "cardLabel": "Elevated Work",
+      "name": "高空作业系列",
+      "model": "JY-POLE SERIES",
+      "category": "Elevated Work / 高空作业",
+      "image": "assets/series/pole-saw.webp",
+      "summary": "由延长杆、高枝锯和高枝绿篱机组成的 21V 高空维护方案，覆盖树冠修枝与高位绿篱整形。",
+      "featureTitle": "把地面上的稳定操控，延伸到更高的作业位置。",
+      "description": "模块化长杆结构降低登高作业频率，可调角度帮助刀头贴合不同枝条和绿篱方向；同一 21V 电池平台让多种高空任务快速切换。",
+      "specs": [
+        {
+          "label": "额定电压",
+          "value": "21V"
+        },
+        {
+          "label": "系列产品",
+          "value": "3 款"
+        },
+        {
+          "label": "最长杆长",
+          "value": "2.5 m"
+        },
+        {
+          "label": "最高链速",
+          "value": "7 m/s"
+        },
+        {
+          "label": "最高功率",
+          "value": "800 W"
+        },
+        {
+          "label": "刀头",
+          "value": "锯链 / 绿篱刀"
+        }
       ],
-      "featured": null
+      "uses": [
+        "果树与树冠修枝",
+        "高位绿篱整形",
+        "庭院高空维护"
+      ],
+      "series": [
+        {
+          "model": "JY-CH0702",
+          "name": "延长杆系统",
+          "image": "assets/series/pole-extension.webp",
+          "description": "可伸缩长杆与角度可调刀头，将迷你链锯的灵活性延伸到树冠位置，适合家庭庭院中的高枝修剪。",
+          "specs": [
+            "21V",
+            "7 m/s",
+            "2 / 2.5 m"
+          ],
+          "parameters": [
+            {
+              "label": "额定电压",
+              "value": "21V"
+            },
+            {
+              "label": "链速",
+              "value": "7 m/s"
+            },
+            {
+              "label": "电机转速",
+              "value": "20,000 rpm"
+            },
+            {
+              "label": "最大功率",
+              "value": "800 W"
+            },
+            {
+              "label": "杆长",
+              "value": "2 / 2.5 m"
+            }
+          ],
+          "applications": [
+            "果树与树冠修枝",
+            "高位绿篱整形",
+            "庭院高空维护"
+          ]
+        },
+        {
+          "model": "JY-PCH01",
+          "name": "锂电高枝锯",
+          "image": "assets/series/pole-saw.webp",
+          "description": "高转速电机与 150 / 200 mm 切割配置兼顾通过性和切割效率，可调角度结构让使用者从地面完成不同方向的树枝处理。",
+          "specs": [
+            "21V",
+            "7 m/s",
+            "20,000 rpm",
+            "800 W",
+            "150 / 200 mm"
+          ],
+          "parameters": [
+            {
+              "label": "额定电压",
+              "value": "21V"
+            },
+            {
+              "label": "最大切割直径",
+              "value": "150 / 200 mm"
+            },
+            {
+              "label": "电机转速",
+              "value": "20,000 rpm"
+            },
+            {
+              "label": "链速",
+              "value": "7 m/s"
+            },
+            {
+              "label": "最大功率",
+              "value": "800 W"
+            }
+          ],
+          "applications": [
+            "果树与树冠修枝",
+            "高位绿篱整形",
+            "庭院高空维护"
+          ]
+        },
+        {
+          "model": "JY-PHT01",
+          "name": "锂电高枝绿篱机",
+          "image": "assets/series/pole-trimmer.webp",
+          "description": "400 mm 刀片与多角度刀头适合高位绿篱的顶部和侧面整形，长杆结构扩大作业范围并减少反复移动。",
+          "specs": [
+            "21V",
+            "1,500 SPM",
+            "400 mm",
+            "500 W"
+          ],
+          "parameters": [
+            {
+              "label": "额定电压",
+              "value": "21V"
+            },
+            {
+              "label": "冲程速度",
+              "value": "1,500 SPM"
+            },
+            {
+              "label": "最大切割直径",
+              "value": "400 mm"
+            },
+            {
+              "label": "最大功率",
+              "value": "500 W"
+            }
+          ],
+          "applications": [
+            "果树与树冠修枝",
+            "高位绿篱整形",
+            "庭院高空维护"
+          ]
+        }
+      ]
     },
     {
       "id": "precision",
@@ -1310,6 +1201,7 @@
           "model": "JY-EC2601",
           "name": "电动纸板切割机",
           "image": "assets/series/cardboard-cutter-ec2601.png",
+          "description": "紧凑式圆刀结构面向纸板与包装材料的连续裁切，机身便于单手握持，可减少传统手工刀具反复用力。",
           "specs": [
             "3.6–4.2V",
             "2–3A",
@@ -1338,13 +1230,13 @@
             "瓦楞纸板裁切",
             "包装材料拆解",
             "轻型手工作业"
-          ],
-          "description": "紧凑式圆刀结构面向纸板与包装材料的连续裁切，机身便于单手握持，可减少传统手工刀具反复用力。"
+          ]
         },
         {
           "model": "JY-EP2501",
           "name": "电动修枝剪",
           "image": "assets/series/pruner-ep2501.png",
+          "description": "30 mm 最大剪切直径配合 21V 锂电平台，适合果树、灌木和庭院枝条的快速修剪，降低重复握剪带来的疲劳。",
           "specs": [
             "21V",
             "2.5–3A",
@@ -1377,11 +1269,9 @@
             "果树枝条修剪",
             "灌木整形",
             "庭院绿植维护"
-          ],
-          "description": "30 mm 最大剪切直径配合 21V 锂电平台，适合果树、灌木和庭院枝条的快速修剪，降低重复握剪带来的疲劳。"
+          ]
         }
-      ],
-      "featured": null
+      ]
     },
     {
       "id": "cultivator",
@@ -1432,6 +1322,7 @@
           "model": "JY-TC2501",
           "name": "锂电松土机（有刷）",
           "image": "assets/series/cultivator-brushed.webp",
+          "description": "有刷版本以 600 W 最大功率覆盖日常花圃和家庭菜园松土，结构直接、操控轻便，适合常规庭院耕作。",
           "specs": [
             "21V",
             "340 rpm",
@@ -1464,13 +1355,13 @@
             "花圃表层松土",
             "小型菜园整地",
             "种植前土壤翻松"
-          ],
-          "description": "有刷版本以 600 W 最大功率覆盖日常花圃和家庭菜园松土，结构直接、操控轻便，适合常规庭院耕作。"
+          ]
         },
         {
           "model": "JY-TC2501",
           "name": "锂电松土机（无刷）",
           "image": "assets/series/cultivator-brushless.webp",
+          "description": "无刷版本将最大功率提升至 800 W，并提供 210 × 230 mm 耕作范围，适合更深土层和强度更高的连续整地任务。",
           "specs": [
             "21V",
             "340 rpm",
@@ -1503,11 +1394,9 @@
             "较深土层松动",
             "菜园与种植区整地",
             "连续庭院耕作"
-          ],
-          "description": "无刷版本将最大功率提升至 800 W，并提供 210 × 230 mm 耕作范围，适合更深土层和强度更高的连续整地任务。"
+          ]
         }
-      ],
-      "featured": null
+      ]
     },
     {
       "id": "snow",
@@ -1598,8 +1487,7 @@
         "image": "assets/snow-scene-original.png",
         "meta": "40V · 3400W",
         "kicker": "17 × 40 cm 除雪范围",
-        "headline": "从绿地，工作到雪季。",
-        "features": []
+        "headline": "从绿地，工作到雪季。"
       }
     },
     {
@@ -1766,8 +1654,110 @@
             "露营与户外装备清洁"
           ]
         }
+      ]
+    },
+    {
+      "id": "mower",
+      "order": 4,
+      "year": "2026",
+      "cardLayout": "full",
+      "cardLabel": "Smart Lawn",
+      "name": "智能割草机器人",
+      "model": "VISUAL + RTK",
+      "category": "Smart Lawn / 智能草坪",
+      "image": "assets/mower.webp",
+      "summary": "视觉识别与 RTK 定位双系统协同，实现无边界割草、区域管理、智能避障和 App 控制。",
+      "featureTitle": "看见边界，理解环境，自主完成草坪养护。",
+      "description": "双目视觉识别与厘米级 RTK 定位共同建立工作区域，支持多区域任务规划和七类对象识别。无需铺设传统边界线，降低安装与后期调整成本。",
+      "specs": [
+        {
+          "label": "导航系统",
+          "value": "Visual + RTK"
+        },
+        {
+          "label": "边界方式",
+          "value": "无边界"
+        },
+        {
+          "label": "剪草高度",
+          "value": "25–70 mm"
+        },
+        {
+          "label": "工作速度",
+          "value": "40 × 20 cm/s"
+        },
+        {
+          "label": "续航覆盖",
+          "value": "700㎡ / 4Ah"
+        },
+        {
+          "label": "控制方式",
+          "value": "App / 区域管理"
+        }
       ],
-      "featured": null
+      "uses": [
+        "独立住宅草坪",
+        "景观庭院",
+        "多区域草坪管理"
+      ],
+      "series": [
+        {
+          "model": "VISUAL + RTK",
+          "name": "双系统智能割草机器人",
+          "image": "assets/mower.webp",
+          "specs": [
+            "视觉 + RTK",
+            "25–70 mm",
+            "700㎡ / 4Ah"
+          ],
+          "parameters": [
+            {
+              "label": "导航系统",
+              "value": "Visual + RTK 双系统"
+            },
+            {
+              "label": "识别能力",
+              "value": "7 类对象识别"
+            },
+            {
+              "label": "边界方式",
+              "value": "无边界 / 无需 RTK 配件"
+            },
+            {
+              "label": "剪草高度",
+              "value": "25–70 mm"
+            },
+            {
+              "label": "作业效率",
+              "value": "40 × 20 cm/s"
+            },
+            {
+              "label": "续航覆盖",
+              "value": "700㎡ / 4Ah"
+            },
+            {
+              "label": "控制方式",
+              "value": "App / 区域管理"
+            }
+          ],
+          "applications": [
+            "独立住宅草坪",
+            "景观庭院",
+            "多区域草坪管理"
+          ]
+        }
+      ],
+      "featured": {
+        "image": "assets/mower-scene-clean.png",
+        "meta": "Visual + RTK",
+        "kicker": "无边界 · 区域管理 · App 控制",
+        "headline": "看见边界，自主完成草坪养护。",
+        "features": [
+          "厘米级定位",
+          "智能避障",
+          "边界识别"
+        ]
+      }
     }
   ],
   "featuredProductIds": [
@@ -2226,18 +2216,15 @@
     "officialAccounts": [
       {
         "name": "官方账号 01",
-        "description": "Official Channel",
-        "image": ""
+        "description": "Official Channel"
       },
       {
         "name": "官方账号 02",
-        "description": "Official Channel",
-        "image": ""
+        "description": "Official Channel"
       },
       {
         "name": "官方账号 03",
-        "description": "Official Channel",
-        "image": ""
+        "description": "Official Channel"
       }
     ]
   }
