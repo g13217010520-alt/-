@@ -908,7 +908,7 @@
     },
     {
       "id": "drill",
-      "order": 6,
+      "order": 4,
       "year": "2026",
       "cardLayout": "standard",
       "cardLabel": "Cordless Drilling",
@@ -1195,7 +1195,7 @@
     },
     {
       "id": "precision",
-      "order": 7,
+      "order": 6,
       "year": "2026",
       "cardLayout": "standard",
       "cardLabel": "Precision Cutting",
@@ -1317,7 +1317,7 @@
     },
     {
       "id": "cultivator",
-      "order": 8,
+      "order": 7,
       "year": "2026",
       "cardLayout": "standard",
       "cardLabel": "Soil Cultivation",
@@ -1443,7 +1443,7 @@
     },
     {
       "id": "snow",
-      "order": 9,
+      "order": 8,
       "year": "2026",
       "cardLayout": "standard",
       "cardLabel": "All Season",
@@ -1537,7 +1537,7 @@
     },
     {
       "id": "washer",
-      "order": 10,
+      "order": 9,
       "year": "2026",
       "cardLayout": "standard",
       "cardLabel": "Cleaning System",
@@ -1707,7 +1707,7 @@
     },
     {
       "id": "mower",
-      "order": 4,
+      "order": 10,
       "year": "2026",
       "cardLayout": "full",
       "cardLabel": "Smart Lawn",
@@ -2280,5 +2280,6 @@
         "image": ""
       }
     ]
-  }
+  },
+  "updatedAt": "2026-10-06T00:53:07.469Z"
 }
