@@ -2,13 +2,76 @@
 <html lang="zh-CN">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="refresh" content="0; url=visual-admin.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="robots" content="noindex,nofollow" />
-    <link rel="canonical" href="visual-admin.html" />
-    <title>嘉易动力 · 统一内容后台</title>
+    <meta name="theme-color" content="#0b100c" />
+    <title>嘉易网站管理后台</title>
+    <link rel="stylesheet" href="admin.css" />
   </head>
   <body>
-    <p>正在进入统一内容后台……<a href="visual-admin.html">立即打开</a></p>
+    <main class="login-view" data-login-view hidden>
+      <section class="login-card">
+        <img src="assets/jiayi-logo.svg" alt="JIAYI POWER" />
+        <p class="admin-kicker">CONTENT MANAGEMENT</p>
+        <h1>嘉易网站管理后台</h1>
+        <p>使用文字表单管理全部网站内容，可视化页面仅作为实时预览。</p>
+        <form data-login-form><label>管理密码<input type="password" name="password" autocomplete="current-password" required /></label><button class="primary-button" type="submit">安全登录</button><p class="form-message" data-login-message aria-live="polite"></p></form>
+        <a href="https://app.pagescms.org/g13217010520-alt/-/main/file/website_content">进入 Pages CMS →</a>
+      </section>
+    </main>
+
+    <div class="admin-shell" data-admin-shell hidden>
+      <aside class="admin-sidebar">
+        <a class="admin-brand" href="company.html" target="_blank" rel="noreferrer"><img src="assets/jiayi-logo.svg" alt="JIAYI POWER" /><span>网站管理后台<small>TEXT CMS + LIVE PREVIEW</small></span></a>
+        <nav aria-label="后台导航">
+          <a class="is-active" href="#overview" data-nav><span>01</span>内容总览</a>
+          <a href="#pages" data-nav><span>02</span>页面与研发能力</a>
+          <a href="#products" data-nav><span>03</span>产品管理</a>
+          <a href="#featured" data-nav><span>04</span>精选产品</a>
+          <a href="#galleries" data-nav><span>05</span>企业影像</a>
+          <a href="#media" data-nav><span>06</span>媒体库</a>
+          <a href="#contact" data-nav><span>07</span>联系方式</a>
+        </nav>
+        <div class="sidebar-footer"><button type="button" class="connection-state" data-storage-state>正在检查发布连接…</button><a class="text-button" href="https://app.pagescms.org/g13217010520-alt/-/main/file/website_content">高级管理 →</a><button type="button" class="text-button" data-logout hidden>退出登录</button></div>
+      </aside>
+
+      <div class="admin-main">
+        <header class="admin-topbar">
+          <button class="menu-button" type="button" data-menu aria-label="展开菜单">☰</button>
+          <div><p data-section-kicker>Dashboard</p><h1 data-section-title>内容总览</h1></div>
+          <div class="topbar-actions"><span class="language-sync">七种语言同步</span><span class="save-state" data-save-state>尚未修改</span><button class="secondary-button" type="button" data-refresh-preview>刷新预览</button><button class="primary-button" type="button" data-save>保存并发布</button></div>
+        </header>
+
+        <div class="admin-workspace">
+          <div class="admin-content">
+            <section class="admin-panel" id="overview" data-panel>
+              <div class="panel-intro"><div><p class="admin-kicker">OVERVIEW</p><h2>网站内容一览</h2></div><p>左侧文字表单是主要编辑路径；右侧网页只用于检查修改后的实际效果。</p></div>
+              <div class="stat-grid" data-stats></div>
+              <div class="notice-card language-notice"><strong>多语言同步规则</strong><p>七种语言共用同一份内容源。修改后所有语言会重新读取最新内容，不再保留旧文案；已有翻译继续使用，新文案没有翻译时显示最新中文。</p></div>
+              <div class="notice-card" data-bootstrap-notice hidden><strong>首次初始化</strong><p>目前正在使用网站内置内容，完成一次“保存并发布”后将写入 GitHub 并自动部署。</p></div>
+              <div class="quick-grid"><button type="button" data-go="pages"><span>✎</span><strong>页面与研发</strong><small>首屏、企业介绍、研发能力</small></button><button type="button" data-go="products"><span>＋</span><strong>产品管理</strong><small>产品、型号和参数</small></button><button type="button" data-go="galleries"><span>↑</span><strong>上传企业照片</strong><small>直接选择本机图片</small></button><button type="button" data-go="contact"><span>✉</span><strong>编辑联系</strong><small>电话、邮箱与按钮</small></button></div>
+            </section>
+
+            <section class="admin-panel" id="pages" data-panel hidden><div class="panel-intro"><div><p class="admin-kicker">PAGES &amp; R&amp;D</p><h2>页面与研发能力</h2></div><p>管理入口首屏、企业页首屏、企业介绍与研发能力模块。</p></div><form class="page-form" data-page-form></form></section>
+
+            <section class="admin-panel" id="products" data-panel hidden><div class="panel-intro"><div><p class="admin-kicker">PRODUCTS</p><h2>产品管理</h2></div><div class="panel-actions"><button class="secondary-button" type="button" data-expand-products>全部展开</button><button class="primary-button" type="button" data-add-product>＋ 新增产品</button></div></div><p class="panel-help">可管理产品概要、参数、应用场景和具体型号。所有图片都可直接从电脑上传。</p><div class="product-editor-list" data-product-list></div></section>
+
+            <section class="admin-panel" id="featured" data-panel hidden><div class="panel-intro"><div><p class="admin-kicker">FEATURED</p><h2>精选产品</h2></div><p>选择并排序首页“精选产品”板块，第一项使用大卡片。</p></div><div class="featured-picker" data-featured-picker></div><div class="featured-editor" data-featured-editor></div></section>
+
+            <section class="admin-panel" id="galleries" data-panel hidden><div class="panel-intro"><div><p class="admin-kicker">GALLERIES</p><h2>企业照片与视频</h2></div><label class="primary-button file-button">＋ 上传图片<input type="file" accept="image/*" multiple data-gallery-upload /></label></div><div class="gallery-tabs" data-gallery-tabs></div><div class="gallery-editor-grid" data-gallery-list></div></section>
+
+            <section class="admin-panel" id="media" data-panel hidden><div class="panel-intro"><div><p class="admin-kicker">MEDIA LIBRARY</p><h2>媒体库</h2></div><button class="secondary-button" type="button" data-refresh-media>刷新列表</button></div><form class="upload-zone" data-upload-form><input type="file" name="file" accept="image/*,video/*" required data-upload-input /><span>↑</span><strong>选择图片或视频上传</strong><small>图片上传后可直接用于产品、研发能力和企业影像；文件会在发布时一并提交。</small><button class="primary-button" type="submit">开始上传</button><progress max="100" value="0" data-upload-progress hidden></progress></form><div class="media-grid" data-media-list></div></section>
+
+            <section class="admin-panel" id="contact" data-panel hidden><div class="panel-intro"><div><p class="admin-kicker">CONTACT</p><h2>联系方式与行动按钮</h2></div><p>内容会同步到联系板块、页脚和产品咨询入口。</p></div><form class="contact-form form-grid" data-contact-form></form><div class="subsection"><div class="subsection__heading"><div><h3>官方账号二维码</h3><p class="panel-help">二维码图片可直接上传。</p></div><button class="secondary-button" type="button" data-add-account>＋ 添加账号</button></div><div class="series-list" data-account-list></div></div></section>
+          </div>
+
+          <aside class="admin-preview" aria-label="网站实时预览"><div class="admin-preview__bar"><div><i></i><strong>网页预览</strong><small data-preview-state>内容已连接</small></div><div><button type="button" data-preview-page="index">入口</button><button class="is-active" type="button" data-preview-page="company">内部页</button><a href="company.html" target="_blank" rel="noreferrer">新窗口 ↗</a></div></div><iframe src="company.html?cms-preview=1" title="网站预览" data-admin-preview></iframe></aside>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" data-toast role="status" aria-live="polite" hidden></div>
+    <dialog class="confirm-dialog" data-confirm-dialog><form method="dialog"><h2 data-confirm-title>确认操作</h2><p data-confirm-copy></p><div><button class="secondary-button" value="cancel">取消</button><button class="danger-button" value="confirm">确认删除</button></div></form></dialog>
+    <script src="admin.js" type="module"></script>
   </body>
 </html>

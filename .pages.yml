@@ -303,6 +303,36 @@ content:
           - name: aboutStatement
             label: 企业定位介绍
             type: text
+          - name: rdKicker
+            label: 研发能力英文眉题
+            type: string
+          - name: rdTitle
+            label: 研发能力标题
+            type: text
+          - name: rdBody1
+            label: 研发能力第一段说明
+            type: text
+          - name: rdBody2
+            label: 研发能力第二段说明
+            type: text
+          - name: rdImage1
+            label: 实验室图片
+            type: image
+            options:
+              media: site_media
+              categories: [image]
+          - name: rdImage2
+            label: 研发办公室图片
+            type: image
+            options:
+              media: site_media
+              categories: [image]
+          - name: rdImage3
+            label: 研发团队图片
+            type: image
+            options:
+              media: site_media
+              categories: [image]
       - name: products
         label: 产品管理
         component: product

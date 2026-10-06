@@ -1,7 +1,7 @@
 import { createServer } from "node:http";
 import { execFile } from "node:child_process";
-import { access, readFile, rename, stat, writeFile } from "node:fs/promises";
-import { dirname, extname, join, normalize, resolve } from "node:path";
+import { access, mkdir, readFile, readdir, rename, stat, unlink, writeFile } from "node:fs/promises";
+import { basename, dirname, extname, join, normalize, resolve } from "node:path";
 import { promisify } from "node:util";
 import { normalizeContent } from "./functions/_shared/content.js";
 
@@ -10,6 +10,7 @@ const root = join(workspace, "dist");
 const port = Number(process.env.PORT || 4173);
 const execFileAsync = promisify(execFile);
 const contentPath = join(root, "default-content.json");
+const uploadsPath = join(root, "assets", "uploads");
 const gitRuntimeBin = resolve(dirname(process.execPath), "..", "..", "native", "git", "mingw64", "bin");
 const types = {
   ".html": "text/html; charset=utf-8",
@@ -38,6 +39,38 @@ const readJson = async (request) => {
     if (raw.length > 10 * 1024 * 1024) throw new Error("内容数据过大。");
   }
   return JSON.parse(raw || "null");
+};
+
+const readBuffer = async (request) => {
+  const chunks = [];
+  let size = 0;
+  for await (const chunk of request) {
+    size += chunk.length;
+    if (size > 50 * 1024 * 1024) throw new Error("单个文件不能超过 50 MB。");
+    chunks.push(chunk);
+  }
+  return Buffer.concat(chunks);
+};
+
+const safeUploadName = (value = "upload") => {
+  const raw = basename(String(value)).normalize("NFKC");
+  const extension = extname(raw).toLowerCase();
+  const allowed = new Set([".jpg", ".jpeg", ".png", ".webp", ".gif", ".svg", ".mp4", ".webm"]);
+  if (!allowed.has(extension)) throw new Error("仅支持 JPG、PNG、WebP、GIF、SVG、MP4 或 WebM 文件。");
+  const stem = basename(raw, extension).replace(/[^a-zA-Z0-9\u4e00-\u9fff_-]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 80) || "media";
+  return `${Date.now()}-${stem}${extension}`;
+};
+
+const localMedia = async () => {
+  await mkdir(uploadsPath, { recursive: true });
+  const entries = await readdir(uploadsPath, { withFileTypes: true });
+  const items = await Promise.all(entries.filter((entry) => entry.isFile()).map(async (entry) => {
+    const info = await stat(join(uploadsPath, entry.name));
+    const extension = extname(entry.name).toLowerCase();
+    const type = [".mp4", ".webm"].includes(extension) ? `video/${extension.slice(1)}` : `image/${extension === ".jpg" ? "jpeg" : extension.slice(1)}`;
+    return { key: `uploads/${entry.name}`, url: `assets/uploads/${entry.name}`, type, size: info.size, uploaded: info.mtime.toISOString() };
+  }));
+  return items.sort((left, right) => String(right.uploaded).localeCompare(String(left.uploaded)));
 };
 
 const localRequestAllowed = (request) => {
@@ -80,15 +113,17 @@ const publishLocalContent = async (content) => {
     delete copy.updatedAt;
     return JSON.stringify(copy);
   };
-  if (comparable(current) === comparable(content)) return { commit: head, changed: false, content: current };
-
-  const temporaryPath = `${contentPath}.${process.pid}.tmp`;
-  await writeFile(temporaryPath, `${JSON.stringify(content, null, 2)}\n`, "utf8");
-  await rename(temporaryPath, contentPath);
-  await git("add", "--", "dist/default-content.json");
-  const changed = await git("diff", "--cached", "--name-only", "--", "dist/default-content.json");
-  if (!changed) return { commit: head, changed: false, content };
-  await git("commit", "-m", "后台发布：网站内容", "--", "dist/default-content.json");
+  const contentChanged = comparable(current) !== comparable(content);
+  if (contentChanged) {
+    const temporaryPath = `${contentPath}.${process.pid}.tmp`;
+    await writeFile(temporaryPath, `${JSON.stringify(content, null, 2)}\n`, "utf8");
+    await rename(temporaryPath, contentPath);
+  }
+  await mkdir(uploadsPath, { recursive: true });
+  await git("add", "--", "dist/default-content.json", "dist/assets/uploads");
+  const changed = await git("diff", "--cached", "--name-only", "--", "dist/default-content.json", "dist/assets/uploads");
+  if (!changed) return { commit: head, changed: false, content: current };
+  await git("commit", "-m", "后台发布：网站内容", "--", "dist/default-content.json", "dist/assets/uploads");
   const commit = await git("rev-parse", "HEAD");
   await git("push", "origin", "HEAD:main");
   return { commit, changed: true, content };
@@ -99,6 +134,27 @@ createServer(async (request, response) => {
     const pathname = decodeURIComponent(new URL(request.url, "http://localhost").pathname);
     if (pathname === "/api/local/status" && request.method === "GET") {
       return sendJson(response, 200, { ok: true, mode: "local-git", repository: "g13217010520-alt/-", branch: "main" });
+    }
+    if (pathname === "/api/local/media" && request.method === "GET") {
+      return sendJson(response, 200, { ok: true, items: await localMedia() });
+    }
+    if (pathname === "/api/local/media" && request.method === "DELETE") {
+      if (!localRequestAllowed(request)) return sendJson(response, 403, { ok: false, error: "请求来源验证失败。" });
+      const key = new URL(request.url, "http://localhost").searchParams.get("key") || "";
+      if (!/^uploads\/[^/]+$/.test(key)) return sendJson(response, 422, { ok: false, error: "媒体文件标识不正确。" });
+      await unlink(join(uploadsPath, basename(key)));
+      return sendJson(response, 200, { ok: true });
+    }
+    if (pathname === "/api/local/upload" && request.method === "POST") {
+      if (!localRequestAllowed(request)) return sendJson(response, 403, { ok: false, error: "请求来源验证失败。" });
+      const requestedName = new URL(request.url, "http://localhost").searchParams.get("name") || "upload";
+      const filename = safeUploadName(requestedName);
+      const data = await readBuffer(request);
+      if (!data.length) return sendJson(response, 422, { ok: false, error: "请选择需要上传的文件。" });
+      await mkdir(uploadsPath, { recursive: true });
+      await writeFile(join(uploadsPath, filename), data);
+      const type = String(request.headers["content-type"] || "application/octet-stream").split(";")[0];
+      return sendJson(response, 200, { ok: true, item: { key: `uploads/${filename}`, url: `assets/uploads/${filename}`, type, size: data.length, uploaded: new Date().toISOString() } });
     }
     if (pathname === "/api/local/publish" && request.method === "POST") {
       if (!localRequestAllowed(request)) return sendJson(response, 403, { ok: false, error: "请求来源验证失败。" });

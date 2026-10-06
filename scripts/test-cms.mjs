@@ -111,10 +111,10 @@ const deleteResponse = await deleteMedia({ request: request(`/api/admin/media?ke
 assert.equal(deleteResponse.status, 200);
 
 const adminHtml = await readFile(new URL("../dist/admin.html", import.meta.url), "utf8");
-assert.ok(adminHtml.includes("visual-admin.html"), "admin.html should redirect to the unified visual admin");
-const visualAdminHtml = await readFile(new URL("../dist/visual-admin.html", import.meta.url), "utf8");
-for (const marker of ["data-preview-page=\"index\"", "data-preview-page=\"company\"", "app.pagescms.org/g13217010520-alt/-/main/file/website_content"]) {
-  assert.ok(visualAdminHtml.includes(marker), `visual-admin.html should include ${marker}`);
+for (const marker of ["data-page-form", "data-gallery-upload", "data-admin-preview", "页面与研发能力"]) {
+  assert.ok(adminHtml.includes(marker), `admin.html should include ${marker}`);
 }
+const visualAdminHtml = await readFile(new URL("../dist/visual-admin.html", import.meta.url), "utf8");
+assert.ok(visualAdminHtml.includes("location.replace(`admin.html"), "visual-admin.html should redirect to the text-first admin");
 
-console.log("CMS smoke tests passed: authentication, GitHub content persistence, legacy storage, defaults, and unified admin structure.");
+console.log("CMS smoke tests passed: authentication, GitHub persistence, uploads, defaults, and text-first admin structure.");

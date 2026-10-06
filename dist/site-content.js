@@ -10,6 +10,7 @@ const content = visualPreview || await loadSiteContent();
 window.JIAYI_CONTENT = content;
 
 const setText = (selector, value) => { const element = document.querySelector(selector); if (element && value !== undefined) element.textContent = value; };
+const setHtml = (selector, value) => { const element = document.querySelector(selector); if (element && value !== undefined) element.innerHTML = htmlLines(value); };
 const intro = content.intro || {};
 setText("[data-cms-intro-meta]", intro.topMeta);
 setText("[data-cms-intro-eyebrow]", intro.eyebrow);
@@ -29,6 +30,14 @@ setText("[data-cms-hero-intro]", page.heroIntro);
 setText("[data-cms-about-title]", page.aboutTitle);
 setText("[data-cms-about-accent]", page.aboutAccent);
 setText("[data-cms-about-statement]", page.aboutStatement);
+setText("[data-cms-rd-kicker]", page.rdKicker);
+setHtml("[data-cms-rd-title]", page.rdTitle);
+setText('[data-cms-rd-body="rdBody1"]', page.rdBody1);
+setText('[data-cms-rd-body="rdBody2"]', page.rdBody2);
+document.querySelectorAll("[data-cms-rd-image]").forEach((image) => {
+  const source = page[image.dataset.cmsRdImage];
+  if (source) image.src = source;
+});
 
 const productGrid = document.querySelector("[data-cms-product-grid]");
 if (productGrid && Array.isArray(content.products)) {

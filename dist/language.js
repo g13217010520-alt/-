@@ -28,19 +28,23 @@
 
   const storageKey = "jiayi-language";
   let isOpen = false;
-  const sourceNodes = [];
-  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
-    acceptNode(node) {
-      const parent = node.parentElement;
-      if (!parent || parent.closest("script, style, [data-language-menu], [data-language-toggle]")) return NodeFilter.FILTER_REJECT;
-      return /[\u3400-\u9fff]/.test(node.nodeValue) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
-    },
-  });
+  let sourceNodes = [];
+  let activeLanguage = "zh-CN";
 
-  while (walker.nextNode()) {
-    const node = walker.currentNode;
-    sourceNodes.push({ node, value: node.nodeValue });
-  }
+  const collectSourceNodes = () => {
+    sourceNodes = [];
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        const parent = node.parentElement;
+        if (!parent || parent.closest("script, style, [data-language-menu], [data-language-toggle]")) return NodeFilter.FILTER_REJECT;
+        return /[\u3400-\u9fff]/.test(node.nodeValue) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+      },
+    });
+    while (walker.nextNode()) {
+      const node = walker.currentNode;
+      sourceNodes.push({ node, value: node.nodeValue });
+    }
+  };
 
   const setOpen = (next, restoreFocus = false) => {
     isOpen = next;
@@ -62,6 +66,7 @@
 
   const applyLanguage = (code) => {
     const selected = languageNames[code] ? code : "zh-CN";
+    activeLanguage = selected;
     const dictionary = window.JIAYI_TRANSLATIONS?.[selected] || {};
     document.documentElement.lang = selected;
     current.textContent = currentLabels[selected];
@@ -112,6 +117,15 @@
   } catch (_) {
     initial = "zh-CN";
   }
+  collectSourceNodes();
   applyLanguage(initial);
   setOpen(false);
+
+  document.addEventListener("jiayi:content-ready", () => {
+    sourceNodes.forEach(({ node, value }) => {
+      if (node.isConnected) node.nodeValue = value;
+    });
+    collectSourceNodes();
+    applyLanguage(activeLanguage);
+  });
 })();

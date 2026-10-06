@@ -7,11 +7,13 @@ const slugify = (value = "product") => String(value).trim().toLowerCase().replac
 const lines = (value = "") => String(value).split("\n").map((line) => line.trim()).filter(Boolean);
 const pairs = (value = "") => lines(value).map((line) => {
   const separator = line.indexOf("|");
-  return separator < 0 ? [line, ""] : [line.slice(0, separator).trim(), line.slice(separator + 1).trim()];
+  return separator < 0 ? { label: line, value: "" } : { label: line.slice(0, separator).trim(), value: line.slice(separator + 1).trim() };
 });
-const pairText = (value = []) => (Array.isArray(value) ? value : []).map((row) => Array.isArray(row) ? `${row[0] || ""} | ${row[1] || ""}` : String(row)).join("\n");
+const pairText = (value = []) => (Array.isArray(value) ? value : []).map((row) => Array.isArray(row) ? `${row[0] || ""} | ${row[1] || ""}` : `${row?.label || ""} | ${row?.value || ""}`).join("\n");
 const lineText = (value = []) => (Array.isArray(value) ? value : []).join("\n");
 const formatBytes = (bytes = 0) => bytes < 1024 ? `${bytes} B` : bytes < 1048576 ? `${(bytes / 1024).toFixed(1)} KB` : `${(bytes / 1048576).toFixed(1)} MB`;
+const localDemo = ["127.0.0.1", "localhost"].includes(location.hostname);
+const localStorageKey = "jiayi-visual-cms-content-v3";
 
 const state = {
   content: null,
@@ -20,6 +22,10 @@ const state = {
   media: [],
   currentPanel: "overview",
   saving: false,
+  original: null,
+  sha: null,
+  localPublishReady: false,
+  previewPage: "company",
 };
 
 const elements = {
@@ -28,6 +34,7 @@ const elements = {
   toast: $("[data-toast]"),
   saveState: $("[data-save-state]"),
   confirm: $("[data-confirm-dialog]"),
+  preview: $("[data-admin-preview]"),
 };
 
 const api = async (url, options = {}) => {
@@ -69,15 +76,29 @@ const fetchDefaults = async () => {
 };
 
 const loadContent = async () => {
-  const [remote, defaults] = await Promise.all([api("/api/admin/content"), fetchDefaults()]);
-  state.content = clone(remote.content || defaults);
+  const defaults = await fetchDefaults();
+  let content = defaults;
+  if (localDemo) {
+    try { content = JSON.parse(localStorage.getItem(localStorageKey)) || defaults; } catch { content = defaults; }
+  } else {
+    const remote = await api("/api/admin/github-content");
+    content = remote.content || defaults;
+    state.sha = remote.sha || null;
+  }
+  state.content = clone(content);
+  state.content.intro = { ...(defaults.intro || {}), ...(state.content.intro || {}) };
+  state.content.page = { ...(defaults.page || {}), ...(state.content.page || {}) };
   state.content.products ||= [];
   state.content.galleries ||= defaults.galleries || {};
   state.content.featuredProductIds ||= [];
   state.content.contact ||= defaults.contact || {};
-  $("[data-bootstrap-notice]").hidden = Boolean(remote.content);
+  state.original = clone(state.content);
+  window.JIAYI_VISUAL_CONTENT = state.content;
+  $("[data-bootstrap-notice]").hidden = true;
   setDirty(false);
   renderAll();
+  refreshPreview();
+  loadMedia();
 };
 
 const showLogin = (message = "") => {
@@ -94,9 +115,20 @@ const showAdmin = () => {
 
 const boot = async () => {
   try {
+    if (localDemo) {
+      showAdmin();
+      $("[data-logout]").hidden = true;
+      try {
+        const status = await api("/api/local/status");
+        state.localPublishReady = status.mode === "local-git";
+        $("[data-storage-state]").textContent = state.localPublishReady ? "GitHub 发布已连接" : "仅保存本地草稿";
+      } catch {
+        $("[data-storage-state]").textContent = "仅保存本地草稿";
+      }
+      return await loadContent();
+    }
     const session = await api("/api/admin/session");
-    const storage = session.storage || {};
-    $("[data-storage-state]").textContent = storage.content && storage.media ? "Cloudflare 存储已连接" : "部分存储尚未配置";
+    $("[data-storage-state]").textContent = session.configured ? "GitHub 内容已连接" : "线上密钥尚未配置";
     if (!session.configured) return showLogin("Cloudflare 中尚未配置 CMS_ADMIN_PASSWORD 和 CMS_SESSION_SECRET。请先完成部署说明中的设置。");
     if (!session.authenticated) return showLogin();
     showAdmin();
@@ -124,6 +156,27 @@ const field = (label, path, value, options = {}) => {
   return `<label class="${classes}">${escapeHtml(label)}<input type="${options.type || "text"}" data-field="${escapeAttr(path)}" value="${escapeAttr(value || "")}" placeholder="${escapeAttr(options.placeholder || "")}" ${options.readonly ? "readonly" : ""} /></label>`;
 };
 
+const imageField = (label, path, value) => `<div class="image-field" data-image-field="${escapeAttr(path)}">
+  <img src="${escapeAttr(value || "assets/jiayi-logo.svg")}" alt="" />
+  <div class="image-field__body"><strong>${escapeHtml(label)}</strong><small>${escapeHtml(value || "尚未选择图片")}</small><label>上传 / 替换图片<input type="file" accept="image/*" data-upload-field="${escapeAttr(path)}" /></label></div>
+</div>`;
+
+const pageSections = [
+  { title: "入口首屏", help: "访客打开网站时看到的全屏封面。", scope: "intro", fields: [["右上角年份标语", "topMeta"], ["英文眉题", "eyebrow"], ["主标题", "title"], ["描边标题", "accentTitle"], ["说明文字", "lead", "textarea"], ["进入按钮文字", "buttonLabel"], ["左下角地点", "footerLocation"], ["右下角提示", "scrollLabel"]], image: ["背景图片", "backgroundImage"] },
+  { title: "企业页首屏", help: "企业主页顶部标题和简介。", scope: "page", fields: [["主标题", "heroTitle"], ["强调标题", "heroAccent"], ["介绍文字", "heroIntro", "textarea"]] },
+  { title: "企业介绍", help: "关于嘉易板块的核心定位。", scope: "page", fields: [["板块标题", "aboutTitle"], ["第二行标题", "aboutAccent"], ["企业定位介绍", "aboutStatement", "textarea"]] },
+  { title: "研发能力", help: "研发能力模块的标题、说明和三张展示图片。", scope: "page", fields: [["英文眉题", "rdKicker"], ["主标题", "rdTitle", "textarea"], ["第一段说明", "rdBody1", "textarea"], ["第二段说明", "rdBody2", "textarea"]], images: [["实验室图片", "rdImage1"], ["研发办公室图片", "rdImage2"], ["研发团队图片", "rdImage3"]] },
+];
+
+const renderPages = () => {
+  $("[data-page-form]").innerHTML = pageSections.map((section) => {
+    const target = state.content[section.scope] || {};
+    const controls = section.fields.map(([label, key, type]) => field(label, key, target[key], { type, wide: type === "textarea" })).join("");
+    const images = (section.images || (section.image ? [section.image] : [])).map(([label, key]) => imageField(label, key, target[key])).join("");
+    return `<section class="form-section" data-content-scope="${section.scope}"><h3>${escapeHtml(section.title)}</h3><p>${escapeHtml(section.help)}</p><div class="form-grid">${controls}${images}</div></section>`;
+  }).join("");
+};
+
 const renderSeries = (product) => (product.series || []).map((item, index) => `
   <article class="series-editor" data-series-index="${index}">
     <div class="series-editor__top"><strong>${String(index + 1).padStart(2, "0")} · ${escapeHtml(item.name || "未命名型号")}</strong><div class="inline-actions">
@@ -131,7 +184,7 @@ const renderSeries = (product) => (product.series || []).map((item, index) => `
     </div></div>
     <div class="form-grid">
       ${field("型号", "model", item.model)}${field("型号名称", "name", item.name)}
-      ${field("产品图片地址", "image", item.image, { wide: true })}
+      ${imageField("型号图片", "image", item.image)}
       ${field("产品概要", "description", item.description, { type: "textarea", wide: true })}
       ${field("参数摘要（每行一项）", "specsText", lineText(item.specs), { type: "textarea" })}
       ${field("核心参数（每行：名称 | 数值）", "parametersText", pairText(item.parameters), { type: "textarea" })}
@@ -155,7 +208,7 @@ const renderProducts = () => {
           ${field("产品 ID（链接标识）", "id", product.id, { readonly: true })}${field("产品标题", "name", product.name)}
           ${field("主型号", "model", product.model)}${field("年份", "year", product.year)}
           ${field("分类", "category", product.category)}${field("产品卡片标签", "cardLabel", product.cardLabel)}
-          ${field("产品卡片版式", "cardLayout", product.cardLayout || "standard", { type: "select", options: [["standard", "标准"], ["wide", "横向宽卡"], ["full", "独立整行"]] })}${field("主图地址", "image", product.image)}
+          ${field("产品卡片版式", "cardLayout", product.cardLayout || "standard", { type: "select", options: [["standard", "标准"], ["wide", "横向宽卡"], ["full", "独立整行"]] })}${imageField("产品主图", "image", product.image)}
           ${field("产品概要", "summary", product.summary, { type: "textarea", wide: true })}
           ${field("亮点标题", "featureTitle", product.featureTitle, { type: "textarea" })}${field("产品文案", "description", product.description, { type: "textarea" })}
           ${field("核心参数（每行：名称 | 数值）", "specsText", pairText(product.specs), { type: "textarea" })}${field("应用场景（每行一项）", "usesText", lineText(product.uses), { type: "textarea" })}
@@ -175,7 +228,7 @@ const renderFeatured = () => {
     if (!product) return "";
     const featured = product.featured || {};
     return `<article class="featured-card-editor" data-featured-id="${escapeAttr(id)}"><header><h3>${String(index + 1).padStart(2, "0")} · ${escapeHtml(product.name)}</h3><div class="inline-actions"><button class="icon-button" type="button" data-action="featured-up">↑</button><button class="icon-button" type="button" data-action="featured-down">↓</button></div></header><div class="form-grid">
-      ${field("场景图片地址", "image", featured.image || product.image, { wide: true })}${field("右上角信息", "meta", featured.meta || product.model)}
+      ${imageField("精选场景图片", "image", featured.image || product.image)}${field("右上角信息", "meta", featured.meta || product.model)}
       ${field("绿色说明", "kicker", featured.kicker || product.summary)}${field("精选标题", "headline", featured.headline || product.featureTitle, { type: "textarea", wide: true })}
       ${field("标签（每行一项）", "featuresText", lineText(featured.features), { type: "textarea", wide: true })}
     </div></article>`;
@@ -190,7 +243,7 @@ const renderGalleries = () => {
   const items = galleries[state.activeGallery]?.items || [];
   $("[data-gallery-list]").innerHTML = items.map((item, index) => `<article class="gallery-item" data-gallery-index="${index}">
     <div class="gallery-item__preview">${galleryPreview(item)}<span>${String(index + 1).padStart(2, "0")} · ${escapeHtml(item.type || "image")}</span></div>
-    <div class="gallery-item__body">${field("媒体地址", "url", item.url)}${field("替代文字", "alt", item.alt)}${field("类型", "type", item.type || "image", { type: "select", options: [["image", "图片"], ["video", "视频"]] })}${field("方向", "orientation", item.orientation || "landscape", { type: "select", options: [["landscape", "横向"], ["portrait", "竖向"]] })}<div class="gallery-item__actions"><button type="button" data-action="gallery-up">↑ 上移</button><button type="button" data-action="gallery-down">↓ 下移</button><button type="button" data-action="gallery-delete">删除</button></div></div>
+    <div class="gallery-item__body"><label class="secondary-button file-button">替换图片<input type="file" accept="image/*" data-upload-field="url" /></label>${field("图片说明", "alt", item.alt)}${field("方向", "orientation", item.orientation || "landscape", { type: "select", options: [["landscape", "横向"], ["portrait", "竖向"]] })}<div class="gallery-item__actions"><button type="button" data-action="gallery-up">↑ 上移</button><button type="button" data-action="gallery-down">↓ 下移</button><button type="button" data-action="gallery-delete">删除</button></div></div>
   </article>`).join("") || `<div class="notice-card"><strong>此分类暂无内容</strong><p>点击右上角添加照片或视频。</p></div>`;
 };
 
@@ -203,11 +256,12 @@ const renderContact = () => {
   const contact = state.content.contact || {};
   $("[data-contact-form]").innerHTML = contactFields.map(([label, key, type]) => field(label, key, contact[key], { type })).join("");
   contact.officialAccounts ||= [];
-  $("[data-account-list]").innerHTML = contact.officialAccounts.map((account, index) => `<article class="series-editor" data-account-index="${index}"><div class="series-editor__top"><strong>${String(index + 1).padStart(2, "0")} · ${escapeHtml(account.name || "未命名账号")}</strong><div class="inline-actions"><button class="icon-button" type="button" data-action="account-up">↑</button><button class="icon-button" type="button" data-action="account-down">↓</button><button class="icon-button" type="button" data-action="account-delete">×</button></div></div><div class="form-grid">${field("账号名称", "name", account.name)}${field("说明", "description", account.description)}${field("二维码图片地址", "image", account.image, { wide: true })}</div></article>`).join("") || `<div class="notice-card"><strong>暂无官方账号</strong><p>点击“添加账号”创建二维码位置。</p></div>`;
+  $("[data-account-list]").innerHTML = contact.officialAccounts.map((account, index) => `<article class="series-editor" data-account-index="${index}"><div class="series-editor__top"><strong>${String(index + 1).padStart(2, "0")} · ${escapeHtml(account.name || "未命名账号")}</strong><div class="inline-actions"><button class="icon-button" type="button" data-action="account-up">↑</button><button class="icon-button" type="button" data-action="account-down">↓</button><button class="icon-button" type="button" data-action="account-delete">×</button></div></div><div class="form-grid">${field("账号名称", "name", account.name)}${field("说明", "description", account.description)}${imageField("二维码图片", "image", account.image)}</div></article>`).join("") || `<div class="notice-card"><strong>暂无官方账号</strong><p>点击“添加账号”创建二维码位置。</p></div>`;
 };
 
 const renderAll = () => {
   renderStats();
+  renderPages();
   renderProducts();
   renderFeatured();
   renderGalleries();
@@ -226,38 +280,68 @@ const productFromElement = (element) => {
   return state.content.products.find((product) => product.id === id);
 };
 
+const targetForElement = (element) => {
+  const productElement = element.closest("[data-product-id]");
+  const featuredElement = element.closest("[data-featured-id]");
+  const galleryElement = element.closest("[data-gallery-index]");
+  const accountElement = element.closest("[data-account-index]");
+  const scopeElement = element.closest("[data-content-scope]");
+  if (productElement) {
+    let target = productFromElement(productElement);
+    const seriesElement = element.closest("[data-series-index]");
+    if (seriesElement) target = target?.series?.[Number(seriesElement.dataset.seriesIndex)];
+    return target;
+  }
+  if (featuredElement) {
+    const product = state.content.products.find((item) => item.id === featuredElement.dataset.featuredId);
+    if (!product) return null;
+    product.featured ||= {};
+    return product.featured;
+  }
+  if (galleryElement) return state.content.galleries[state.activeGallery]?.items?.[Number(galleryElement.dataset.galleryIndex)];
+  if (accountElement) return state.content.contact.officialAccounts?.[Number(accountElement.dataset.accountIndex)];
+  if (element.closest("[data-contact-form]")) return state.content.contact;
+  if (scopeElement) return state.content[scopeElement.dataset.contentScope];
+  return null;
+};
+
+const refreshPreview = () => {
+  if (!elements.preview || !state.content) return;
+  window.JIAYI_VISUAL_CONTENT = state.content;
+  const file = state.previewPage === "index" ? "index.html" : "company.html";
+  $("[data-preview-state]").textContent = "正在刷新…";
+  elements.preview.src = `${file}?cms-preview=1&editor=${Date.now()}`;
+};
+
+const schedulePreview = () => {
+  clearTimeout(schedulePreview.timer);
+  schedulePreview.timer = setTimeout(refreshPreview, 650);
+};
+
 const syncField = (event) => {
   const input = event.target.closest("[data-field]");
   if (!input || !state.content) return;
   const fieldName = input.dataset.field;
-  const productElement = input.closest("[data-product-id]");
-  const featuredElement = input.closest("[data-featured-id]");
-  const galleryElement = input.closest("[data-gallery-index]");
-  let target;
-  if (productElement) {
-    target = productFromElement(productElement);
-    const seriesElement = input.closest("[data-series-index]");
-    if (seriesElement) target = target?.series?.[Number(seriesElement.dataset.seriesIndex)];
-  } else if (featuredElement) {
-    const product = state.content.products.find((item) => item.id === featuredElement.dataset.featuredId);
-    product.featured ||= {};
-    target = product.featured;
-  } else if (galleryElement) {
-    target = state.content.galleries[state.activeGallery]?.items?.[Number(galleryElement.dataset.galleryIndex)];
-  } else if (input.closest("[data-account-index]")) {
-    target = state.content.contact.officialAccounts?.[Number(input.closest("[data-account-index]").dataset.accountIndex)];
-  } else if (input.closest("[data-contact-form]")) {
-    target = state.content.contact;
-  }
+  const target = targetForElement(input);
   if (!target) return;
   if (fieldName === "specsText" || fieldName === "parametersText") target[fieldName.replace("Text", "")] = pairs(input.value);
   else if (["usesText", "applicationsText", "featuresText"].includes(fieldName)) target[fieldName.replace("Text", "")] = lines(input.value);
   else target[fieldName] = input.value;
   setDirty();
+  schedulePreview();
 };
 
 document.addEventListener("input", syncField);
 document.addEventListener("change", syncField);
+
+elements.preview.addEventListener("load", () => { $("[data-preview-state]").textContent = "预览已更新"; });
+$("[data-refresh-preview]").addEventListener("click", refreshPreview);
+$$('[data-preview-page]').forEach((button) => button.addEventListener("click", () => {
+  state.previewPage = button.dataset.previewPage === "index" ? "index" : "company";
+  $$('[data-preview-page]').forEach((item) => item.classList.toggle("is-active", item === button));
+  refreshPreview();
+}));
+$("[data-storage-state]").addEventListener("click", () => toast(state.localPublishReady ? "本机已连接 GitHub main；保存并发布会更新线上网站。" : "当前只保存本地草稿，请使用项目自带服务器打开后台。", !state.localPublishReady));
 
 $("[data-login-form]").addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -282,7 +366,7 @@ const showPanel = (id) => {
   state.currentPanel = id;
   $$('[data-panel]').forEach((panel) => { panel.hidden = panel.id !== id; });
   $$('[data-nav]').forEach((link) => link.classList.toggle("is-active", link.hash === `#${id}`));
-  const titles = { overview: ["Dashboard", "内容总览"], products: ["Products", "产品管理"], featured: ["Featured", "精选产品"], galleries: ["Galleries", "企业影像"], media: ["Media", "媒体库"], contact: ["Contact", "联系方式"] };
+  const titles = { overview: ["Dashboard", "内容总览"], pages: ["Pages & R&D", "页面与研发能力"], products: ["Products", "产品管理"], featured: ["Featured", "精选产品"], galleries: ["Galleries", "企业影像"], media: ["Media", "媒体库"], contact: ["Contact", "联系方式"] };
   $("[data-section-kicker]").textContent = titles[id]?.[0] || "CMS";
   $("[data-section-title]").textContent = titles[id]?.[1] || "网站管理";
   document.body.classList.remove("menu-open");
@@ -352,7 +436,6 @@ $("[data-featured-editor]").addEventListener("click", (event) => {
 });
 
 $("[data-gallery-tabs]").addEventListener("click", (event) => { const tab = event.target.closest("[data-gallery-tab]"); if (!tab) return; state.activeGallery = tab.dataset.galleryTab; renderGalleries(); });
-$("[data-add-gallery-item]").addEventListener("click", () => { const group = state.content.galleries[state.activeGallery]; group.items ||= []; group.items.push({ id: `${state.activeGallery}-${Date.now().toString(36)}`, type: "image", url: "assets/jiayi-logo.svg", alt: group.title || "企业影像", orientation: "landscape" }); renderGalleries(); renderStats(); setDirty(); });
 $("[data-gallery-list]").addEventListener("click", async (event) => {
   const button = event.target.closest("[data-action]"); if (!button) return;
   const items = state.content.galleries[state.activeGallery].items;
@@ -372,16 +455,78 @@ $("[data-account-list]").addEventListener("click", async (event) => {
   renderContact(); setDirty();
 });
 
+const uploadFile = async (file) => {
+  if (localDemo) {
+    return api(`/api/local/upload?name=${encodeURIComponent(file.name)}`, {
+      method: "POST",
+      headers: { "content-type": file.type || "application/octet-stream" },
+      body: file,
+    });
+  }
+  const form = new FormData();
+  form.append("file", file);
+  return api("/api/admin/media", { method: "POST", body: form });
+};
+
+document.addEventListener("change", async (event) => {
+  const input = event.target.closest("[data-upload-field]");
+  if (!input?.files?.[0]) return;
+  const target = targetForElement(input);
+  if (!target) return;
+  input.disabled = true;
+  try {
+    const result = await uploadFile(input.files[0]);
+    const item = result.item;
+    target[input.dataset.uploadField] = item.url;
+    if (input.dataset.uploadField === "url") target.type = item.type?.startsWith("video/") ? "video" : "image";
+    state.media = [item, ...state.media.filter((entry) => entry.key !== item.key)];
+    setDirty();
+    renderAll();
+    showPanel(state.currentPanel);
+    refreshPreview();
+    toast("图片已上传并替换，点击“保存并发布”后同步线上。");
+  } catch (error) {
+    toast(error.message, true);
+  } finally {
+    input.disabled = false;
+  }
+});
+
+$("[data-gallery-upload]").addEventListener("change", async (event) => {
+  const files = [...event.target.files];
+  if (!files.length) return;
+  const group = state.content.galleries[state.activeGallery];
+  group.items ||= [];
+  event.target.disabled = true;
+  try {
+    for (const file of files) {
+      const { item } = await uploadFile(file);
+      state.media = [item, ...state.media.filter((entry) => entry.key !== item.key)];
+      group.items.push({ id: `${state.activeGallery}-${Date.now().toString(36)}-${group.items.length}`, type: "image", url: item.url, alt: file.name.replace(/\.[^.]+$/, ""), orientation: "landscape" });
+    }
+    setDirty();
+    renderGalleries();
+    renderStats();
+    refreshPreview();
+    toast(`已上传 ${files.length} 张图片，保存并发布后同步线上。`);
+  } catch (error) {
+    toast(error.message, true);
+  } finally {
+    event.target.value = "";
+    event.target.disabled = false;
+  }
+});
+
 const renderMedia = () => {
   $("[data-media-list]").innerHTML = state.media.map((item) => `<article class="media-item" data-media-key="${escapeAttr(item.key)}"><div class="media-item__preview">${item.type.startsWith("video/") ? `<video src="${escapeAttr(item.url)}" muted controls preload="metadata"></video>` : `<img src="${escapeAttr(item.url)}" alt="" loading="lazy" />`}<span>${item.type.startsWith("video/") ? "VIDEO" : "IMAGE"}</span></div><div class="media-item__body"><strong title="${escapeAttr(item.key)}">${escapeHtml(item.key.split("/").at(-1))}</strong><small>${formatBytes(item.size)} · ${item.uploaded ? new Date(item.uploaded).toLocaleDateString("zh-CN") : "刚刚上传"}</small><div class="media-item__actions"><button type="button" data-action="media-copy">复制地址</button><button type="button" data-action="media-gallery">加入当前影像</button><button type="button" data-action="media-delete">删除</button></div></div></article>`).join("") || `<div class="notice-card"><strong>媒体库为空</strong><p>上传后的图片和视频会显示在这里。</p></div>`;
 };
 
-const loadMedia = async () => { try { const result = await api("/api/admin/media"); state.media = result.items || []; renderMedia(); } catch (error) { toast(error.message, true); } };
+const loadMedia = async () => { try { const result = await api(localDemo ? "/api/local/media" : "/api/admin/media"); state.media = result.items || []; renderMedia(); } catch (error) { toast(error.message, true); } };
 $("[data-refresh-media]").addEventListener("click", loadMedia);
 $("[data-upload-form]").addEventListener("submit", async (event) => {
   event.preventDefault(); const file = event.currentTarget.file.files[0]; if (!file) return;
   const button = $("button", event.currentTarget); button.disabled = true; button.textContent = "正在上传…";
-  try { const form = new FormData(); form.append("file", file); const result = await api("/api/admin/media", { method: "POST", body: form }); state.media.unshift(result.item); renderMedia(); event.currentTarget.reset(); toast("媒体上传成功，可以复制地址或加入企业影像。"); }
+  try { const result = await uploadFile(file); state.media.unshift(result.item); renderMedia(); event.currentTarget.reset(); setDirty(); toast("媒体上传成功，保存并发布后会同步到线上。"); }
   catch (error) { toast(error.message, true); } finally { button.disabled = false; button.textContent = "开始上传"; }
 });
 
@@ -391,13 +536,35 @@ $("[data-media-list]").addEventListener("click", async (event) => {
   const item = state.media.find((entry) => entry.key === key); if (!item) return;
   if (button.dataset.action === "media-copy") { await navigator.clipboard.writeText(new URL(item.url, location.href).href); toast("媒体地址已复制。"); }
   if (button.dataset.action === "media-gallery") { const group = state.content.galleries[state.activeGallery]; group.items.push({ id: `${state.activeGallery}-${Date.now().toString(36)}`, type: item.type.startsWith("video/") ? "video" : "image", url: item.url, alt: group.title || "企业影像", orientation: "landscape" }); renderGalleries(); renderStats(); setDirty(); toast(`已加入“${group.title}”，保存发布后生效。`); }
-  if (button.dataset.action === "media-delete" && await confirmAction("永久删除媒体", "此操作会从 Cloudflare R2 永久删除文件。如果网页仍在使用该地址，将显示失败。确定继续吗？")) { await api(`/api/admin/media?key=${encodeURIComponent(key)}`, { method: "DELETE" }); state.media = state.media.filter((entry) => entry.key !== key); renderMedia(); toast("媒体文件已删除。"); }
+  if (button.dataset.action === "media-delete" && await confirmAction("永久删除媒体", `此操作会从${localDemo ? "本机待发布目录" : " Cloudflare R2"}删除文件。如果网页仍在使用该地址，将显示失败。确定继续吗？`)) { await api(`${localDemo ? "/api/local/media" : "/api/admin/media"}?key=${encodeURIComponent(key)}`, { method: "DELETE" }); state.media = state.media.filter((entry) => entry.key !== key); renderMedia(); toast("媒体文件已删除。"); }
 });
 
 const save = async () => {
   if (state.saving || !state.content) return;
   state.saving = true; const buttons = $$('[data-save]'); buttons.forEach((button) => { button.disabled = true; button.textContent = "正在发布…"; });
-  try { const result = await api("/api/admin/content", { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify({ content: state.content }) }); state.content.updatedAt = result.updatedAt; setDirty(false); $("[data-bootstrap-notice]").hidden = true; toast("保存成功，线上网站已更新。"); }
+  try {
+    state.content.languageSync = { mode: "shared-source", languages: ["zh-CN", "en", "de", "ru", "es", "th", "tr"], updatedAt: new Date().toISOString() };
+    let result;
+    if (localDemo) {
+      localStorage.setItem(localStorageKey, JSON.stringify(state.content));
+      if (!state.localPublishReady) {
+        setDirty(false);
+        toast("已保存为本地草稿；当前没有连接 GitHub 发布通道。", true);
+        return;
+      }
+      result = await api("/api/local/publish", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ content: state.content }) });
+    } else {
+      result = await api("/api/admin/github-content", { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify({ content: state.content, sha: state.sha }) });
+      state.sha = result.sha || state.sha;
+    }
+    state.content = clone(result.content || state.content);
+    window.JIAYI_VISUAL_CONTENT = state.content;
+    state.original = clone(state.content);
+    setDirty(false);
+    $("[data-bootstrap-notice]").hidden = true;
+    refreshPreview();
+    toast(result.changed === false ? "内容与线上版本一致，无需重复发布。" : "已提交 GitHub，Cloudflare 正在部署；通常 1–3 分钟后线上生效。");
+  }
   catch (error) { if (error.status === 401) showLogin("登录已失效，请重新登录。"); else toast(error.message, true); }
   finally { state.saving = false; buttons.forEach((button) => { button.disabled = false; button.textContent = "保存并发布"; }); }
 };
@@ -406,5 +573,5 @@ window.addEventListener("beforeunload", (event) => { if (!state.dirty) return; e
 document.addEventListener("keydown", (event) => { if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "s") { event.preventDefault(); save(); } });
 
 const initialPanel = location.hash.slice(1);
-if (["overview", "products", "featured", "galleries", "media", "contact"].includes(initialPanel)) showPanel(initialPanel);
+if (["overview", "pages", "products", "featured", "galleries", "media", "contact"].includes(initialPanel)) showPanel(initialPanel);
 boot();
