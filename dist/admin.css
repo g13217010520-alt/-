@@ -82,6 +82,7 @@ input:focus,textarea:focus,select:focus { border-color:rgba(153,255,66,.65); box
 .subsection { margin-top:26px; padding-top:24px; border-top:1px solid var(--line); }
 .subsection__heading { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
 .subsection__heading h3 { margin:0; }
+.subsection__heading .panel-help { margin:6px 0 0; line-height:1.5; }
 .series-list { display:grid; gap:12px; }
 .series-editor { padding:16px; border:1px solid var(--line); border-radius:14px; background:#0b0f0c; }
 .series-editor__top { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:14px; }
