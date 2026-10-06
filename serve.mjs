@@ -74,16 +74,24 @@ const publishLocalContent = async (content) => {
     throw failure;
   }
 
+  const current = JSON.parse(await readFile(contentPath, "utf8"));
+  const comparable = (value) => {
+    const copy = structuredClone(value);
+    delete copy.updatedAt;
+    return JSON.stringify(copy);
+  };
+  if (comparable(current) === comparable(content)) return { commit: head, changed: false, content: current };
+
   const temporaryPath = `${contentPath}.${process.pid}.tmp`;
   await writeFile(temporaryPath, `${JSON.stringify(content, null, 2)}\n`, "utf8");
   await rename(temporaryPath, contentPath);
   await git("add", "--", "dist/default-content.json");
   const changed = await git("diff", "--cached", "--name-only", "--", "dist/default-content.json");
-  if (!changed) return { commit: head, changed: false };
+  if (!changed) return { commit: head, changed: false, content };
   await git("commit", "-m", "后台发布：网站内容", "--", "dist/default-content.json");
   const commit = await git("rev-parse", "HEAD");
   await git("push", "origin", "HEAD:main");
-  return { commit, changed: true };
+  return { commit, changed: true, content };
 };
 
 createServer(async (request, response) => {
@@ -98,7 +106,7 @@ createServer(async (request, response) => {
       if (!content) return sendJson(response, 422, { ok: false, error: "内容格式不正确。" });
       try {
         const result = await publishLocalContent(content);
-        return sendJson(response, 200, { ok: true, ...result, content });
+        return sendJson(response, 200, { ok: true, ...result });
       } catch (error) {
         return sendJson(response, error.status || 502, { ok: false, error: error.stderr?.trim() || error.message || "发布失败。" });
       }
