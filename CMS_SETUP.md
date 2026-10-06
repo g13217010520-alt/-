@@ -8,6 +8,7 @@
 
 - 可视化编辑：打开 `/admin.html`，修改入口首屏、企业主页、产品卡片与详情、具体型号参数、企业影像和联系方式。
 - 高级内容管理：在可视化后台点击“高级管理”，或直接打开 `https://app.pagescms.org/g13217010520-alt/-/main/file/website_content`。
+- 本机发布：使用 `node serve.mjs` 启动后台且电脑已登录 GitHub 时，状态显示“GitHub 发布已连接”；点击“发布修改”会提交 `dist/default-content.json` 到 `main` 并触发线上部署。
 
 ## 可视化后台一次性配置
 
