@@ -27,6 +27,8 @@ const page = content.page || {};
 setText("[data-cms-hero-title]", page.heroTitle);
 setText("[data-cms-hero-accent]", page.heroAccent);
 setText("[data-cms-hero-intro]", page.heroIntro);
+const heroImage = document.querySelector("[data-cms-hero-image]");
+if (heroImage && page.heroImage) heroImage.src = page.heroImage;
 setText("[data-cms-about-title]", page.aboutTitle);
 setText("[data-cms-about-accent]", page.aboutAccent);
 setText("[data-cms-about-statement]", page.aboutStatement);

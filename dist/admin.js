@@ -163,7 +163,7 @@ const imageField = (label, path, value) => `<div class="image-field" data-image-
 
 const pageSections = [
   { title: "入口首屏", help: "访客打开网站时看到的全屏封面。", scope: "intro", fields: [["右上角年份标语", "topMeta"], ["英文眉题", "eyebrow"], ["主标题", "title"], ["描边标题", "accentTitle"], ["说明文字", "lead", "textarea"], ["进入按钮文字", "buttonLabel"], ["左下角地点", "footerLocation"], ["右下角提示", "scrollLabel"]], image: ["背景图片", "backgroundImage"] },
-  { title: "企业页首屏", help: "企业主页顶部标题和简介。", scope: "page", fields: [["主标题", "heroTitle"], ["强调标题", "heroAccent"], ["介绍文字", "heroIntro", "textarea"]] },
+  { title: "企业页首屏", help: "企业主页顶部标题、简介和右侧展示图片。", scope: "page", fields: [["主标题", "heroTitle"], ["强调标题", "heroAccent"], ["介绍文字", "heroIntro", "textarea"]], image: ["首屏展示图片", "heroImage"] },
   { title: "企业介绍", help: "关于嘉易板块的核心定位。", scope: "page", fields: [["板块标题", "aboutTitle"], ["第二行标题", "aboutAccent"], ["企业定位介绍", "aboutStatement", "textarea"]] },
   { title: "研发能力", help: "研发能力模块的标题、说明和三张展示图片。", scope: "page", fields: [["英文眉题", "rdKicker"], ["主标题", "rdTitle", "textarea"], ["第一段说明", "rdBody1", "textarea"], ["第二段说明", "rdBody2", "textarea"]], images: [["实验室图片", "rdImage1"], ["研发办公室图片", "rdImage2"], ["研发团队图片", "rdImage3"]] },
 ];

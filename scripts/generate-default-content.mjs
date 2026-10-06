@@ -95,6 +95,7 @@ const content = {
     heroTitle: "把更稳定的动力，",
     heroAccent: "交给每一片生长",
     heroIntro: "嘉易动力专注园林锂电工具的研发与制造，从结构设计、动力匹配到规模交付，为全球品牌提供可持续扩展的产品解决方案。",
+    heroImage: "assets/company-exterior.png",
     aboutTitle: "不只是制造，",
     aboutAccent: "更是共同开发",
     aboutStatement: "永康市嘉易工贸有限公司立足浙江永康，定位为全球标杆品牌的“隐形动力专家”与共同开发伙伴。",

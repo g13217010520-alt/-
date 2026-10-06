@@ -294,6 +294,12 @@ content:
           - name: heroIntro
             label: 企业主页首屏介绍
             type: text
+          - name: heroImage
+            label: 企业主页首屏图片
+            type: image
+            options:
+              media: site_media
+              categories: [image]
           - name: aboutTitle
             label: 企业介绍标题
             type: string
