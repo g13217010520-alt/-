@@ -1,5 +1,24 @@
 {
   "version": 1,
+  "intro": {
+    "topMeta": "2026 / Outdoor Power Tools",
+    "eyebrow": "One platform. More possibilities.",
+    "title": "动力，藏于",
+    "accentTitle": "每一次生长",
+    "lead": "园林锂电工具研发与制造，让稳定动力贯穿修剪、清洁、耕作与智能养护。",
+    "buttonLabel": "进入嘉易动力",
+    "footerLocation": "Yongkang · Zhejiang · China",
+    "scrollLabel": "Click to explore",
+    "backgroundImage": "assets/intro-cover.webp"
+  },
+  "page": {
+    "heroTitle": "把更稳定的动力，",
+    "heroAccent": "交给每一片生长",
+    "heroIntro": "嘉易动力专注园林锂电工具的研发与制造，从结构设计、动力匹配到规模交付，为全球品牌提供可持续扩展的产品解决方案。",
+    "aboutTitle": "不只是制造，",
+    "aboutAccent": "更是共同开发",
+    "aboutStatement": "永康市嘉易工贸有限公司立足浙江永康，定位为全球标杆品牌的“隐形动力专家”与共同开发伙伴。"
+  },
   "products": [
     {
       "id": "chainsaw",
@@ -55,6 +74,7 @@
             "10 m/s",
             "无刷动力"
           ],
+          "description": "12″ / 16″ 无刷链锯围绕庭院树枝修整等场景开发，以 21V、10 m/s、无刷动力 为核心配置，在动力输出、操控与维护效率之间取得平衡。",
           "parameters": [
             {
               "label": "额定电压",
@@ -100,6 +120,7 @@
             "9 m/s",
             "200 mm"
           ],
+          "description": "8″ 迷你链锯围绕庭院树枝修整等场景开发，以 21V、9 m/s、200 mm 为核心配置，在动力输出、操控与维护效率之间取得平衡。",
           "parameters": [
             {
               "label": "额定电压",
@@ -137,6 +158,7 @@
             "7 m/s",
             "150 mm"
           ],
+          "description": "6″ 迷你链锯围绕庭院树枝修整等场景开发，以 21V、7 m/s、150 mm 为核心配置，在动力输出、操控与维护效率之间取得平衡。",
           "parameters": [
             {
               "label": "额定电压",
@@ -174,6 +196,7 @@
             "6–7 m/s",
             "双版本可选"
           ],
+          "description": "6″ 迷你链锯围绕庭院树枝修整等场景开发，以 21V、6–7 m/s、双版本可选 为核心配置，在动力输出、操控与维护效率之间取得平衡。",
           "parameters": [
             {
               "label": "额定电压",
@@ -211,6 +234,7 @@
             "7 m/s",
             "无刷动力"
           ],
+          "description": "6″ / 8″ 迷你链锯围绕庭院树枝修整等场景开发，以 21V、7 m/s、无刷动力 为核心配置，在动力输出、操控与维护效率之间取得平衡。",
           "parameters": [
             {
               "label": "额定电压",
@@ -248,6 +272,7 @@
             "5 m/s",
             "100 mm"
           ],
+          "description": "4″ 迷你链锯围绕庭院树枝修整等场景开发，以 12V、5 m/s、100 mm 为核心配置，在动力输出、操控与维护效率之间取得平衡。",
           "parameters": [
             {
               "label": "额定电压",
@@ -285,6 +310,7 @@
             "12.5 m/s",
             "210 mm"
           ],
+          "description": "10″ 迷你链锯围绕庭院树枝修整等场景开发，以 21V、12.5 m/s、210 mm 为核心配置，在动力输出、操控与维护效率之间取得平衡。",
           "parameters": [
             {
               "label": "额定电压",
@@ -322,6 +348,7 @@
             "6–7 m/s",
             "电量显示"
           ],
+          "description": "6″ 数显迷你链锯围绕庭院树枝修整等场景开发，以 21V、6–7 m/s、电量显示 为核心配置，在动力输出、操控与维护效率之间取得平衡。",
           "parameters": [
             {
               "label": "额定电压",
@@ -359,6 +386,7 @@
             "7 m/s",
             "轻量机身"
           ],
+          "description": "6″ 迷你链锯围绕庭院树枝修整等场景开发，以 21V、7 m/s、轻量机身 为核心配置，在动力输出、操控与维护效率之间取得平衡。",
           "parameters": [
             {
               "label": "额定电压",
@@ -450,6 +478,7 @@
             "150 km/h",
             "210 CFM"
           ],
+          "description": "210 CFM 锂电吹风机围绕庭院落叶清扫等场景开发，以 21V、150 km/h、210 CFM 为核心配置，在动力输出、操控与维护效率之间取得平衡。",
           "parameters": [
             {
               "label": "额定电压",
@@ -487,6 +516,7 @@
             "240 km/h",
             "630 CFM"
           ],
+          "description": "630 CFM 无刷吹风机围绕庭院落叶清扫等场景开发，以 21V、240 km/h、630 CFM 为核心配置，在动力输出、操控与维护效率之间取得平衡。",
           "parameters": [
             {
               "label": "额定电压",
@@ -524,6 +554,7 @@
             "225 km/h",
             "440 CFM"
           ],
+          "description": "迷你锂电吹风机围绕庭院落叶清扫等场景开发，以 21V、225 km/h、440 CFM 为核心配置，在动力输出、操控与维护效率之间取得平衡。",
           "parameters": [
             {
               "label": "额定电压",
@@ -609,6 +640,7 @@
             "10,500 rpm",
             "700 W"
           ],
+          "description": "锂电割草机围绕草坪边缘整理等场景开发，以 21V、10,500 rpm、700 W 为核心配置，在动力输出、操控与维护效率之间取得平衡。",
           "parameters": [
             {
               "label": "额定电压",
@@ -646,6 +678,7 @@
             "19,500 rpm",
             "850 W"
           ],
+          "description": "无刷锂电割草机围绕草坪边缘整理等场景开发，以 21V、19,500 rpm、850 W 为核心配置，在动力输出、操控与维护效率之间取得平衡。",
           "parameters": [
             {
               "label": "额定电压",
@@ -683,6 +716,7 @@
             "10,500 rpm",
             "700 W"
           ],
+          "description": "轻量锂电割草机围绕草坪边缘整理等场景开发，以 21V、10,500 rpm、700 W 为核心配置，在动力输出、操控与维护效率之间取得平衡。",
           "parameters": [
             {
               "label": "额定电压",
@@ -720,6 +754,7 @@
             "19,500 rpm",
             "850 W"
           ],
+          "description": "无刷割草机围绕草坪边缘整理等场景开发，以 21V、19,500 rpm、850 W 为核心配置，在动力输出、操控与维护效率之间取得平衡。",
           "parameters": [
             {
               "label": "额定电压",
@@ -872,107 +907,130 @@
       "featured": null
     },
     {
-      "id": "mower",
-      "order": 4,
+      "id": "drill",
+      "order": 6,
       "year": "2026",
-      "cardLayout": "full",
-      "cardLabel": "Smart Lawn",
-      "name": "智能割草机器人",
-      "model": "VISUAL + RTK",
-      "category": "Smart Lawn / 智能草坪",
-      "image": "assets/mower.webp",
-      "summary": "视觉识别与 RTK 定位双系统协同，实现无边界割草、区域管理、智能避障和 App 控制。",
-      "featureTitle": "看见边界，理解环境，自主完成草坪养护。",
-      "description": "双目视觉识别与厘米级 RTK 定位共同建立工作区域，支持多区域任务规划和七类对象识别。无需铺设传统边界线，降低安装与后期调整成本。",
+      "cardLayout": "standard",
+      "cardLabel": "Cordless Drilling",
+      "name": "锂电钻系列",
+      "model": "JY-ED24 SERIES",
+      "category": "Cordless Drilling / 锂电钻",
+      "image": "assets/series/drill-ed2402.png",
+      "summary": "有刷与无刷双版本覆盖安装、装配和日常维护，让 21V 电池平台延伸至通用工具场景。",
+      "featureTitle": "从园林维护到安装装配，共用一套无绳动力平台。",
+      "description": "双速调节覆盖拧紧与钻孔任务，紧凑握持结构便于长时间操作；无刷版本进一步提升扭矩、效率和耐久性。",
       "specs": [
         {
-          "label": "导航系统",
-          "value": "Visual + RTK"
+          "label": "额定电压",
+          "value": "21V"
         },
         {
-          "label": "边界方式",
-          "value": "无边界"
+          "label": "系列产品",
+          "value": "2 款"
         },
         {
-          "label": "剪草高度",
-          "value": "25–70 mm"
+          "label": "转速",
+          "value": "450 / 1,500 rpm"
         },
         {
-          "label": "工作速度",
-          "value": "40 × 20 cm/s"
+          "label": "最大扭矩",
+          "value": "20 / 30 N·m"
         },
         {
-          "label": "续航覆盖",
-          "value": "700㎡ / 4Ah"
+          "label": "最大功率",
+          "value": "500 / 700 W"
         },
         {
-          "label": "控制方式",
-          "value": "App / 区域管理"
+          "label": "电机",
+          "value": "有刷 / 无刷"
         }
       ],
       "uses": [
-        "独立住宅草坪",
-        "景观庭院",
-        "多区域草坪管理"
+        "设备安装与装配",
+        "庭院设施维护",
+        "家庭日常维修"
       ],
       "series": [
         {
-          "model": "VISUAL + RTK",
-          "name": "双系统智能割草机器人",
-          "image": "assets/mower.webp",
+          "model": "JY-ED2401",
+          "name": "有刷锂电钻",
+          "image": "assets/series/drill-ed2401.png",
           "specs": [
-            "视觉 + RTK",
-            "25–70 mm",
-            "700㎡ / 4Ah"
+            "21V",
+            "450 / 1,500 rpm",
+            "20 N·m",
+            "500 W"
           ],
+          "description": "双速有刷方案满足日常钻孔和紧固需求，结构简洁、使用直观，适合高频基础安装与维修。",
           "parameters": [
             {
-              "label": "导航系统",
-              "value": "Visual + RTK 双系统"
+              "label": "额定电压",
+              "value": "21V"
             },
             {
-              "label": "识别能力",
-              "value": "7 类对象识别"
+              "label": "电机转速",
+              "value": "450 / 1,500 rpm"
             },
             {
-              "label": "边界方式",
-              "value": "无边界 / 无需 RTK 配件"
+              "label": "最大扭矩",
+              "value": "20 N·m"
             },
             {
-              "label": "剪草高度",
-              "value": "25–70 mm"
+              "label": "最大功率",
+              "value": "500 W"
             },
             {
-              "label": "作业效率",
-              "value": "40 × 20 cm/s"
-            },
-            {
-              "label": "续航覆盖",
-              "value": "700㎡ / 4Ah"
-            },
-            {
-              "label": "控制方式",
-              "value": "App / 区域管理"
+              "label": "电机类型",
+              "value": "有刷"
             }
           ],
           "applications": [
-            "独立住宅草坪",
-            "景观庭院",
-            "多区域草坪管理"
+            "设备安装与装配",
+            "庭院设施维护",
+            "家庭日常维修"
+          ]
+        },
+        {
+          "model": "JY-ED2402",
+          "name": "无刷锂电钻",
+          "image": "assets/series/drill-ed2402.png",
+          "specs": [
+            "21V",
+            "450 / 1,500 rpm",
+            "30 N·m",
+            "700 W"
+          ],
+          "description": "无刷电机将最大扭矩提升至 30 N·m，并以更高效率和更低维护需求应对强度更高的装配任务。",
+          "parameters": [
+            {
+              "label": "额定电压",
+              "value": "21V"
+            },
+            {
+              "label": "电机转速",
+              "value": "450 / 1,500 rpm"
+            },
+            {
+              "label": "最大扭矩",
+              "value": "30 N·m"
+            },
+            {
+              "label": "最大功率",
+              "value": "700 W"
+            },
+            {
+              "label": "电机类型",
+              "value": "无刷"
+            }
+          ],
+          "applications": [
+            "设备安装与装配",
+            "庭院设施维护",
+            "家庭日常维修"
           ]
         }
       ],
-      "featured": {
-        "image": "assets/mower-scene-clean.png",
-        "meta": "Visual + RTK",
-        "kicker": "无边界 · 区域管理 · App 控制",
-        "headline": "看见边界，自主完成草坪养护。",
-        "features": [
-          "厘米级定位",
-          "智能避障",
-          "边界识别"
-        ]
-      }
+      "featured": null
     },
     {
       "id": "pole",
@@ -1130,132 +1188,6 @@
             "果树与树冠修枝",
             "高位绿篱整形",
             "庭院高空维护"
-          ]
-        }
-      ],
-      "featured": null
-    },
-    {
-      "id": "drill",
-      "order": 6,
-      "year": "2026",
-      "cardLayout": "standard",
-      "cardLabel": "Cordless Drilling",
-      "name": "锂电钻系列",
-      "model": "JY-ED24 SERIES",
-      "category": "Cordless Drilling / 锂电钻",
-      "image": "assets/series/drill-ed2402.png",
-      "summary": "有刷与无刷双版本覆盖安装、装配和日常维护，让 21V 电池平台延伸至通用工具场景。",
-      "featureTitle": "从园林维护到安装装配，共用一套无绳动力平台。",
-      "description": "双速调节覆盖拧紧与钻孔任务，紧凑握持结构便于长时间操作；无刷版本进一步提升扭矩、效率和耐久性。",
-      "specs": [
-        {
-          "label": "额定电压",
-          "value": "21V"
-        },
-        {
-          "label": "系列产品",
-          "value": "2 款"
-        },
-        {
-          "label": "转速",
-          "value": "450 / 1,500 rpm"
-        },
-        {
-          "label": "最大扭矩",
-          "value": "20 / 30 N·m"
-        },
-        {
-          "label": "最大功率",
-          "value": "500 / 700 W"
-        },
-        {
-          "label": "电机",
-          "value": "有刷 / 无刷"
-        }
-      ],
-      "uses": [
-        "设备安装与装配",
-        "庭院设施维护",
-        "家庭日常维修"
-      ],
-      "series": [
-        {
-          "model": "JY-ED2401",
-          "name": "有刷锂电钻",
-          "image": "assets/series/drill-ed2401.png",
-          "specs": [
-            "21V",
-            "450 / 1,500 rpm",
-            "20 N·m",
-            "500 W"
-          ],
-          "description": "双速有刷方案满足日常钻孔和紧固需求，结构简洁、使用直观，适合高频基础安装与维修。",
-          "parameters": [
-            {
-              "label": "额定电压",
-              "value": "21V"
-            },
-            {
-              "label": "电机转速",
-              "value": "450 / 1,500 rpm"
-            },
-            {
-              "label": "最大扭矩",
-              "value": "20 N·m"
-            },
-            {
-              "label": "最大功率",
-              "value": "500 W"
-            },
-            {
-              "label": "电机类型",
-              "value": "有刷"
-            }
-          ],
-          "applications": [
-            "设备安装与装配",
-            "庭院设施维护",
-            "家庭日常维修"
-          ]
-        },
-        {
-          "model": "JY-ED2402",
-          "name": "无刷锂电钻",
-          "image": "assets/series/drill-ed2402.png",
-          "specs": [
-            "21V",
-            "450 / 1,500 rpm",
-            "30 N·m",
-            "700 W"
-          ],
-          "description": "无刷电机将最大扭矩提升至 30 N·m，并以更高效率和更低维护需求应对强度更高的装配任务。",
-          "parameters": [
-            {
-              "label": "额定电压",
-              "value": "21V"
-            },
-            {
-              "label": "电机转速",
-              "value": "450 / 1,500 rpm"
-            },
-            {
-              "label": "最大扭矩",
-              "value": "30 N·m"
-            },
-            {
-              "label": "最大功率",
-              "value": "700 W"
-            },
-            {
-              "label": "电机类型",
-              "value": "无刷"
-            }
-          ],
-          "applications": [
-            "设备安装与装配",
-            "庭院设施维护",
-            "家庭日常维修"
           ]
         }
       ],
@@ -1591,7 +1523,8 @@
             "住宅车道清雪",
             "庭院步道维护",
             "门廊与露台清理"
-          ]
+          ],
+          "description": "40V 无刷除雪机围绕住宅车道清雪等场景开发，以 40V、2,600 rpm、17 × 40 cm、3,400 W、无刷 为核心配置，在动力输出、操控与维护效率之间取得平衡。"
         }
       ],
       "featured": {
@@ -1656,6 +1589,7 @@
             "2 Bar",
             "5 L/min"
           ],
+          "description": "便携式锂电清洗机围绕车辆与自行车清洗等场景开发，以 21V、2 Bar、5 L/min 为核心配置，在动力输出、操控与维护效率之间取得平衡。",
           "parameters": [
             {
               "label": "额定电压",
@@ -1697,6 +1631,7 @@
             "2 Bar",
             "5 L/min"
           ],
+          "description": "多喷型锂电清洗机围绕车辆与自行车清洗等场景开发，以 21V、2 Bar、5 L/min 为核心配置，在动力输出、操控与维护效率之间取得平衡。",
           "parameters": [
             {
               "label": "额定电压",
@@ -1738,6 +1673,7 @@
             "4 Bar",
             "500 W"
           ],
+          "description": "无刷锂电清洗机围绕车辆与自行车清洗等场景开发，以 21V、4 Bar、500 W 为核心配置，在动力输出、操控与维护效率之间取得平衡。",
           "parameters": [
             {
               "label": "额定电压",
@@ -1768,6 +1704,110 @@
         }
       ],
       "featured": null
+    },
+    {
+      "id": "mower",
+      "order": 4,
+      "year": "2026",
+      "cardLayout": "full",
+      "cardLabel": "Smart Lawn",
+      "name": "智能割草机器人",
+      "model": "VISUAL + RTK",
+      "category": "Smart Lawn / 智能草坪",
+      "image": "assets/mower.webp",
+      "summary": "视觉识别与 RTK 定位双系统协同，实现无边界割草、区域管理、智能避障和 App 控制。",
+      "featureTitle": "看见边界，理解环境，自主完成草坪养护。",
+      "description": "双目视觉识别与厘米级 RTK 定位共同建立工作区域，支持多区域任务规划和七类对象识别。无需铺设传统边界线，降低安装与后期调整成本。",
+      "specs": [
+        {
+          "label": "导航系统",
+          "value": "Visual + RTK"
+        },
+        {
+          "label": "边界方式",
+          "value": "无边界"
+        },
+        {
+          "label": "剪草高度",
+          "value": "25–70 mm"
+        },
+        {
+          "label": "工作速度",
+          "value": "40 × 20 cm/s"
+        },
+        {
+          "label": "续航覆盖",
+          "value": "700㎡ / 4Ah"
+        },
+        {
+          "label": "控制方式",
+          "value": "App / 区域管理"
+        }
+      ],
+      "uses": [
+        "独立住宅草坪",
+        "景观庭院",
+        "多区域草坪管理"
+      ],
+      "series": [
+        {
+          "model": "VISUAL + RTK",
+          "name": "双系统智能割草机器人",
+          "image": "assets/mower.webp",
+          "specs": [
+            "视觉 + RTK",
+            "25–70 mm",
+            "700㎡ / 4Ah"
+          ],
+          "description": "双系统智能割草机器人围绕独立住宅草坪等场景开发，以 视觉 + RTK、25–70 mm、700㎡ / 4Ah 为核心配置，在动力输出、操控与维护效率之间取得平衡。",
+          "parameters": [
+            {
+              "label": "导航系统",
+              "value": "Visual + RTK 双系统"
+            },
+            {
+              "label": "识别能力",
+              "value": "7 类对象识别"
+            },
+            {
+              "label": "边界方式",
+              "value": "无边界 / 无需 RTK 配件"
+            },
+            {
+              "label": "剪草高度",
+              "value": "25–70 mm"
+            },
+            {
+              "label": "作业效率",
+              "value": "40 × 20 cm/s"
+            },
+            {
+              "label": "续航覆盖",
+              "value": "700㎡ / 4Ah"
+            },
+            {
+              "label": "控制方式",
+              "value": "App / 区域管理"
+            }
+          ],
+          "applications": [
+            "独立住宅草坪",
+            "景观庭院",
+            "多区域草坪管理"
+          ]
+        }
+      ],
+      "featured": {
+        "image": "assets/mower-scene-clean.png",
+        "meta": "Visual + RTK",
+        "kicker": "无边界 · 区域管理 · App 控制",
+        "headline": "看见边界，自主完成草坪养护。",
+        "features": [
+          "厘米级定位",
+          "智能避障",
+          "边界识别"
+        ]
+      }
     }
   ],
   "featuredProductIds": [

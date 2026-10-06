@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="theme-color" content="#0a0d0a" />
+    <title>嘉易动力 · 可视化编辑</title>
+    <link rel="stylesheet" href="visual-admin.css" />
+  </head>
+  <body>
+    <main class="visual-login" data-login hidden>
+      <section class="visual-login__card">
+        <img src="assets/jiayi-logo.svg" alt="JIAYI POWER" />
+        <p class="visual-kicker">VISUAL CONTENT STUDIO</p>
+        <h1>直接在网页上编辑</h1>
+        <p>登录后可直接点击网页，修改首屏、产品详情、具体型号与企业影像；新增产品和上传媒体可进入 Pages CMS。</p>
+        <form data-login-form>
+          <label>管理密码<input type="password" name="password" autocomplete="current-password" required /></label>
+          <button class="button button--primary" type="submit">进入可视化后台</button>
+          <p class="form-message" data-login-message aria-live="polite"></p>
+        </form>
+        <div class="login-links">
+          <a href="company.html">← 返回企业网站</a>
+          <a href="https://app.pagescms.org/g13217010520-alt/-/main/file/website_content">高级内容管理 →</a>
+        </div>
+      </section>
+    </main>
+
+    <div class="visual-shell" data-shell hidden>
+      <header class="visual-topbar">
+        <a class="visual-brand" href="company.html" target="_blank" rel="noreferrer">
+          <img src="assets/jiayi-logo.svg" alt="JIAYI POWER" />
+          <span>统一内容后台<small>VISUAL + PAGES CMS</small></span>
+        </a>
+        <div class="page-switch" aria-label="选择要编辑的页面">
+          <button class="is-active" type="button" data-preview-page="index" title="编辑网站入口封面">入口首屏</button>
+          <button type="button" data-preview-page="company" title="进入网站内部编辑">内部页面 →</button>
+        </div>
+        <nav class="section-nav" aria-label="预览区域">
+          <button type="button" data-scroll-target="products">产品</button>
+          <button type="button" data-scroll-target="about">企业</button>
+          <button type="button" data-scroll-target="company-gallery">影像</button>
+          <button type="button" data-scroll-target="contact">联系</button>
+        </nav>
+        <div class="visual-actions">
+          <button class="demo-badge" type="button" data-mode-badge hidden title="查看本地发布连接状态">检测发布连接…</button>
+          <span class="save-state" data-save-state>内容已同步</span>
+          <button class="icon-button" type="button" data-viewport="mobile" title="手机预览" aria-label="手机预览">▯</button>
+          <button class="icon-button is-active" type="button" data-viewport="desktop" title="桌面预览" aria-label="桌面预览">▭</button>
+          <a class="button button--secondary" href="index.html" target="_blank" rel="noreferrer" data-open-preview>新窗口预览 ↗</a>
+          <button class="button button--primary" type="button" data-publish>发布修改</button>
+        </div>
+      </header>
+
+      <div class="visual-workspace">
+        <section class="canvas-panel" aria-label="网站预览">
+          <div class="canvas-toolbar">
+            <div><span class="status-dot"></span><strong>实时网站预览</strong><small data-preview-status>正在载入页面…</small></div>
+            <p>点击带绿色虚线的区域开始编辑</p>
+          </div>
+          <div class="device-stage" data-device-stage>
+            <div class="browser-frame">
+              <div class="browser-chrome" aria-hidden="true"><i></i><i></i><i></i><span data-preview-url>jiayipower.com</span></div>
+              <iframe src="index.html?cms-preview=1" title="嘉易动力网站可视化预览" data-preview></iframe>
+            </div>
+          </div>
+        </section>
+
+        <aside class="inspector" aria-label="内容编辑器">
+          <div class="inspector__empty" data-empty-state>
+            <div class="selection-icon">↖</div>
+            <p class="visual-kicker">SELECT AN AREA</p>
+            <h2>从网页中选择内容</h2>
+            <p>将鼠标移到网页上，绿色虚线表示可编辑区域。点击后即可在这里修改。</p>
+            <ol>
+              <li><span>01</span>选择网页区域</li>
+              <li><span>02</span>在右侧修改内容</li>
+              <li><span>03</span>确认预览后发布</li>
+            </ol>
+          </div>
+          <div class="inspector__editor" data-editor hidden>
+            <div class="inspector__heading">
+              <div><p class="visual-kicker" data-editor-kicker>CONTENT</p><h2 data-editor-title>编辑内容</h2></div>
+              <button class="close-button" type="button" data-close-editor aria-label="关闭编辑器">×</button>
+            </div>
+            <p class="inspector__help" data-editor-help></p>
+            <form class="field-list" data-fields></form>
+          </div>
+          <div class="inspector__footer">
+            <button type="button" data-reset>撤销本次修改</button>
+            <button type="button" data-download>导出内容 JSON</button>
+            <a href="https://app.pagescms.org/g13217010520-alt/-/main/file/website_content">高级管理 →</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <div class="toast" data-toast role="status" aria-live="polite" hidden></div>
+    <script type="module" src="visual-admin.js"></script>
+  </body>
+</html>

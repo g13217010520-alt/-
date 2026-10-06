@@ -3,8 +3,32 @@ import { loadSiteContent } from "./content-client.js";
 const escapeHtml = (value = "") => String(value).replace(/[&<>"]/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[character]);
 const htmlLines = (value = "") => escapeHtml(value).replace(/\n/g, "<br />");
 
-const content = await loadSiteContent();
+const visualPreview = new URLSearchParams(window.location.search).has("cms-preview")
+  && window.parent !== window
+  && window.parent.JIAYI_VISUAL_CONTENT;
+const content = visualPreview || await loadSiteContent();
 window.JIAYI_CONTENT = content;
+
+const setText = (selector, value) => { const element = document.querySelector(selector); if (element && value !== undefined) element.textContent = value; };
+const intro = content.intro || {};
+setText("[data-cms-intro-meta]", intro.topMeta);
+setText("[data-cms-intro-eyebrow]", intro.eyebrow);
+setText("[data-cms-intro-title]", intro.title);
+setText("[data-cms-intro-accent]", intro.accentTitle);
+setText("[data-cms-intro-lead]", intro.lead);
+setText("[data-cms-intro-button]", intro.buttonLabel);
+setText("[data-cms-intro-location]", intro.footerLocation);
+setText("[data-cms-intro-scroll]", intro.scrollLabel);
+const introBackground = document.querySelector("[data-cms-intro-background]");
+if (introBackground && intro.backgroundImage) introBackground.style.backgroundImage = `url("${String(intro.backgroundImage).replace(/["\\]/g, "\\$&")}")`;
+
+const page = content.page || {};
+setText("[data-cms-hero-title]", page.heroTitle);
+setText("[data-cms-hero-accent]", page.heroAccent);
+setText("[data-cms-hero-intro]", page.heroIntro);
+setText("[data-cms-about-title]", page.aboutTitle);
+setText("[data-cms-about-accent]", page.aboutAccent);
+setText("[data-cms-about-statement]", page.aboutStatement);
 
 const productGrid = document.querySelector("[data-cms-product-grid]");
 if (productGrid && Array.isArray(content.products)) {
@@ -41,7 +65,6 @@ if (projectStack) {
 }
 
 const contact = content.contact || {};
-const setText = (selector, value) => { const element = document.querySelector(selector); if (element && value) element.textContent = value; };
 setText("[data-cms-contact-left]", contact.eyebrowLeft);
 setText("[data-cms-contact-right]", contact.eyebrowRight);
 setText("[data-cms-contact-title]", contact.title);

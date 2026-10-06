@@ -6,6 +6,10 @@ export async function onRequestGet({ request, env }) {
     ok: true,
     configured: credentialsReady(env),
     authenticated: await isAuthenticated(request, env),
-    storage: { content: Boolean(env.CMS_CONTENT), media: Boolean(env.CMS_MEDIA) },
+    storage: {
+      github: Boolean(env.GITHUB_CONTENT_TOKEN),
+      legacyContent: Boolean(env.CMS_CONTENT),
+      legacyMedia: Boolean(env.CMS_MEDIA),
+    },
   });
 }

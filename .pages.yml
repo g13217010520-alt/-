@@ -247,6 +247,62 @@ content:
         label: 数据版本
         type: number
         readonly: true
+      - name: intro
+        label: 入口首屏
+        type: object
+        fields:
+          - name: topMeta
+            label: 右上角年份标语
+            type: string
+          - name: eyebrow
+            label: 英文眉题
+            type: string
+          - name: title
+            label: 主标题
+            type: string
+          - name: accentTitle
+            label: 描边标题
+            type: string
+          - name: lead
+            label: 说明文字
+            type: text
+          - name: buttonLabel
+            label: 进入按钮文字
+            type: string
+          - name: footerLocation
+            label: 左下角地点
+            type: string
+          - name: scrollLabel
+            label: 右下角提示
+            type: string
+          - name: backgroundImage
+            label: 首屏背景图片
+            type: image
+            options:
+              media: site_media
+              categories: [image]
+      - name: page
+        label: 企业主页常用内容
+        type: object
+        fields:
+          - name: heroTitle
+            label: 企业主页首屏标题
+            type: string
+          - name: heroAccent
+            label: 企业主页首屏强调标题
+            type: string
+          - name: heroIntro
+            label: 企业主页首屏介绍
+            type: text
+          - name: aboutTitle
+            label: 企业介绍标题
+            type: string
+          - name: aboutAccent
+            label: 企业介绍强调标题
+            type: string
+          - name: aboutStatement
+            label: 企业定位介绍
+            type: text
       - name: products
         label: 产品管理
         component: product

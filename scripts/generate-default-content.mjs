@@ -14,7 +14,7 @@ const extractLiteral = (startMarker, endMarker) => {
 };
 
 const productMap = extractLiteral("const fallbackProducts =", "const catalogParameters =");
-const parameterMap = extractLiteral("const catalogParameters =", "const managedContent =");
+const parameterMap = extractLiteral("const catalogParameters =", "const visualPreview =");
 
 const layoutById = { chainsaw: "wide", pole: "wide", mower: "full" };
 const toKeyValueList = (items = []) => items.map((item) => Array.isArray(item)
@@ -44,9 +44,15 @@ const featuredById = {
   },
 };
 
-const products = Object.entries(productMap).map(([id, product], index) => ({
+const productEntries = Object.entries(productMap);
+const productOrder = new Map(productEntries.map(([id], index) => [id, index]));
+const displayOrder = ["chainsaw", "blower", "trimmer", "hedge", "drill", "pole", "precision", "cultivator", "snow", "washer", "mower"];
+const products = displayOrder
+  .map((id) => [id, productMap[id]])
+  .filter(([, product]) => product)
+  .map(([id, product]) => ({
   id,
-  order: index,
+  order: productOrder.get(id),
   year: "2026",
   cardLayout: layoutById[id] || "standard",
   cardLabel: product.category.split(" /")[0],
@@ -54,11 +60,12 @@ const products = Object.entries(productMap).map(([id, product], index) => ({
   specs: toKeyValueList(product.specs),
   series: (product.series || []).map((item) => ({
     ...item,
+    description: item.description || `${item.name || "该型号"}围绕${product.uses?.[0] || "真实作业"}等场景开发，以 ${(item.specs || []).join("、")} 为核心配置，在动力输出、操控与维护效率之间取得平衡。`,
     parameters: toKeyValueList(item.parameters || parameterMap[`${item.model}|${item.name}`] || parameterMap[item.model] || []),
     applications: item.applications || product.uses || [],
   })),
   featured: featuredById[id] || null,
-}));
+  }));
 
 const makeGallery = (directory, prefix, indices, portrait = []) => indices.map((number) => ({
   id: `${prefix}-${String(number).padStart(2, "0")}`,
@@ -73,6 +80,25 @@ const factoryPortrait = [3, 10, 11, 12, 13, 26, 27, 29, 30, 31, 33, 34, 35, 37, 
 
 const content = {
   version: 1,
+  intro: {
+    topMeta: "2026 / Outdoor Power Tools",
+    eyebrow: "One platform. More possibilities.",
+    title: "动力，藏于",
+    accentTitle: "每一次生长",
+    lead: "园林锂电工具研发与制造，让稳定动力贯穿修剪、清洁、耕作与智能养护。",
+    buttonLabel: "进入嘉易动力",
+    footerLocation: "Yongkang · Zhejiang · China",
+    scrollLabel: "Click to explore",
+    backgroundImage: "assets/intro-cover.webp",
+  },
+  page: {
+    heroTitle: "把更稳定的动力，",
+    heroAccent: "交给每一片生长",
+    heroIntro: "嘉易动力专注园林锂电工具的研发与制造，从结构设计、动力匹配到规模交付，为全球品牌提供可持续扩展的产品解决方案。",
+    aboutTitle: "不只是制造，",
+    aboutAccent: "更是共同开发",
+    aboutStatement: "永康市嘉易工贸有限公司立足浙江永康，定位为全球标杆品牌的“隐形动力专家”与共同开发伙伴。",
+  },
   products,
   featuredProductIds: ["mower", "chainsaw", "snow"],
   galleries: {

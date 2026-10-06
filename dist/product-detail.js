@@ -245,7 +245,10 @@ const catalogParameters = {
   "JY-WG2601": [["额定电压", "21V"], ["电机转速", "24,000 rpm"], ["最大功率", "500 W"], ["最大压力", "4 Bar"], ["电机类型", "无刷"]],
 };
 
-const managedContent = await loadSiteContent();
+const visualPreview = new URLSearchParams(window.location.search).has("cms-preview")
+  && window.parent !== window
+  && window.parent.JIAYI_VISUAL_CONTENT;
+const managedContent = visualPreview || await loadSiteContent();
 const managedContact = managedContent.contact || {};
 const managedProducts = Array.isArray(managedContent.products) ? managedContent.products : [];
 const products = managedProducts.length
@@ -346,11 +349,11 @@ if (seriesGrid) {
     const applications = getApplications(item);
     const slug = `${item.model}-${index + 1}`.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
     return `
-      <article class="series-detail${index % 2 ? " series-detail--reverse" : ""}" id="model-${slug}">
+      <article class="series-detail${index % 2 ? " series-detail--reverse" : ""}" id="model-${slug}" data-series-index="${index}">
         <div class="series-detail__copy">
           <span class="series-detail__index">${String(index + 1).padStart(2, "0")}</span>
-          <p class="series-detail__model">${item.model}</p>
-          <h3>${item.name}</h3>
+          <p class="series-detail__model" data-cms-series-model>${item.model}</p>
+          <h3 data-cms-series-name>${item.name}</h3>
           <div class="model-tabs" data-model-tabs>
             <div class="model-tabs__controls" role="tablist" aria-label="${item.model} 产品信息">
               <button type="button" role="tab" id="tab-${slug}-overview" aria-controls="panel-${slug}-overview" aria-selected="true" data-model-tab="overview">产品概要</button>
@@ -359,13 +362,13 @@ if (seriesGrid) {
             </div>
             <div class="model-tabs__panels">
               <div class="model-tab-panel is-active" id="panel-${slug}-overview" role="tabpanel" aria-labelledby="tab-${slug}-overview" data-model-panel="overview">
-                <p class="series-detail__description">${description}</p>
+                <p class="series-detail__description" data-cms-series-description>${description}</p>
               </div>
               <div class="model-tab-panel" id="panel-${slug}-specs" role="tabpanel" aria-labelledby="tab-${slug}-specs" data-model-panel="specs" hidden>
-                <dl class="model-spec-table">${parameters.map(({ label, value }) => `<div><dt>${label}</dt><dd>${value}</dd></div>`).join("")}</dl>
+                <dl class="model-spec-table" data-cms-series-parameters>${parameters.map(({ label, value }) => `<div><dt>${label}</dt><dd>${value}</dd></div>`).join("")}</dl>
               </div>
               <div class="model-tab-panel" id="panel-${slug}-use" role="tabpanel" aria-labelledby="tab-${slug}-use" data-model-panel="use" hidden>
-                <ul class="model-use-list">${applications.map((use, useIndex) => `<li><span>${String(useIndex + 1).padStart(2, "0")}</span>${use}</li>`).join("")}</ul>
+                <ul class="model-use-list" data-cms-series-applications>${applications.map((use, useIndex) => `<li><span>${String(useIndex + 1).padStart(2, "0")}</span>${use}</li>`).join("")}</ul>
               </div>
             </div>
           </div>
@@ -376,7 +379,7 @@ if (seriesGrid) {
           <div class="series-detail__orbit" aria-hidden="true"></div>
           <div class="series-detail__object" data-series-object>
             <span class="series-detail__shadow" aria-hidden="true"></span>
-            <img src="${item.image}" alt="${item.model} ${item.name}" loading="lazy" draggable="false" />
+            <img src="${item.image}" alt="${item.model} ${item.name}" loading="lazy" draggable="false" data-cms-series-image />
           </div>
         </div>
       </article>

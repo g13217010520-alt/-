@@ -4,6 +4,7 @@ import { onRequestGet as getPublicContent } from "../functions/api/content.js";
 import { onRequestPost as login } from "../functions/api/admin/login.js";
 import { onRequestGet as getSession } from "../functions/api/admin/session.js";
 import { onRequestGet as getAdminContent, onRequestPut as putAdminContent } from "../functions/api/admin/content.js";
+import { onRequestGet as getGitHubContent, onRequestPut as putGitHubContent } from "../functions/api/admin/github-content.js";
 import { onRequestDelete as deleteMedia, onRequestGet as getMedia, onRequestPost as uploadMedia } from "../functions/api/admin/media.js";
 
 class MemoryKV {
@@ -50,6 +51,52 @@ const readResponse = await getAdminContent({ request: request("/api/admin/conten
 const saved = await readResponse.json();
 assert.equal(saved.content.products.length, 11);
 assert.equal(saved.content.featuredProductIds.length, 3);
+assert.equal(saved.content.intro.title, "动力，藏于");
+assert.equal(saved.content.intro.backgroundImage, "assets/intro-cover.webp");
+
+const missingGitHub = await getGitHubContent({ request: request("/api/admin/github-content", { headers: { cookie } }), env });
+assert.equal((await missingGitHub.json()).configured, false);
+
+const nativeFetch = globalThis.fetch;
+let githubContent = structuredClone(content);
+let githubSha = "content-sha-1";
+globalThis.fetch = async (_url, init = {}) => {
+  if (!init.method || init.method === "GET") {
+    return new Response(JSON.stringify({ type: "file", sha: githubSha, content: Buffer.from(JSON.stringify(githubContent)).toString("base64") }), {
+      status: 200,
+      headers: { "content-type": "application/json" },
+    });
+  }
+  const payload = JSON.parse(init.body);
+  assert.equal(payload.sha, githubSha);
+  githubContent = JSON.parse(Buffer.from(payload.content, "base64").toString("utf8"));
+  githubSha = "content-sha-2";
+  return new Response(JSON.stringify({ content: { sha: githubSha }, commit: { html_url: "https://github.com/example/commit/2" } }), {
+    status: 200,
+    headers: { "content-type": "application/json" },
+  });
+};
+
+const githubEnv = { ...env, GITHUB_CONTENT_TOKEN: "test-token" };
+const githubRead = await getGitHubContent({ request: request("/api/admin/github-content", { headers: { cookie } }), env: githubEnv });
+const githubReadPayload = await githubRead.json();
+assert.equal(githubReadPayload.content.intro.title, "动力，藏于");
+assert.equal(githubReadPayload.sha, "content-sha-1");
+
+githubReadPayload.content.intro.title = "新的入口标题";
+const githubWrite = await putGitHubContent({
+  request: request("/api/admin/github-content", {
+    method: "PUT",
+    headers: { cookie, "content-type": "application/json" },
+    body: JSON.stringify({ content: githubReadPayload.content, sha: githubReadPayload.sha }),
+  }),
+  env: githubEnv,
+});
+const githubWritePayload = await githubWrite.json();
+assert.equal(githubWrite.status, 200);
+assert.equal(githubWritePayload.sha, "content-sha-2");
+assert.equal(githubContent.intro.title, "新的入口标题");
+globalThis.fetch = nativeFetch;
 
 const mediaForm = new FormData();
 mediaForm.append("file", new File([new Uint8Array([137, 80, 78, 71])], "test-image.png", { type: "image/png" }));
@@ -64,8 +111,10 @@ const deleteResponse = await deleteMedia({ request: request(`/api/admin/media?ke
 assert.equal(deleteResponse.status, 200);
 
 const adminHtml = await readFile(new URL("../dist/admin.html", import.meta.url), "utf8");
-for (const marker of ["data-product-list", "data-featured-editor", "data-gallery-list", "data-media-list", "data-contact-form"]) {
-  assert.ok(adminHtml.includes(marker), `admin.html should include ${marker}`);
+assert.ok(adminHtml.includes("visual-admin.html"), "admin.html should redirect to the unified visual admin");
+const visualAdminHtml = await readFile(new URL("../dist/visual-admin.html", import.meta.url), "utf8");
+for (const marker of ["data-preview-page=\"index\"", "data-preview-page=\"company\"", "app.pagescms.org/g13217010520-alt/-/main/file/website_content"]) {
+  assert.ok(visualAdminHtml.includes(marker), `visual-admin.html should include ${marker}`);
 }
 
-console.log("CMS smoke tests passed: authentication, session, content persistence, defaults, and admin structure.");
+console.log("CMS smoke tests passed: authentication, GitHub content persistence, legacy storage, defaults, and unified admin structure.");
